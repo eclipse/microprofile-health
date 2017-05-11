@@ -1,0 +1,7 @@
+
+The RI TCK coverage currently depends on custom Wildfly Swarm branch:
+ 
+ https://github.com/heiko-braun/wildfly-swarm-1/tree/mp_health_api
+ 
+ 
+It's pretty much work in progress...
