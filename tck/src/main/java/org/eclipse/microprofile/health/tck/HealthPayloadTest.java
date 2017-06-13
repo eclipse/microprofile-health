@@ -23,6 +23,7 @@
 package org.eclipse.microprofile.health.tck;
 
 import org.eclipse.microprofile.health.tck.deployment.ApplicationConfig;
+import org.eclipse.microprofile.health.tck.deployment.CDIHealthCheck;
 import org.eclipse.microprofile.health.tck.deployment.FailedChecks;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -31,6 +32,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,18 +48,81 @@ public class HealthPayloadTest extends SimpleHttp {
         deployment.addClass(SimpleHttp.class);
         deployment.addClass(ApplicationConfig.class);
         deployment.addClass(FailedChecks.class);
+        deployment.addClass(CDIHealthCheck.class);
         return deployment;
     }
 
+    /**
+     * Verifies the health integration with CDI at the scope of a server runtime
+     */
     @Test
     @RunAsClient
-    public void testHealthIntegration() throws Exception {
+    @Ignore //for now
+    public void testGlobalScopeCDIIntegration() throws Exception {
+        Response response = getUrlContents("http://localhost:8080/health");
+        String responsePayload = response.getBody().get();
+        Assert.assertTrue(
+                "Expected a CDI health check to be invoked, but it was not present in the response",
+                responsePayload.contains("CDI")
+        );
+    }
+
+    /**
+     * Verifies the health integration with CDI at the scope of a single deployment
+     */
+    @Test
+    @RunAsClient
+    public void testLocalScopeCDIIntegration() throws Exception {
+        Response response = getUrlContents("http://localhost:8080/tck/health");
+        Assert.assertEquals(200, response.getStatus());
+
+        String responsePayload = response.getBody().get();
+        System.out.println(responsePayload);
+        Assert.assertTrue(
+                "Expected a CDI health check to be invoked, but it was not present in the response",
+                responsePayload.contains("CDI")
+        );
+    }
+
+    /**
+     * Verifies the health integration with JAX-RS at the scope of a server runtime
+     */
+    @Test
+    @RunAsClient
+    public void testGlobalScopeJAXRSIntegration() throws Exception {
+        // aggregator
+        Response response = getUrlContents("http://localhost:8080/health");
+
+        Assert.assertTrue("Response payload is missing", response.getBody().isPresent());
+        System.out.println(response.getBody().get());
+
+        String responsePayload = response.getBody().get();
+
+        Assert.assertTrue(
+                responsePayload.contains("first") &&
+                        responsePayload.contains("second")
+        );
+
+        // aggregator / failed
+        response = getUrlContents("http://localhost:8080/health", true);
+        Assert.assertEquals("Expected 503", 503, response.getStatus());
+        Assert.assertTrue("Response payload is missing", response.getBody().isPresent());
+        responsePayload = response.getBody().get();
+        Assert.assertTrue(responsePayload.contains("first") && responsePayload.contains("UP"));
+    }
+
+    /**
+     * Verifies the health integration with JAX-RS at the scope of a single deployment
+     */
+    @Test
+    @RunAsClient
+    public void testLocalScopeJAXRSIntegration() throws Exception {
 
         // aggregator / with auth
         Response response = getUrlContents("http://localhost:8080/health");
-        System.out.println(response.getBody());
 
         Assert.assertTrue("Response payload is missing", response.getBody().isPresent());
+        System.out.println(response.getBody().get());
 
         String responsePayload = response.getBody().get();
 
@@ -66,8 +131,6 @@ public class HealthPayloadTest extends SimpleHttp {
                     responsePayload.contains("second")
         );
 
-        // TODO: all web context roots are really vendor specific
-
         // direct / failure
         response = getUrlContents("http://localhost:8080/tck/failed/first", false);
         Assert.assertEquals("Expected 503", 503, response.getStatus());
@@ -75,13 +138,6 @@ public class HealthPayloadTest extends SimpleHttp {
         // direct / success
         response = getUrlContents("http://localhost:8080/tck/failed/second", false);
         Assert.assertEquals("Expected 200", 200, response.getStatus());
-
-        // aggregator / failed
-        response = getUrlContents("http://localhost:8080/health", true);
-        Assert.assertEquals("Expected 503", 503, response.getStatus());
-        Assert.assertTrue("Response payload is missing", response.getBody().isPresent());
-        responsePayload = response.getBody().get();
-        Assert.assertTrue(responsePayload.contains("first") && responsePayload.contains("UP"));
 
     }
 }
