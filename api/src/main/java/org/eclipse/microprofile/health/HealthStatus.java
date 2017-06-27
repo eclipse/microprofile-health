@@ -60,7 +60,7 @@ public class HealthStatus implements Status {
     }
 
     private void assertNamed() {
-        if (null == this.name) {
+        if (this.name == null) {
             throw new IllegalStateException("HealthStatus need to be named");
         }
     }

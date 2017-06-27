@@ -48,7 +48,7 @@ public class HttpBinding {
     @Produces(value = "application/json")
     public Response checkHealth() {
 
-        if (null == procedures) {
+        if (procedures == null) {
             return Response.ok().status(204).build();
         }
 
