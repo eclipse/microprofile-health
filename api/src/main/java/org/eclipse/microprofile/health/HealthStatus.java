@@ -37,8 +37,6 @@ public class HealthStatus implements Status {
 
     private static final String DATA = "data";
 
-    private static final String ESCAPED_QUOTE = "\"";
-
     private final String name;
 
     private Optional<Map<String, Object>> message = Optional.empty();
@@ -107,15 +105,15 @@ public class HealthStatus implements Status {
     public String toJson() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        sb.append(ESCAPED_QUOTE).append(ID).append("\":\"").append(name).append("\",");
-        sb.append(ESCAPED_QUOTE).append(RESULT).append("\":\"").append(state.name()).append("\"");
+        sb.append("\"").append(ID).append("\":\"").append(name).append("\",");
+        sb.append("\"").append(RESULT).append("\":\"").append(state.name()).append("\"");
         if (message.isPresent()) {
             sb.append(",");
-            sb.append(ESCAPED_QUOTE).append(DATA).append("\": {");
+            sb.append("\"").append(DATA).append("\": {");
             Map<String, Object> atts = message.get();
             int i = 0;
             for (String key : atts.keySet()) {
-                sb.append(ESCAPED_QUOTE).append(key).append("\":").append(encode(atts.get(key)));
+                sb.append("\"").append(key).append("\":").append(encode(atts.get(key)));
                 if (i < atts.keySet().size() - 1) {
                     sb.append(",");
                 }
@@ -131,7 +129,7 @@ public class HealthStatus implements Status {
     private String encode(Object o) {
         String res = null;
         if (o instanceof String) {
-            res = ESCAPED_QUOTE + o.toString() + ESCAPED_QUOTE;
+            res = "\"" + o.toString() + "\"";
         }
         else {
             res = o.toString();
