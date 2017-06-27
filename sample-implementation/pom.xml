@@ -25,9 +25,9 @@
     </parent>
 
 
-    <groupId>org.eclipse.microprofile.health.tck</groupId>
+    <groupId>org.eclipse.microprofile.health</groupId>
     <artifactId>microprofile-health-ri</artifactId>
-    <name>MicroProfile Health Reference Implementation</name>
+    <name>MicroProfile Health Sample Implementation</name>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -57,7 +57,7 @@
 
     <dependencies>
 
-        <!-- RI  -->
+        <!-- sample implementation  -->
 
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
