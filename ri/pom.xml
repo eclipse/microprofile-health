@@ -66,12 +66,18 @@
 
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
+            <artifactId>cdi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
             <artifactId>monitor</artifactId>
         </dependency>
 
         <!-- TCK -->
 
         <dependency>
+
             <groupId>org.eclipse.microprofile.health.tck</groupId>
             <artifactId>microprofile-health-tck</artifactId>
             <version>1.0-SNAPSHOT</version>
