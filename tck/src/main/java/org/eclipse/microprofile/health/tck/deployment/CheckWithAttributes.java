@@ -21,19 +21,22 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
-import javax.enterprise.context.Dependent;
-
 import org.eclipse.microprofile.health.HealthCheckProcedure;
 import org.eclipse.microprofile.health.HealthStatus;
 
+import javax.enterprise.context.Dependent;
+
 /**
- * @author Heiko Braun
- * @since 13.06.17
+ * Created by hbraun on 29.06.17.
  */
 @Dependent
-public class CDIHealthCheck implements HealthCheckProcedure {
+public class CheckWithAttributes implements HealthCheckProcedure {
+
     @Override
     public HealthStatus execute() {
-        return HealthStatus.named("CDI").up();
+        return HealthStatus.named("attributes-check")
+                .withAttribute("first-key", "first-val")
+                .withAttribute("second-key", "second-val")
+                .up();
     }
 }

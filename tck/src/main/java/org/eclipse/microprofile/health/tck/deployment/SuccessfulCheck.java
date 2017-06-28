@@ -19,33 +19,21 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
-
 package org.eclipse.microprofile.health.tck.deployment;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.enterprise.context.Dependent;
 
+import org.eclipse.microprofile.health.HealthCheckProcedure;
 import org.eclipse.microprofile.health.HealthStatus;
-import org.eclipse.microprofile.health.inject.Health;
-
 
 /**
  * @author Heiko Braun
+ * @since 13.06.17
  */
-@Path("/failed")
-public class FailedChecks {
-
-    @GET
-    @Health
-    @Path("/first")
-    public HealthStatus checkHealth() {
-        return HealthStatus.named("first").down();
-    }
-
-    @GET
-    @Health
-    @Path("/second")
-    public HealthStatus checkHealthInsecure() {
-        return HealthStatus.named("second").up().withAttribute("time", System.currentTimeMillis());
+@Dependent
+public class SuccessfulCheck implements HealthCheckProcedure {
+    @Override
+    public HealthStatus execute() {
+        return HealthStatus.named("successful-check").up();
     }
 }
