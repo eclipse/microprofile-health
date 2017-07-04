@@ -48,6 +48,7 @@ public class HealthResponse {
 
     public HealthStatus up() {
         assertNamed();
+        this.state = HealthStatus.State.UP;
         HealthStatusImpl status = new HealthStatusImpl(
                 this.name,
                 this.state,
