@@ -22,119 +22,20 @@
 
 package org.eclipse.microprofile.health;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * A builder to construct a health procedure response
+ * The health procedure response
  */
-public class HealthStatus implements Status {
+public interface HealthStatus {
 
-    private static final String ID = "id";
+    enum State { UP, DOWN }
 
-    private static final String RESULT = "result";
+    String getId();
 
-    private static final String DATA = "data";
+    State getState();
 
-    private final String name;
+    Optional<Map<String, Object>> getAttributes();
 
-    private Optional<Map<String, Object>> message = Optional.empty();
-
-    private State state;
-
-    HealthStatus(String name) {
-        this.name = name;
-    }
-
-    public static HealthStatus named(String name) {
-        return new HealthStatus(name);
-    }
-
-    public HealthStatus up() {
-        assertNamed();
-        this.state = State.UP;
-        return this;
-    }
-
-    private void assertNamed() {
-        if (this.name == null) {
-            throw new IllegalStateException("HealthStatus need to be named");
-        }
-    }
-
-    public HealthStatus down() {
-        this.state = State.DOWN;
-        return this;
-    }
-
-    public HealthStatus withAttribute(String key, String value) {
-        Map<String, Object> payload = getPayloadWrapper();
-        payload.put(key, value);
-        return this;
-    }
-
-    public HealthStatus withAttribute(String key, long value) {
-        Map<String, Object> payload = getPayloadWrapper();
-        payload.put(key, value);
-        return this;
-    }
-
-    public HealthStatus withAttribute(String key, boolean value) {
-        Map<String, Object> payload = getPayloadWrapper();
-        payload.put(key, value);
-        return this;
-    }
-
-    private Map<String, Object> getPayloadWrapper() {
-        if (!this.message.isPresent()) {
-            this.message = Optional.of(new HashMap<>());
-        }
-        return this.message.get();
-    }
-
-    public Optional<String> getMessage() {
-        return message.isPresent() ? Optional.of(toJson()) : Optional.empty();
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    @Override
-    public String toJson() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"").append(ID).append("\":\"").append(name).append("\",");
-        sb.append("\"").append(RESULT).append("\":\"").append(state.name()).append("\"");
-        if (message.isPresent()) {
-            sb.append(",");
-            sb.append("\"").append(DATA).append("\": {");
-            Map<String, Object> atts = message.get();
-            int i = 0;
-            for (String key : atts.keySet()) {
-                sb.append("\"").append(key).append("\":").append(encode(atts.get(key)));
-                if (i < atts.keySet().size() - 1) {
-                    sb.append(",");
-                }
-                i++;
-            }
-            sb.append("}");
-        }
-
-        sb.append("}");
-        return sb.toString();
-    }
-
-    private String encode(Object o) {
-        String res = null;
-        if (o instanceof String) {
-            res = "\"" + o.toString() + "\"";
-        }
-        else {
-            res = o.toString();
-        }
-
-        return res;
-    }
 }

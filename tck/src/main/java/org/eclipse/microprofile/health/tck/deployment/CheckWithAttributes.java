@@ -22,6 +22,7 @@
 package org.eclipse.microprofile.health.tck.deployment;
 
 import org.eclipse.microprofile.health.HealthCheckProcedure;
+import org.eclipse.microprofile.health.HealthResponse;
 import org.eclipse.microprofile.health.HealthStatus;
 
 import javax.enterprise.context.Dependent;
@@ -33,8 +34,8 @@ import javax.enterprise.context.Dependent;
 public class CheckWithAttributes implements HealthCheckProcedure {
 
     @Override
-    public HealthStatus execute() {
-        return HealthStatus.named("attributes-check")
+    public HealthStatus perform() {
+        return HealthResponse.named("attributes-check")
                 .withAttribute("first-key", "first-val")
                 .withAttribute("second-key", "second-val")
                 .up();

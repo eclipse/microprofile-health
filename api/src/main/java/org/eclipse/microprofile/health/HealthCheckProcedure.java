@@ -28,5 +28,5 @@ package org.eclipse.microprofile.health;
  * @since 13.06.17
  */
 public interface HealthCheckProcedure {
-    HealthStatus execute();
+    HealthStatus perform();
 }

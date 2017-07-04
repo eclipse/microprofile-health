@@ -24,6 +24,7 @@ package org.eclipse.microprofile.health.tck.deployment;
 import javax.enterprise.context.Dependent;
 
 import org.eclipse.microprofile.health.HealthCheckProcedure;
+import org.eclipse.microprofile.health.HealthResponse;
 import org.eclipse.microprofile.health.HealthStatus;
 
 /**
@@ -33,7 +34,7 @@ import org.eclipse.microprofile.health.HealthStatus;
 @Dependent
 public class FailedCheck implements HealthCheckProcedure {
     @Override
-    public HealthStatus execute() {
-        return HealthStatus.named("failed-check").down();
+    public HealthStatus perform() {
+        return HealthResponse.named("failed-check").down();
     }
 }
