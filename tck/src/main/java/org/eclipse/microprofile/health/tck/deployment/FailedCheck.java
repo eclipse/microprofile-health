@@ -19,20 +19,21 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
+package org.eclipse.microprofile.health.tck.deployment;
 
-package org.eclipse.microprofile.health.inject;
+import javax.enterprise.context.Dependent;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.eclipse.microprofile.health.HealthCheckProcedure;
+import org.eclipse.microprofile.health.HealthStatus;
 
 /**
- * Indicates that a method should be used as a health check procedure.
+ * @author Heiko Braun
+ * @since 13.06.17
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Health {
-
+@Dependent
+public class FailedCheck implements HealthCheckProcedure {
+    @Override
+    public HealthStatus execute() {
+        return HealthStatus.named("failed-check").down();
+    }
 }
-
