@@ -32,7 +32,7 @@ public interface HealthStatus {
 
     enum State { UP, DOWN }
 
-    String getId();
+    String getName();
 
     State getState();
 

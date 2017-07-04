@@ -120,18 +120,18 @@ public class HealthResponse {
         }
 
         @Override
-        public String getId() {
-            return null;
+        public String getName() {
+            return name;
         }
 
         @Override
         public State getState() {
-            return null;
+            return state;
         }
 
         @Override
         public Optional<Map<String, Object>> getAttributes() {
-            return null;
+            return attributes;
         }
     }
 }
