@@ -22,6 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.FailedCheck;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulCheck;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -76,7 +78,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
 
 
         for (JsonValue check : checks) {
-            String id = check.asJsonObject().getString("id");
+            String id = asJsonObject(check).getString("id");
             switch (id) {
                 case "successful-check":
                     verifySuccessPayload(check);
@@ -102,13 +104,13 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
         Assert.assertEquals(
                 "Expected a CDI health check to be invoked, but it was not present in the response",
                 "failed-check",
-                check.asJsonObject().getString("id")
+                asJsonObject(check).getString("id")
         );
 
         Assert.assertEquals(
                 "Expected a successful check result",
                 "DOWN",
-                check.asJsonObject().getString("result")
+                asJsonObject(check).getString("result")
         );
     }
 
@@ -117,13 +119,13 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
         Assert.assertEquals(
                 "Expected a CDI health check to be invoked, but it was not present in the response",
                 "successful-check",
-                check.asJsonObject().getString("id")
+                asJsonObject(check).getString("id")
         );
 
         Assert.assertEquals(
                 "Expected a successful check result",
                 "UP",
-                check.asJsonObject().getString("result")
+                asJsonObject(check).getString("result")
         );
 
     }

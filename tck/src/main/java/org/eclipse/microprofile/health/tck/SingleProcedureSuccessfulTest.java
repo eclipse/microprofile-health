@@ -22,6 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulCheck;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -75,13 +77,13 @@ public class SingleProcedureSuccessfulTest extends SimpleHttp {
         Assert.assertEquals(
                 "Expected a CDI health check to be invoked, but it was not present in the response",
                 "successful-check",
-                checks.get(0).asJsonObject().getString("id")
+                asJsonObject(checks.get(0)).getString("id")
         );
 
         Assert.assertEquals(
                 "Expected a successful check result",
                 "UP",
-                checks.get(0).asJsonObject().getString("result")
+                asJsonObject(checks.get(0)).getString("result")
         );
 
         // overall outcome

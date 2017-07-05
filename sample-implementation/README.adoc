@@ -16,7 +16,7 @@ mvn -Dmaven.test.skip=false test
 
 
 ```
-git clone https://github.com/heiko-braun/wildfly-swarm-1 health-ri
+git clone -b mp_health_api https://github.com/heiko-braun/wildfly-swarm-1 health-ri
 cd health-ri
 mvn clean install
 ```

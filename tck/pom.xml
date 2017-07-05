@@ -34,7 +34,7 @@
         <arquillian.version>1.1.13.Final</arquillian.version>
         <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9_]*$</checkstyle.methodNameFormat>
         <junit.version>4.12</junit.version>
-        <version.glassfish.json>1.1</version.glassfish.json>
+        <version.glassfish.json>1.0</version.glassfish.json>
     </properties>
 
     <dependencyManagement>
