@@ -19,23 +19,16 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
-
 package org.eclipse.microprofile.health;
 
-import java.util.Map;
-import java.util.Optional;
-
 /**
- * The health procedure response
+ * The health check procedure interface.
+ * Invoked by consumers to verify the healthiness of a computing node.
+ * Unhealthy nodes are expected to be terminated.
+ *
+ * @author Heiko Braun
+ * @since 13.06.17
  */
-public interface HealthStatus {
-
-    enum State { UP, DOWN }
-
-    String getName();
-
-    State getState();
-
-    Optional<Map<String, Object>> getAttributes();
-
+public interface HealthCheck {
+    Response call();
 }

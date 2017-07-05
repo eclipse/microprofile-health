@@ -19,14 +19,29 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
+
 package org.eclipse.microprofile.health;
 
 /**
- * The basic health check procedure interface
+ * A builder to construct a health procedure response.
  *
- * @author Heiko Braun
- * @since 13.06.17
+ * <p>
+ * The ResponseBuilder class is reserved for an extension by implementation providers.
+ * <p/>
  */
-public interface HealthCheckProcedure {
-    HealthStatus perform();
+public abstract class ResponseBuilder {
+
+    public abstract ResponseBuilder name(String name);
+
+    public abstract ResponseBuilder withAttribute(String key, String value);
+
+    public abstract ResponseBuilder withAttribute(String key, long value);
+
+    public abstract ResponseBuilder withAttribute(String key, boolean value);
+
+    public abstract Response up();
+
+    public abstract Response down();
+
+
 }
