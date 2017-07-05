@@ -27,6 +27,7 @@ package org.eclipse.microprofile.health;
  * @author Heiko Braun
  * @since 13.06.17
  */
+@FunctionalInterface
 public interface HealthCheckProcedure {
     HealthStatus perform();
 }
