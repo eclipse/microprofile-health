@@ -54,6 +54,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.eclipse.microprofile.apis</groupId>
+                <artifactId>microprofile-health-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>javax.enterprise</groupId>
                 <artifactId>cdi-api</artifactId>
                 <version>1.2</version>
