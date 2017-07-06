@@ -15,7 +15,53 @@
 // limitations under the License.
 //
 
-= Running the Microprofile Health TCK
+= Running the MicroProfile Health TCK
 
-TODO
+The TCK uses `JUnit`.
 
+== Dependencies
+
+To enable the tests in your project you need to add the following dependency to your build:
+
+[source, xml]
+----
+<dependency>
+    <groupId>org.eclipse.microprofile.health.tck</groupId>
+    <artifactId>microprofile-health-tck</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.microprofile.apis</groupId>
+    <artifactId>microprofile-health-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
+----
+
+== Configuration in Apache Maven pom.xml
+
+The TCK tests are provided by the `org.eclipse.microprofile.health.tck:microprofile-health-tck` Jar file.
+
+If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, you need to add a `<dependenciesToScan>` configuration to scan the `org.eclipse.microprofile.health.tck:microprofile-health-tck` and run its tests.
+
+[source, xml]
+----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+                <dependenciesToScan>
+                    <dependency>org.eclipse.microprofile.health.tck:microprofile-health-tck</dependency>
+                </dependenciesToScan>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+----
+
+== Examples
+
+The https://github.com/jmesnil/wildfly-microprofile-health[WildFly implementation] of the MicroProfile Health runs the TCK in its https://github.com/jmesnil/wildfly-microprofile-health/tree/master/tck[tck module].
