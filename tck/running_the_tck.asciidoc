@@ -19,6 +19,17 @@
 
 The TCK uses `JUnit`.
 
+== Health URL
+
+Implementation of the MicroProfile Health TCK can set a System property that corresponds to the HTTP endpoint that the
+ TCK calls to check the health:
+
+```
+org.eclipse.microprofile.health.tck.url
+```
+
+The default is http://localhost:8080/health[http://localhost:8080/health].
+
 == Dependencies
 
 To enable the tests in your project you need to add the following dependency to your build:
@@ -53,6 +64,9 @@ If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, 
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+                <systemPropertyVariables>
+                    <org.eclipse.microprofile.health.tck.url>http://localhost:8080/health</org.eclipse.microprofile.health.tck.url>
+                </systemPropertyVariables>
                 <dependenciesToScan>
                     <dependency>org.eclipse.microprofile.health.tck:microprofile-health-tck</dependency>
                 </dependenciesToScan>
@@ -62,6 +76,7 @@ If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, 
 </build>
 ----
 
+Note that the `org.eclipse.microprofile.health.tck.url` System property is also explicitely set in the `maven-surefire-plugin` configuration.
 == Examples
 
 The https://github.com/jmesnil/wildfly-microprofile-health[WildFly implementation] of the MicroProfile Health runs the TCK in its https://github.com/jmesnil/wildfly-microprofile-health/tree/master/tck[tck module].

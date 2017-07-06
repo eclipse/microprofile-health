@@ -23,6 +23,7 @@
 package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulCheck;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -60,7 +61,7 @@ public class SingleProcedureSuccessfulTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testSuccessResponsePayload() throws Exception {
-        Response response = getUrlContents("http://localhost:8080/health");
+        Response response = getUrlContents(getHealthURL());
 
         // status code
         Assert.assertEquals(200, response.getStatus());
