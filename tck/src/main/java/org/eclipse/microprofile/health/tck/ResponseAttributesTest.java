@@ -22,6 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.CheckWithAttributes;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -78,17 +80,17 @@ public class ResponseAttributesTest extends SimpleHttp {
         Assert.assertEquals(
                 "Expected a CDI health check to be invoked, but it was not present in the response",
                 "attributes-check",
-                check.asJsonObject().getString("id")
+                asJsonObject(check).getString("id")
         );
 
         Assert.assertEquals(
                 "Expected a successful check result",
                 "UP",
-                check.asJsonObject().getString("result")
+                asJsonObject(check).getString("result")
         );
 
         // response payload attributes
-        JsonObject data = check.asJsonObject().getJsonObject("data");
+        JsonObject data = asJsonObject(check).getJsonObject("data");
         Assert.assertEquals(
                 "first-val",
                 data.getString("first-key")
