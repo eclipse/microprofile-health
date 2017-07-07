@@ -47,19 +47,16 @@ public class HealthResponse {
     }
 
     public HealthStatus up() {
-        assertNamed();
-        this.state = HealthStatus.State.UP;
-        HealthStatusImpl status = new HealthStatusImpl(
-                this.name,
-                this.state,
-                this.attributes
-        );
-        return status;
+        return state(true);
     }
 
     public HealthStatus down() {
+        return state(false);
+    }
+
+    public HealthStatus state(boolean up) {
         assertNamed();
-        this.state = HealthStatus.State.DOWN;
+        this.state = up ? HealthStatus.State.UP : HealthStatus.State.DOWN;
         HealthStatusImpl status = new HealthStatusImpl(
                 this.name,
                 this.state,
