@@ -43,5 +43,7 @@ public abstract class ResponseBuilder {
 
     public abstract Response down();
 
+    public abstract Response state(boolean up);
+
 
 }
