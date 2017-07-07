@@ -45,9 +45,28 @@ public abstract class Response {
 
     private static final Logger LOGGER = Logger.getLogger(Response.class.getName());
 
+    private static volatile SPIFactory factory = null;
+
     public static ResponseBuilder named(String name) {
-        ResponseBuilder builder = find(SPIFactory.class).createResponseBuilder();
-        return builder.name(name);
+
+        if (factory == null) {
+            synchronized (Response.class) {
+                if (factory != null) {
+                    return factory.createResponseBuilder();
+                }
+
+                SPIFactory newInstance = find(SPIFactory.class);
+
+                if (newInstance == null) {
+                    throw new IllegalStateException(
+                            "No ResponseBuilder implementation found!");
+                }
+
+                factory = newInstance;
+            }
+        }
+
+        return factory.createResponseBuilder().name(name);
     }
 
     // the actual contract
@@ -89,7 +108,7 @@ public abstract class Response {
         }
 
         if(null==serviceInstance) {
-            throw new IllegalStateException("Unable to load service " + service.getName());
+            throw new IllegalStateException("Unable to find service " + service.getName());
         }
 
         return serviceInstance;
