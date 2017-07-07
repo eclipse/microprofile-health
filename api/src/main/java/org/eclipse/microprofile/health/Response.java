@@ -26,7 +26,6 @@ import org.eclipse.microprofile.health.spi.SPIFactory;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
@@ -58,8 +57,7 @@ public abstract class Response {
                 SPIFactory newInstance = find(SPIFactory.class);
 
                 if (newInstance == null) {
-                    throw new IllegalStateException(
-                            "No ResponseBuilder implementation found!");
+                    throw new IllegalStateException("No SPIFactory implementation found!");
                 }
 
                 factory = newInstance;
@@ -81,39 +79,45 @@ public abstract class Response {
 
     private static <T> T find(Class<T> service) {
 
-        T serviceInstance = null;
+        T serviceInstance = find(service, Response.getContextClassLoader());
 
-        // context classloader
-        try {
-            Iterator<T> iterator = ServiceLoader.load(service, Response.getContextClassLoader()).iterator();
-
-            if (iterator.hasNext()) {
-                serviceInstance = iterator.next();
-            }
-        }
-        catch (Throwable t) {
-            LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
+        // alternate classloader
+        if(null==serviceInstance) {
+            serviceInstance = find(service, Response.class.getClassLoader());
         }
 
-        // library classloader
-        try {
-            Iterator<T> iterator = ServiceLoader.load(service, Response.class.getClassLoader()).iterator();
-
-            if (iterator.hasNext()) {
-                serviceInstance = iterator.next();
-            }
-        }
-        catch (Throwable t) {
-            LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
-        }
-
+        // service cannot be found
         if(null==serviceInstance) {
             throw new IllegalStateException("Unable to find service " + service.getName());
         }
 
         return serviceInstance;
-
     }
+
+    private static <T> T find(Class<T> service, ClassLoader cl) {
+
+        T serviceInstance = null;
+
+        try {
+            ServiceLoader<T> services = ServiceLoader.load(service, cl);
+
+            for (T spi : services) {
+                if (serviceInstance != null) {
+                    throw new IllegalStateException(
+                            "Multiple service implementations found: "
+                                    + spi.getClass().getName() + " and "
+                                    + serviceInstance.getClass().getName());
+                }
+                serviceInstance = spi;
+            }
+        }
+        catch (Throwable t) {
+            LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
+        }
+
+        return serviceInstance;
+    }
+
 
 
     private static ClassLoader getContextClassLoader() {
