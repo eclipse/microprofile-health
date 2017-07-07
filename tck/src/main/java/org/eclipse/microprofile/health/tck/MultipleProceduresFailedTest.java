@@ -23,6 +23,7 @@
 package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 import org.eclipse.microprofile.health.tck.deployment.FailedCheck;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulCheck;
@@ -63,7 +64,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testFailureResponsePayload() throws Exception {
-        Response response = getUrlContents("http://localhost:8080/health");
+        Response response = getUrlContents(getHealthURL());
 
         // status code
         Assert.assertEquals(503, response.getStatus());
