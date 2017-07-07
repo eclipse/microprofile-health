@@ -22,6 +22,8 @@
 
 package org.eclipse.microprofile.health;
 
+import org.eclipse.microprofile.health.spi.SPIFactory;
+
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
@@ -44,7 +46,7 @@ public abstract class Response {
     private static final Logger LOGGER = Logger.getLogger(Response.class.getName());
 
     public static ResponseBuilder named(String name) {
-        ResponseBuilder builder = findSPI(ResponseBuilder.class);
+        ResponseBuilder builder = find(SPIFactory.class).createResponseBuilder();
         return builder.name(name);
     }
 
@@ -58,7 +60,7 @@ public abstract class Response {
 
     public abstract Optional<Map<String, Object>> getAttributes();
 
-    private static <T> T findSPI(Class<T> service) {
+    private static <T> T find(Class<T> service) {
 
         T serviceInstance = null;
 
