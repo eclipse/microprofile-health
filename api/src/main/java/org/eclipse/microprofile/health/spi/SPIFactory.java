@@ -19,21 +19,16 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
-package org.eclipse.microprofile.health.tck.deployment;
 
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.Response;
+package org.eclipse.microprofile.health.spi;
 
-import javax.enterprise.context.Dependent;
+import org.eclipse.microprofile.health.ResponseBuilder;
 
 /**
- * @author Heiko Braun
- * @since 13.06.17
+ * Created by hbraun on 07.07.17.
  */
-@Dependent
-public class FailedCheck implements HealthCheck {
-    @Override
-    public Response call() {
-        return Response.named("failed-check").down();
-    }
+public interface SPIFactory {
+
+    ResponseBuilder createResponseBuilder();
+
 }

@@ -22,11 +22,15 @@
 package org.eclipse.microprofile.health;
 
 /**
- * The basic health check procedure interface
+ * The health check procedure interface.
+ * Invoked by consumers to verify the healthiness of a computing node.
+ * Unhealthy nodes are expected to be terminated.
  *
  * @author Heiko Braun
  * @since 13.06.17
  */
-public interface HealthCheckProcedure {
-    HealthStatus perform();
+@FunctionalInterface
+public interface HealthCheck {
+    
+    Response call();
 }

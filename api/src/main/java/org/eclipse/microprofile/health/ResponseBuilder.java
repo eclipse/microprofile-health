@@ -22,20 +22,28 @@
 
 package org.eclipse.microprofile.health;
 
-import java.util.Map;
-import java.util.Optional;
-
 /**
- * The health procedure response
+ * A builder to construct a health procedure response.
+ *
+ * <p>
+ * The ResponseBuilder class is reserved for an extension by implementation providers.
+ * </p>
  */
-public interface HealthStatus {
+public abstract class ResponseBuilder {
 
-    enum State { UP, DOWN }
+    public abstract ResponseBuilder name(String name);
 
-    String getName();
+    public abstract ResponseBuilder withAttribute(String key, String value);
 
-    State getState();
+    public abstract ResponseBuilder withAttribute(String key, long value);
 
-    Optional<Map<String, Object>> getAttributes();
+    public abstract ResponseBuilder withAttribute(String key, boolean value);
+
+    public abstract Response up();
+
+    public abstract Response down();
+
+    public abstract Response state(boolean up);
+
 
 }
