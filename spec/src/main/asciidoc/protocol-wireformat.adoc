@@ -43,7 +43,7 @@ Note that the force of these words is modified by the requirement level of the d
 
 ## Rationale
 
-The rationale for health checks in is to signal the state of a computing node to other machines (i.e. kubernetes service controller). It’s not intended (although could be used) as a monitoring solution for humans.
+Health checks are used to signal the state of a computing node to other machines (cloud orchstration frameworks, i.e. kubernetes service controller). It’s not intended (although could be used) as a monitoring solution for humans.
 
 ## Goals
 * MUST be compatibility with Kubernetes health checks: http://kubernetes.io/docs/user-guide/liveness/
@@ -81,31 +81,34 @@ The rationale for health checks in is to signal the state of a computing node to
 6. The payload is written to the response stream
 7. The consumer reads the response
 8. The consumer determines the overall outcome
-Protocol Specifics
-Interacting with producers
-How are the health checks accessed and invoked ? We don’t make any assumptions about this, except for the wire format and protocol.
+
+# Protocol Specifics
+
+## Interacting with producers
+How are the health checks accessed and invoked ? 
+We don’t make any assumptions about this, except for the wire format and protocol.
 
 ## Protocol Mappings
 
+Health checks (innermost) can and should be mapped to the actual invocation protocol (outermost). This section described some of guidelines and rules for these mappings.
+
 * Producers MAY support a variety of protocols but the information items in the response payload MUST remain the same.
 * Producers SHOULD define a well known default context to perform checks
-Protocol Mappings
-Health checks (innermost) can and should be mapped to the actual invocation protocol (outermost). This section described some of guidelines and rules for these mappings.
 * Each response SHOULD integrate with the outermost protocol whenever it makes sense (i.e. using HTTP status codes to signal the overall state)
 * Inner protocol information items MUST NOT be replaced by outer protocol information items, rather kept redundantly.
 * The inner protocol response MUST be self-contained, that is carrying all information needed to reason about the the producer outcome
 
-
 ## Mandatory and optional protocol types
 
-REST/HTTP interaction
-* Producer MUST provide a HTTP endpoint that follow the REST interface specifications described in Appendix A
+### REST/HTTP interaction
 
+* Producer MUST provide a HTTP endpoint that follow the REST interface specifications described in Appendix A
 
 ## Protocol Adaptor
 
 Each provider MUST provide the REST/HTTP interaction, but MAY provide other protocols such as TCP or JMX. When possible, the output MUST be the JSON output returned by the equivalent HTTP calls (Appendix B). The request is protocol specific.
-Healthcheck Response information
+
+### Healthcheck Response information
 
 * The primary information MUST be boolean, it needs to be consumed by other machines. Anything between available/unavailable doesn’t make sense or would increase the complexity on the side of the consumer processing that information.
 * The response information MAY contain an additional information holder
@@ -113,7 +116,7 @@ Healthcheck Response information
 * The response information MUST contain the boolean check state
 * The response information MAY contain the check id (or name)
 
-Wireformats
+### Wireformats
 
 * Producer MUST  support JSON encoded payload with simple UP/DOWN states
 * Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
@@ -122,21 +125,20 @@ Wireformats
 * The JSON response MUST contain the `result`entry specifying the state as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
-
 # Health Check Procedures
-* A producer MUST support custom health check procedures
+* A producer MUST support custom, application level health check procedures
 * A producer SHOULD support reasonable out-of-the-box procedures
 * A producer without health check procedures installed MUST returns positive overall outcome (i.e. HTTP 204, no content)
 
-
 ## Policies to determine the overall outcome
+
 When multiple procedures are installed all procedures MUST be executed and the overall outcome needs to be determined.
 * Consumers MUST support a logical conjunction policy to determine the outcome
 * Consumers MUST use the logical conjunction policy by default to determine the outcome
 * Consumers MAY support custom policies to determine the outcome
-Security
-Aspects regarding the secure access of health check information.
 
+# Security
+Aspects regarding the secure access of health check information.
 
 * A producer MUST enforce security on all check invocations
 * A producer MAY ignore security for trusted origins (i.e. localhost)
