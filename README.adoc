@@ -43,7 +43,7 @@ A detailed description of the health check protocol can be in the link:https://g
 
 ### Java API
 
-The main API to describe health check results (responses) is the `HealthCheck` interface:
+The main API to provide health check procedures on the application level is the `HealthCheck` interface:
 
 ```
 @FunctionalInterface
