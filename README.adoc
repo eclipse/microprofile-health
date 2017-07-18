@@ -17,30 +17,69 @@
 // limitations under the License.
 //
 
-# Health Check for MicroProfile
+# Service Healthchecks
 
-## Status
+## Motivation
 
-Work in progress
+Health checks are used to probe the state of a computing node from another other machine (i.e. kubernetes service controller) with the primary target being cloud infrastructure environments where automated processes maintain the state of computing nodes.
 
-== Rational
+In this scenario _health checks are used to determine if a computing node needs to be discarded (terminated, shutdown)_ and eventually replaced by another (healthy) instance.
 
-TODO
+It’s not intended (although could be used) as a monitoring solution for human operators.
 
-== Influences and History
+## Proposed solution
 
-TODO
+The proposed solution breaks down into two parts:
 
-== Implementations
+- A health checks protocol and wireformat
+- A Java API to implement health check procedures
 
-TODO
+## Detailed design
 
-== Design
+### Protocol
+
+This project defines a protocol (wireformat, semantics and possible forms of interactions) between system components that need to determine the “liveliness” of computing nodes in a bigger architecture.
+A detailed description of the health check protocol can be in the link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document]
+
+### Java API
+
+The main API to describe health check results (responses) is the `HealthCheck` interface:
+
+```
+@FunctionalInterface
+public interface HealthCheck {
+
+    Response call();
+}
+```
+
+Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the
+the framework, platform or runtime hosting the application to verify the healthiness of the computing node .
 
 
-== Building
+### CDI Integration
 
-The whole MicroProfile health project can be built via Apache Maven
+A possible integration with CDI:
 
-`$> mvn clean install`
+```
+@ApplicationScoped()
+public class CheckDiskpace implements HealthCheck {
 
+    public Response call() {
+        [...]
+    }
+}
+```
+
+### Constructing health `Response`s
+
+Application level code is expected to use one of static methods on `Response` to retrieve a builder used to construct a Response:
+
+```
+public class SuccessfulCheck implements HealthCheck {
+    @Override
+    public Response call() {
+        return Response.named("successful-check").up();
+    }
+}
+```

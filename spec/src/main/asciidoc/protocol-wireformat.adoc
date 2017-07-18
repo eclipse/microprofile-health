@@ -1,0 +1,247 @@
+
+# ﻿Healthcheck specification 1.0
+December 2016
+
+## Authors
+- Heiko Braun
+- Clement Escoffier
+- Heiko Rupp
+
+# Abstract
+This document defines a health check specification to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” of computing nodes in a bigger system.
+
+## Guidelines
+
+Note that the force of these words is modified by the requirement level of the document in which they are used.
+
+1. MUST   This word, or the terms "REQUIRED" or "SHALL", mean that the
+  definition is an absolute requirement of the specification.
+
+2. MUST NOT   This phrase, or the phrase "SHALL NOT", mean that the
+  definition is an absolute prohibition of the specification.
+
+3. SHOULD   This word, or the adjective "RECOMMENDED", mean that there
+  may exist valid reasons in particular circumstances to ignore a
+  particular item, but the full implications must be understood and
+  carefully weighed before choosing a different course.
+
+4. SHOULD NOT   This phrase, or the phrase "NOT RECOMMENDED" mean that
+  there may exist valid reasons in particular circumstances when the
+  particular behavior is acceptable or even useful, but the full
+  implications should be understood and the case carefully weighed
+  before implementing any behavior described with this label.
+
+
+5. MAY – This word, or the adjective “OPTIONAL,” mean that an item is truly discretionary.
+
+### Contributors
+
+* WildFly Swarm
+* Eclipse Vert.x
+* Hawkular Specification
+
+
+## Rationale
+
+The rationale for health checks in is to signal the state of a computing node to other machines (i.e. kubernetes service controller). It’s not intended (although could be used) as a monitoring solution for humans.
+
+## Goals
+* MUST be compatibility with Kubernetes health checks: http://kubernetes.io/docs/user-guide/liveness/
+* MUST be appropriate for machine-to-machine communication
+* SHOULD give enough information for a human administrator
+
+
+### Terms used
+
+| Term       | Description     |
+| ------------- |-------------|
+| Producer | The service/application that is checked |
+| Consumer | The probing end, usually a machine, that needs to verify the liveness of a Producer |
+| Health Check Procedure | The code executed to determine the liveliness of a Producer |
+| Producer Outcome | The overall outcome, determined by considering all health check procedure results |
+| Health check procedure result | The result of single check |
+
+# Protocol Overview
+
+1. Consumer invokes the health check of a Producer through any of the supported protocols
+2. Producer enforces security constraints on the invocation (i.e authentication)
+3. Producer executes a set of Health check procedures (could be a set with one element)
+4. Producer determines the overall outcome (Producer outcome)
+5. The outcome is mapped to outermost protocol (i.e. HTTP status codes)
+6. The payload is written to the response stream
+7. The consumer reads the response
+8. The consumer determines the overall outcome
+Protocol Specifics
+Interacting with producers
+How are the health checks accessed and invoked ? We don’t make any assumptions about this, except for the wire format and protocol.
+
+## Protocol Mappings
+
+* Producers MAY support a variety of protocols but the information items in the response payload MUST remain the same.
+* Producers SHOULD define a well known default context to perform checks
+Protocol Mappings
+Health checks (innermost) can and should be mapped to the actual invocation protocol (outermost). This section described some of guidelines and rules for these mappings.
+* Each response SHOULD integrate with the outermost protocol whenever it makes sense (i.e. using HTTP status codes to signal the overall state)
+* Inner protocol information items MUST NOT be replaced by outer protocol information items, rather kept redundantly.
+* The inner protocol response MUST be self-contained, that is carrying all information needed to reason about the the producer outcome
+
+
+## Mandatory and optional protocol types
+
+REST/HTTP interaction
+* Producer MUST provide a HTTP endpoint that follow the REST interface specifications described in Appendix A
+
+
+## Protocol Adaptor
+
+Each provider MUST provide the REST/HTTP interaction, but MAY provide other protocols such as TCP or JMX. When possible, the output MUST be the JSON output returned by the equivalent HTTP calls (Appendix B). The request is protocol specific.
+Healthcheck Response information
+
+* The primary information MUST be boolean, it needs to be consumed by other machines. Anything between available/unavailable doesn’t make sense or would increase the complexity on the side of the consumer processing that information.
+* The response information MAY contain an additional information holder
+* Consumers MAY process the additional information holder or simply decide to ignore it
+* The response information MUST contain the boolean check state
+* The response information MAY contain the check id (or name)
+
+Wireformats
+
+* Producer MUST  support JSON encoded payload with simple UP/DOWN states
+* Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
+* The JSON response payload MUST be compatible with the one described in Appendix B
+* The JSON response MUST contain the `id` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
+* The JSON response MUST contain the `result`entry specifying the state as String: “UP” or “DOWN”
+* The JSON MAY support an additional information holder to carry key value pairs that provide additional context
+
+
+# Health Check Procedures
+* A producer MUST support custom health check procedures
+* A producer SHOULD support reasonable out-of-the-box procedures
+* A producer without health check procedures installed MUST returns positive overall outcome (i.e. HTTP 204, no content)
+
+
+## Policies to determine the overall outcome
+When multiple procedures are installed all procedures MUST be executed and the overall outcome needs to be determined.
+* Consumers MUST support a logical conjunction policy to determine the outcome
+* Consumers MUST use the logical conjunction policy by default to determine the outcome
+* Consumers MAY support custom policies to determine the outcome
+Security
+Aspects regarding the secure access of health check information.
+
+
+* A producer MUST enforce security on all check invocations
+* A producer MAY ignore security for trusted origins (i.e. localhost)
+* HTTP Digest Auth MUST be one supported authentication mechanism
+* HTTP Digest Auth SHOULD be the default algorithm for the HTTP protocol binding
+
+# Appendix A: REST interface specifications
+
+| Context       | Verb          | Status Code  | Response |
+| ------------- |:-------------:| :-----:| -----|
+| /health       | GET           | 200, 204, 500, 503 | See Appendix B|
+
+## Status Codes:
+
+* 200 for a health check with a positive outcome
+* 204 in case no health check procedures are installed into the runtime
+* 503 in case the overall outcome is negative
+* 500 in case the consumer wasn’t able to process the health check request (i.e. error in procedure)
+
+
+# Appendix B: JSON payload specification
+
+The following table give valid health check responses:
+
+| Request | HTTP Status       | JSON Payload         | State  | Comment |
+| ------------- |:-------------:| :-----:| -----| ----|
+| /health       | 200           | Yes, see below  | UP | Check with payload |
+| /health       | 204           | No  | UP | Check without procedures installed |
+| /health       | 503           | Yes  | Down | Check failed|
+| /health       | 500           | No  | No | Request processing failed (i.e. error in procedure) |
+
+
+## JSON Schema:
+```
+{
+ "$schema": "http://json-schema.org/draft-04/schema#",
+ "type": "object",
+ "properties": {
+   "outcome": {
+     "type": "string"
+   },
+   "checks": {
+     "type": "array",
+     "items": {
+       "type": "object",
+       "properties": {
+         "id": {
+           "type": "string"
+         },
+         "result": {
+           "type": "string"
+         },
+         "data": {
+           "type": "object",
+           "properties": {
+             "key": {
+               "type": "string"
+             },
+             "value": {
+               "type": "string|boolean|int"
+             }
+           }
+         }
+       },
+       "required": [
+         "id",
+         "result"
+         ]
+     }
+   }
+ },
+ "required": [
+   "outcome",
+   "checks"
+ ]
+}
+```
+(See http://jsonschema.net/#/)
+
+## With procedures installed into the runtime
+Status 200
+```
+{
+  "outcome": "UP",
+  "checks": [
+    {
+      "id": "myCheck",
+      "result": "UP",
+      "data": {
+        "key": "value",
+        "foo": "bar"
+      }
+    }
+  ]
+}
+```
+
+
+Status 503
+```
+{
+  "outcome": "DOWN",
+  "checks": [
+    {
+      "id": "myCheck",
+      "result": "DOWN",
+      "data": {
+        "key": "value",
+        "foo": "bar"
+      }
+    }
+  ]
+}
+```
+
+## Without procedures installed into the runtime
+Status 204
+No payload, as required by https://tools.ietf.org/html/rfc7231#section-6.3.5
