@@ -145,9 +145,13 @@ Aspects regarding the secure access of health check information.
 
 # Appendix A: REST interface specifications
 
-| Context       | Verb          | Status Code  | Response |
-| ------------- |:-------------:| :-----:| -----|
-| /health       | GET           | 200, 204, 500, 503 | See Appendix B|
+|===
+| Context       | Verb          | Status Code  | Response 
+| /health       
+| GET           
+| 200, 204, 500, 503 
+| See Appendix B
+|===
 
 ## Status Codes:
 
@@ -161,13 +165,32 @@ Aspects regarding the secure access of health check information.
 
 The following table give valid health check responses:
 
-| Request | HTTP Status       | JSON Payload         | State  | Comment |
-| ------------- |:-------------:| :-----:| -----| ----|
-| /health       | 200           | Yes, see below  | UP | Check with payload |
-| /health       | 204           | No  | UP | Check without procedures installed |
-| /health       | 503           | Yes  | Down | Check failed|
-| /health       | 500           | No  | No | Request processing failed (i.e. error in procedure) |
+|===
+| Request | HTTP Status       | JSON Payload         | State  | Comment 
+| /health       
+| 200           
+| Yes, see below  
+| UP 
+| Check with payload 
 
+| /health       
+| 204           
+| No  
+| UP 
+| Check without procedures installed 
+
+| /health       
+| 503           
+| Yes  
+| Down 
+| Check failed
+
+| /health       
+| 500           
+| No  
+| No 
+| Request processing failed (i.e. error in procedure) 
+|===
 
 ## JSON Schema:
 ```
