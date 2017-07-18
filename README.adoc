@@ -39,7 +39,7 @@ The proposed solution breaks down into two parts:
 ### Protocol
 
 This project defines a protocol (wireformat, semantics and possible forms of interactions) between system components that need to determine the “liveliness” of computing nodes in a bigger architecture.
-A detailed description of the health check protocol can be in the link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document]
+A detailed description of the health check protocol can be found in the link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document]
 
 ### Java API
 
@@ -54,26 +54,27 @@ public interface HealthCheck {
 ```
 
 Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the
-the framework, platform or runtime hosting the application to verify the healthiness of the computing node .
+the framework or runtime hosting the application to verify the healthiness of the computing node.
 
-
-### CDI Integration
-
-A possible integration with CDI:
+The runtime will `call()` the `HealthCheck` which in turn creates a `Response` that signals the health status to a consuming end:
 
 ```
-@ApplicationScoped()
-public class CheckDiskpace implements HealthCheck {
+public abstract class Response {
+   
+    public enum State { UP, DOWN }
 
-    public Response call() {
-        [...]
-    }
+    public abstract String getName();
+
+    public abstract State getState();
+
+    public abstract Optional<Map<String, Object>> getAttributes();
+    
+    [...]
 }
 ```
-
 ### Constructing health `Response`s
 
-Application level code is expected to use one of static methods on `Response` to retrieve a builder used to construct a Response:
+Application level code is expected to use one of static methods on `Response` to retrieve a `ResponseBuilder` used to construct a `Response`, i.e. :
 
 ```
 public class SuccessfulCheck implements HealthCheck {
@@ -83,3 +84,18 @@ public class SuccessfulCheck implements HealthCheck {
     }
 }
 ```
+
+### Integration with CDI
+
+Within CDI contexts, beans that implement `HealthCheck` are discovered automatically and and invoked by the framework or runtime when the outermost protocol entry point (i.e. `http:/HOST:PORT/health`) receives an inbound request.
+
+```
+@ApplicationScoped
+public class CheckDiskpace implements HealthCheck {
+
+    public Response call() {
+        [...]
+    }
+}
+```
+
