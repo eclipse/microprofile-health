@@ -38,7 +38,7 @@ Note that the force of these words is modified by the requirement level of the d
 
 * WildFly Swarm
 * Eclipse Vert.x
-* Hawkular Specification
+* Hawkular 
 
 
 ## Rationale
