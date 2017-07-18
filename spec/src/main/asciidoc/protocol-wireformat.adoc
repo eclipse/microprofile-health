@@ -53,13 +53,23 @@ The rationale for health checks in is to signal the state of a computing node to
 
 ### Terms used
 
-| Term       | Description     |
-| ------------- |-------------|
-| Producer | The service/application that is checked |
-| Consumer | The probing end, usually a machine, that needs to verify the liveness of a Producer |
-| Health Check Procedure | The code executed to determine the liveliness of a Producer |
-| Producer Outcome | The overall outcome, determined by considering all health check procedure results |
-| Health check procedure result | The result of single check |
+|===
+| Term       | Description     
+| Producer 
+| The service/application that is checked 
+
+| Consumer 
+| The probing end, usually a machine, that needs to verify the liveness of a Producer 
+
+| Health Check Procedure 
+| The code executed to determine the liveliness of a Producer 
+
+| Producer Outcome 
+| The overall outcome, determined by considering all health check procedure results 
+
+| Health check procedure result 
+| The result of single check 
+|===
 
 # Protocol Overview
 
