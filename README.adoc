@@ -41,7 +41,7 @@ The proposed solution breaks down into two parts:
 This project defines a protocol (wireformat, semantics and possible forms of interactions) between system components that need to determine the “liveliness” of computing nodes in a bigger architecture.
 A detailed description of the health check protocol can be found in the link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document]
 
-### Java API
+### API Usage
 
 The main API to provide health check procedures on the application level is the `HealthCheck` interface:
 
@@ -87,7 +87,7 @@ public class SuccessfulCheck implements HealthCheck {
 
 ### Integration with CDI
 
-Within CDI contexts, beans that implement `HealthCheck` are discovered automatically and and invoked by the framework or runtime when the outermost protocol entry point (i.e. `http:/HOST:PORT/health`) receives an inbound request.
+Within CDI contexts, beans that implement `HealthCheck` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
 
 ```
 @ApplicationScoped
