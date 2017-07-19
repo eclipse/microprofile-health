@@ -99,3 +99,6 @@ public class CheckDiskpace implements HealthCheck {
 }
 ```
 
+# SPI Usage
+
+Implementors of the API are expected to supply implementations of `Response` and `ResponseBuilder` by providing a `SPIFactory` for their runtime. The `SPIFactory` is used internally to create a `ResponseBuilder` which is used to construct a `Response`. This pattern allows implementors to extend a `Response` and adapt it to their implementation needs. Common implementation details that fall into this category are invocation and security contexts required to map `Response` to the outermost invocation protocol.
