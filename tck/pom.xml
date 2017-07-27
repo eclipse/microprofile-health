@@ -24,11 +24,9 @@
         <relativePath>../</relativePath>
     </parent>
 
-
     <groupId>org.eclipse.microprofile.health.tck</groupId>
     <artifactId>microprofile-health-tck</artifactId>
     <name>MicroProfile Health TCK</name>
-    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <arquillian.version>1.1.13.Final</arquillian.version>
@@ -53,8 +51,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.eclipse.microprofile.apis</groupId>
+            <groupId>org.eclipse.microprofile.health</groupId>
             <artifactId>microprofile-health-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -118,7 +117,6 @@
             <artifactId>javax.json</artifactId>
             <version>${version.glassfish.json}</version>
         </dependency>
-
 
     </dependencies>
 
