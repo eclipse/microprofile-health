@@ -46,6 +46,16 @@ public abstract class Response {
 
     private static volatile SPIFactory factory = null;
 
+    /**
+     * Set the SPIFactory instance. It is used by OSGi environment while service loader
+     * pattern is not supported.
+     *
+     * @param factory the factory instance to use.
+     */
+    public static void setFactory(SPIFactory factory) {
+        Response.factory = factory;
+    }
+
     public static ResponseBuilder named(String name) {
 
         if (factory == null) {
