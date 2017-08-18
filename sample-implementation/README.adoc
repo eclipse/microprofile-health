@@ -12,15 +12,18 @@ Since this is not published to maven central, test execution is disabled by defa
 mvn -Dmaven.test.skip=false test
 ```
 
-## Building the RI
+## Building the Sample Implementation
 
 
 ```
-git clone -b mp_health_api https://github.com/heiko-braun/wildfly-swarm-1 health-ri
-cd health-ri
+git clone -b mp_health_api https://github.com/heiko-braun/wildfly-swarm-1 health-sample
+cd health-sample
 mvn clean install
 ```
 
+## Running the TCK against the sample implementation
 
+- Update the propoerty `wildfly-swarm.version` in `sample-implementation/pom.xml` to the version used in `health-sample/pom.xml` (i.e. 2017.9.0-SNAPSHOT)
+- Run the tests with `mvn -Dmaven.test.skip=false test`
 
 
