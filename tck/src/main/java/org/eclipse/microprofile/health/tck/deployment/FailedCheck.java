@@ -24,13 +24,13 @@ package org.eclipse.microprofile.health.tck.deployment;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.Response;
 
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  * @author Heiko Braun
  * @since 13.06.17
  */
-@Dependent
+@ApplicationScoped
 public class FailedCheck implements HealthCheck {
     @Override
     public Response call() {

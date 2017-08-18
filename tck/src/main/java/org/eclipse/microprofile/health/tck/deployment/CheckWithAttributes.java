@@ -24,12 +24,12 @@ package org.eclipse.microprofile.health.tck.deployment;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.Response;
 
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  * Created by hbraun on 29.06.17.
  */
-@Dependent
+@ApplicationScoped
 public class CheckWithAttributes implements HealthCheck {
 
     @Override
