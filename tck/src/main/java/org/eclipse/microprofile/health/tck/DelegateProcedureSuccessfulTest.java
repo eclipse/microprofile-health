@@ -22,20 +22,15 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
-import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
-
 import org.eclipse.microprofile.health.tck.deployment.DelegateCheck;
 import org.eclipse.microprofile.health.tck.deployment.DelegationTarget;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -43,10 +38,12 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.StringReader;
 
+import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
+
 /**
  * @author Heiko Braun
  */
-@RunWith(Arquillian.class)
 public class DelegateProcedureSuccessfulTest extends SimpleHttp {
 
     @Deployment
@@ -73,27 +70,27 @@ public class DelegateProcedureSuccessfulTest extends SimpleHttp {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals("Expected a single check response", 1, checks.size());
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
 
         // single procedure response
         Assert.assertEquals(
-                "Expected a dependent CDI bean to be invoked, to resolve the system state",
+                asJsonObject(checks.get(0)).getString("id"),
                 "delegate-check",
-                asJsonObject(checks.get(0)).getString("id")
-        );
+                "Expected a dependent CDI bean to be invoked, to resolve the system state"
+                );
 
         Assert.assertEquals(
-                "Expected a successful check result",
+                asJsonObject(checks.get(0)).getString("result"),
                 "UP",
-                asJsonObject(checks.get(0)).getString("result")
+                "Expected a successful check result"
         );
 
         // overall outcome
         Assert.assertEquals(
-                "Expected overall outcome to be successful",
+                json.getString("outcome"),
                 "UP",
-                json.getString("outcome")
+                "Expected overall outcome to be successful"
         );
     }
 }
