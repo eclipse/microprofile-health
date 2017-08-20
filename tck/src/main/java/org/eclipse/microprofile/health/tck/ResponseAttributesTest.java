@@ -76,35 +76,35 @@ public class ResponseAttributesTest extends SimpleHttp {
         JsonValue check = checks.get(0);
 
         Assert.assertEquals(
-                "Expected a CDI health check to be invoked, but it was not present in the response",
+                asJsonObject(check).getString("id"),
                 "attributes-check",
-                asJsonObject(check).getString("id")
-        );
+                "Expected a CDI health check to be invoked, but it was not present in the response"
+                );
 
         Assert.assertEquals(
-                "Expected a successful check result",
+                asJsonObject(check).getString("result"),
                 "UP",
-                asJsonObject(check).getString("result")
-        );
+                "Expected a successful check result"
+                );
 
         // response payload attributes
         JsonObject data = asJsonObject(check).getJsonObject("data");
         Assert.assertEquals(
-                "first-val",
-                data.getString("first-key")
+                data.getString("first-key"),
+                "first-val"
         );
 
         Assert.assertEquals(
-                "second-val",
-                data.getString("second-key")
+                data.getString("second-key"),
+                "second-val"
         );
 
         // overall outcome
         Assert.assertEquals(
-                "Expected overall outcome to be successful",
+                json.getString("outcome"),
                 "UP",
-                json.getString("outcome")
-        );
+                "Expected overall outcome to be successful"
+                );
     }
 }
 

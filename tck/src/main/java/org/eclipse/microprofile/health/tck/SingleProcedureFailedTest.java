@@ -73,22 +73,22 @@ public class SingleProcedureFailedTest extends SimpleHttp {
 
         // single procedure response
         Assert.assertEquals(
-                "Expected a CDI health check to be invoked, but it was not present in the response",
+                asJsonObject(checks.get(0)).getString("id"),
                 "failed-check",
-                asJsonObject(checks.get(0)).getString("id")
+                "Expected a CDI health check to be invoked, but it was not present in the response"
         );
 
         Assert.assertEquals(
-                "Expected a successful check result",
+                asJsonObject(checks.get(0)).getString("result"),
                 "DOWN",
-                asJsonObject(checks.get(0)).getString("result")
+                "Expected a successful check result"
         );
 
         // overall outcome
         Assert.assertEquals(
-                "Expected overall outcome to be unsuccessful",
+                json.getString("outcome"),
                 "DOWN",
-                json.getString("outcome")
+                "Expected overall outcome to be unsuccessful"
         );
     }
 }
