@@ -20,80 +20,64 @@
  *
  */
 
-package org.eclipse.microprofile.health;
-
-import org.eclipse.microprofile.health.spi.SPIFactory;
+package org.eclipse.microprofile.health.spi;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.Map;
-import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
+
 /**
- * The response to a health check invocation.
- * <p>
- * The Response class is reserved for an extension by implementation providers.
- * An application should use one of the static methods to create a Response instance using a ResponseBuilder.
- * </p>
- *
+ * Created by hbraun on 07.07.17.
  */
-public abstract class Response {
-
-    private static final Logger LOGGER = Logger.getLogger(Response.class.getName());
-
-    private static volatile SPIFactory factory = null;
+public abstract class HealthCheckResponseProviderResolver {
+    private static volatile HealthCheckResponseProviderResolver instance = null;
+    private static final Logger LOGGER = Logger.getLogger(HealthCheckResponseProviderResolver.class.getName());
 
     /**
      * Set the SPIFactory instance. It is used by OSGi environment while service loader
      * pattern is not supported.
      *
-     * @param factory the factory instance to use.
+     * @param instance the instance instance to use.
      */
-    public static void setFactory(SPIFactory factory) {
-        Response.factory = factory;
+    public static void setFactory(HealthCheckResponseProviderResolver instance) {
+        HealthCheckResponseProviderResolver.instance = instance;
     }
 
-    public static ResponseBuilder named(String name) {
-
-        if (factory == null) {
-            synchronized (Response.class) {
-                if (factory != null) {
-                    return factory.createResponseBuilder();
+    public static HealthCheckResponseProviderResolver instance() {
+        if (instance == null) {
+            synchronized (HealthCheckResponseProviderResolver.class) {
+                if (instance != null) {
+                    return instance;
                 }
 
-                SPIFactory newInstance = find(SPIFactory.class);
+                HealthCheckResponseProviderResolver newInstance = find(HealthCheckResponseProviderResolver.class);
 
                 if (newInstance == null) {
-                    throw new IllegalStateException("No SPIFactory implementation found!");
+                    throw new IllegalStateException("No ResponseBuilderProvider implementation found!");
                 }
 
-                factory = newInstance;
+                instance = newInstance;
             }
         }
-
-        return factory.createResponseBuilder().name(name);
+        return instance;
     }
 
-    // the actual contract
+    protected HealthCheckResponseProviderResolver() {
+    }
 
-    public enum State { UP, DOWN }
-
-    public abstract String getName();
-
-    public abstract State getState();
-
-    public abstract Optional<Map<String, Object>> getAttributes();
+    public abstract HealthCheckResponseBuilder createResponseBuilder();
 
     private static <T> T find(Class<T> service) {
 
-        T serviceInstance = find(service, Response.getContextClassLoader());
+        T serviceInstance = find(service, HealthCheckResponseProviderResolver.getContextClassLoader());
 
         // alternate classloader
         if(null==serviceInstance) {
-            serviceInstance = find(service, Response.class.getClassLoader());
+            serviceInstance = find(service, HealthCheckResponseProviderResolver.class.getClassLoader());
         }
 
         // service cannot be found

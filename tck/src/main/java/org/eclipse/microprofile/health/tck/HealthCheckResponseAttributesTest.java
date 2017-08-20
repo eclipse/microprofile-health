@@ -44,7 +44,7 @@ import java.io.StringReader;
 /**
  * @author Heiko Braun
  */
-public class ResponseAttributesTest extends SimpleHttp {
+public class HealthCheckResponseAttributesTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
