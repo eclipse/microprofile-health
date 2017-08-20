@@ -34,12 +34,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.jboss.arquillian.testng.Arquillian;
 
 /**
  * @author Heiko Braun
  * @since 29/03/16
  */
-public class SimpleHttp {
+public abstract class SimpleHttp extends Arquillian {
 
     protected Response getUrlContents(String theUrl) {
         return getUrlContents(theUrl, false);

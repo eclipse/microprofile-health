@@ -1,6 +1,6 @@
 target
 *.iml
-idea
+.idea
 
 /.settings/
 /.project
