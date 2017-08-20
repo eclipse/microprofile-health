@@ -32,5 +32,5 @@ package org.eclipse.microprofile.health;
 @FunctionalInterface
 public interface HealthCheck {
     
-    Response call();
+    HealthCheckResponse call();
 }

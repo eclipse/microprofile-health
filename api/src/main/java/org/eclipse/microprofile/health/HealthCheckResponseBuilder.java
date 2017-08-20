@@ -29,21 +29,22 @@ package org.eclipse.microprofile.health;
  * The ResponseBuilder class is reserved for an extension by implementation providers.
  * </p>
  */
-public abstract class ResponseBuilder {
+public abstract class HealthCheckResponseBuilder {
 
-    public abstract ResponseBuilder name(String name);
+    public abstract HealthCheckResponseBuilder name(String name);
 
-    public abstract ResponseBuilder withAttribute(String key, String value);
+    public abstract HealthCheckResponseBuilder withAttribute(String key, String value);
 
-    public abstract ResponseBuilder withAttribute(String key, long value);
+    public abstract HealthCheckResponseBuilder withAttribute(String key, long value);
 
-    public abstract ResponseBuilder withAttribute(String key, boolean value);
+    public abstract HealthCheckResponseBuilder withAttribute(String key, boolean value);
 
-    public abstract Response up();
+    public abstract HealthCheckResponseBuilder up();
 
-    public abstract Response down();
+    public abstract HealthCheckResponseBuilder down();
+    public abstract HealthCheckResponseBuilder state(boolean isUp);
 
-    public abstract Response state(boolean up);
+    public abstract HealthCheckResponse build();
 
 
 }

@@ -22,7 +22,7 @@
 package org.eclipse.microprofile.health.tck.deployment;
 
 import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.Response;
+import org.eclipse.microprofile.health.HealthCheckResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -33,7 +33,7 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class SuccessfulCheck implements HealthCheck {
     @Override
-    public Response call() {
-        return Response.named("successful-check").up();
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.builder("successful-check").up().build();
     }
 }

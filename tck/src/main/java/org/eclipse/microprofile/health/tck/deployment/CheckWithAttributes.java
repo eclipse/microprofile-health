@@ -22,7 +22,7 @@
 package org.eclipse.microprofile.health.tck.deployment;
 
 import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.Response;
+import org.eclipse.microprofile.health.HealthCheckResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -33,10 +33,11 @@ import javax.enterprise.context.ApplicationScoped;
 public class CheckWithAttributes implements HealthCheck {
 
     @Override
-    public Response call() {
-        return Response.named("attributes-check")
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.builder("attributes-check")
                 .withAttribute("first-key", "first-val")
                 .withAttribute("second-key", "second-val")
-                .up();
+                .up()
+                .build();
     }
 }
