@@ -19,18 +19,32 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
+
 package org.eclipse.microprofile.health;
 
 /**
- * The health check procedure interface.
- * Invoked by consumers to verify the healthiness of a computing node.
- * Unhealthy nodes are expected to be terminated.
+ * A builder to construct a health procedure response.
  *
- * @author Heiko Braun
- * @since 13.06.17
+ * <p>
+ * The HealthCheckResponseBuilder class is reserved for an extension by implementation providers.
+ * </p>
  */
-@FunctionalInterface
-public interface HealthCheck {
-    
-    HealthCheckResponse call();
+public abstract class HealthCheckResponseBuilder {
+
+    public abstract HealthCheckResponseBuilder name(String name);
+
+    public abstract HealthCheckResponseBuilder withAttribute(String key, String value);
+
+    public abstract HealthCheckResponseBuilder withAttribute(String key, long value);
+
+    public abstract HealthCheckResponseBuilder withAttribute(String key, boolean value);
+
+    public abstract HealthCheckResponseBuilder up();
+
+    public abstract HealthCheckResponseBuilder down();
+
+    public abstract HealthCheckResponseBuilder state(boolean up);
+
+    public abstract HealthCheckResponse build();
+
 }
