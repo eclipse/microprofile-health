@@ -22,7 +22,7 @@
 package org.eclipse.microprofile.health.tck.deployment;
 
 import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.Response;
+import org.eclipse.microprofile.health.HealthCheckResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ public class DelegateCheck implements HealthCheck {
     private DelegationTarget delegate;
 
     @Override
-    public Response call() {
-        return Response.named("delegate-check").state(delegate.isTheSystemHealthy());
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.named("delegate-check").state(delegate.isTheSystemHealthy()).build();
     }
 }

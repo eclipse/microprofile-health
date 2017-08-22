@@ -22,7 +22,7 @@
 
 package org.eclipse.microprofile.health;
 
-import org.eclipse.microprofile.health.spi.SPIFactory;
+import org.eclipse.microprofile.health.spi.HealthCheckResponseProvider;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -35,16 +35,16 @@ import java.util.logging.Logger;
 /**
  * The response to a health check invocation.
  * <p>
- * The Response class is reserved for an extension by implementation providers.
- * An application should use one of the static methods to create a Response instance using a ResponseBuilder.
+ * The HealthCheckResponse class is reserved for an extension by implementation providers.
+ * An application should use one of the static methods to create a Response instance using a HealthCheckResponseBuilder.
  * </p>
  *
  */
-public abstract class Response {
+public abstract class HealthCheckResponse {
 
-    private static final Logger LOGGER = Logger.getLogger(Response.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(HealthCheckResponse.class.getName());
 
-    private static volatile SPIFactory factory = null;
+    private static volatile HealthCheckResponseProvider factory = null;
 
     /**
      * Set the SPIFactory instance. It is used by OSGi environment while service loader
@@ -52,19 +52,19 @@ public abstract class Response {
      *
      * @param factory the factory instance to use.
      */
-    public static void setFactory(SPIFactory factory) {
-        Response.factory = factory;
+    public static void setFactory(HealthCheckResponseProvider factory) {
+        HealthCheckResponse.factory = factory;
     }
 
-    public static ResponseBuilder named(String name) {
+    public static HealthCheckResponseBuilder named(String name) {
 
         if (factory == null) {
-            synchronized (Response.class) {
+            synchronized (HealthCheckResponse.class) {
                 if (factory != null) {
                     return factory.createResponseBuilder();
                 }
 
-                SPIFactory newInstance = find(SPIFactory.class);
+                HealthCheckResponseProvider newInstance = find(HealthCheckResponseProvider.class);
 
                 if (newInstance == null) {
                     throw new IllegalStateException("No SPIFactory implementation found!");
@@ -89,11 +89,11 @@ public abstract class Response {
 
     private static <T> T find(Class<T> service) {
 
-        T serviceInstance = find(service, Response.getContextClassLoader());
+        T serviceInstance = find(service, HealthCheckResponse.getContextClassLoader());
 
         // alternate classloader
         if(null==serviceInstance) {
-            serviceInstance = find(service, Response.class.getClassLoader());
+            serviceInstance = find(service, HealthCheckResponse.class.getClassLoader());
         }
 
         // service cannot be found
