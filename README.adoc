@@ -49,18 +49,18 @@ The main API to provide health check procedures on the application level is the 
 @FunctionalInterface
 public interface HealthCheck {
 
-    Response call();
+    HealthCheckResponse call();
 }
 ```
 
 Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the
 the framework or runtime hosting the application to verify the healthiness of the computing node.
 
-The runtime will `call()` the `HealthCheck` which in turn creates a `Response` that signals the health status to a consuming end:
+The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
 ```
-public abstract class Response {
-   
+public abstract class HealthCheckResponse {
+
     public enum State { UP, DOWN }
 
     public abstract String getName();
@@ -68,19 +68,19 @@ public abstract class Response {
     public abstract State getState();
 
     public abstract Optional<Map<String, Object>> getAttributes();
-    
+
     [...]
 }
 ```
-### Constructing health `Response`s
+### Constructing `HealthCheckResponse`s
 
-Application level code is expected to use one of static methods on `Response` to retrieve a `ResponseBuilder` used to construct a `Response`, i.e. :
+Application level code is expected to use one of static methods on `HealthCheckResponse` to retrieve a `HealthCheckResponseBuilder` used to construct a response, i.e. :
 
 ```
 public class SuccessfulCheck implements HealthCheck {
     @Override
-    public Response call() {
-        return Response.named("successful-check").up();
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.named("successful-check").up();
     }
 }
 ```
@@ -93,14 +93,41 @@ Within CDI contexts, beans that implement `HealthCheck` are discovered automatic
 @ApplicationScoped
 public class CheckDiskpace implements HealthCheck {
 
-    public Response call() {
+    public HealthCheckResponse call() {
         [...]
     }
 }
 ```
 
+### On the wire
+
+It's the responsibility of the runtime to gather all `HealthCheckResponse` s for `HealthCheck` s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
+ on health check procedures and the runtime will provide a composite response, with a single overall outcome, i.e.:
+
+  ```
+  {
+    "outcome": "UP",
+    "checks": [
+      {
+        "id": "first-check",
+        "result": "UP",
+        "data": {
+          "key": "foo",
+          "foo": "bar"
+        }
+      },
+      {
+          "id": "second-check",
+          "result": "UP"
+      }
+    ]
+  }
+  ```
+
+The link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document] contains further information on forms of interaction and the wireformat.
+
 # SPI Usage
 
-Implementors of the API are expected to supply implementations of `Response` and `ResponseBuilder` by providing a `SPIFactory` for their runtime. The `SPIFactory` is discovered using the default JDK service loader. 
+Implementors of the API are expected to supply implementations of `HealthCheckResponse` and `HealthCheckResponseBuilder` by providing a `HealthCheckResponseProvider` to their implementation. The `HealthCheckResponseProvider` is discovered using the default JDK service loader.
 
-A `SPIFactory` is used internally to create a `ResponseBuilder` which is used to construct a `Response`. This pattern allows implementors to extend a `Response` and adapt it to their implementation needs. Common implementation details that fall into this category are invocation and security contexts or anything else required to map `Response` to the outermost invocation protocol.
+A `HealthCheckResponseProvider` is used internally to create a `HealthCheckResponseBuilder` which is used to construct a `HealthCheckResponse`. This pattern allows implementors to extend a `HealthCheckResponse` and adapt it to their implementation needs. Common implementation details that fall into this category are invocation and security contexts or anything else required to map a `HealthCheckResponse` to the outermost invocation protocol (i.e. HTTP/JSON).
