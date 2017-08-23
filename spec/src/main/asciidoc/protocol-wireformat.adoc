@@ -129,16 +129,16 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 * The primary information MUST be boolean, it needs to be consumed by other machines. Anything between available/unavailable doesn’t make sense or would increase the complexity on the side of the consumer processing that information.
 * The response information MAY contain an additional information holder
 * Consumers MAY process the additional information holder or simply decide to ignore it
-* The response information MUST contain the boolean check state
-* The response information MAY contain the check id (or name)
+* The response information MUST contain the boolean state of each check
+* The response information MUST contain the name of each check
 
 ### Wireformats
 
 * Producer MUST  support JSON encoded payload with simple UP/DOWN states
 * Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
 * The JSON response payload MUST be compatible with the one described in Appendix B
-* The JSON response MUST contain the `id` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
-* The JSON response MUST contain the `result`entry specifying the state as String: “UP” or “DOWN”
+* The JSON response MUST contain the `name` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
+* The JSON response MUST contain the `state` entry specifying the state as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
 # Health Check Procedures
