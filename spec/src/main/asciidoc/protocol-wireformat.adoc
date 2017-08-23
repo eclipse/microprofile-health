@@ -57,7 +57,7 @@ Note that the force of these words is modified by the requirement level of the d
 * Hawkular 
 
 
-## Rationale
+## Rational
 
 Health checks are used to signal the state of a computing node to other machines (cloud orchstration frameworks, i.e. kubernetes service controller). It’s not intended (although could be used) as a monitoring solution for humans.
 
