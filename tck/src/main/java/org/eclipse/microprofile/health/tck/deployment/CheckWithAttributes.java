@@ -35,8 +35,8 @@ public class CheckWithAttributes implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.named("attributes-check")
-                .withAttribute("first-key", "first-val")
-                .withAttribute("second-key", "second-val")
+                .withData("first-key", "first-val")
+                .withData("second-key", "second-val")
                 .up()
                 .build();
     }

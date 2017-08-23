@@ -33,11 +33,11 @@ public abstract class HealthCheckResponseBuilder {
 
     public abstract HealthCheckResponseBuilder name(String name);
 
-    public abstract HealthCheckResponseBuilder withAttribute(String key, String value);
+    public abstract HealthCheckResponseBuilder withData(String key, String value);
 
-    public abstract HealthCheckResponseBuilder withAttribute(String key, long value);
+    public abstract HealthCheckResponseBuilder withData(String key, long value);
 
-    public abstract HealthCheckResponseBuilder withAttribute(String key, boolean value);
+    public abstract HealthCheckResponseBuilder withData(String key, boolean value);
 
     public abstract HealthCheckResponseBuilder up();
 

@@ -85,7 +85,7 @@ public abstract class HealthCheckResponse {
 
     public abstract State getState();
 
-    public abstract Optional<Map<String, Object>> getAttributes();
+    public abstract Optional<Map<String, Object>> getData();
 
     private static <T> T find(Class<T> service) {
 
