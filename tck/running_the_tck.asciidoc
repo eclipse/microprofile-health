@@ -17,7 +17,7 @@
 
 = Running the MicroProfile Health TCK
 
-The TCK uses `JUnit`.
+The TCK uses `TestNG`.
 
 == Health URL
 

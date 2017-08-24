@@ -99,6 +99,7 @@ Health checks are used to signal the state of a computing node to other machines
 8. The consumer determines the overall outcome
 
 # Protocol Specifics
+This section describes the specifics of the HTTP protocol usage.
 
 ## Interacting with producers
 How are the health checks accessed and invoked ?
@@ -144,7 +145,7 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 # Health Check Procedures
 * A producer MUST support custom, application level health check procedures
 * A producer SHOULD support reasonable out-of-the-box procedures
-* A producer without health check procedures installed MUST returns positive overall outcome (i.e. HTTP 204, no content)
+* A producer without health check procedures installed MUST returns positive overall outcome (i.e. HTTP 200)
 
 ## Policies to determine the overall outcome
 
@@ -167,14 +168,13 @@ Aspects regarding the secure access of health check information.
 | Context       | Verb          | Status Code  | Response
 | /health
 | GET
-| 200, 204, 500, 503
+| 200, 500, 503
 | See Appendix B
 |===
 
 ## Status Codes:
 
 * 200 for a health check with a positive outcome
-* 204 in case no health check procedures are installed into the runtime
 * 503 in case the overall outcome is negative
 * 500 in case the consumer wasn’t able to process the health check request (i.e. error in procedure)
 
@@ -187,15 +187,15 @@ The following table give valid health check responses:
 | Request | HTTP Status       | JSON Payload         | State  | Comment
 | /health
 | 200
-| Yes, see below
+| Yes
 | UP
-| Check with payload
+| Check with payload. See <<With procedures installed into the runtime>>.
 
 | /health
-| 204
+| 200
 | No
 | UP
-| Check without procedures installed
+| Check without procedures installed. See <<Without procedures installed into the runtime>>
 
 | /health
 | 503
@@ -294,5 +294,6 @@ Status 503
 ```
 
 ## Without procedures installed into the runtime
-Status 204
-No payload, as required by https://tools.ietf.org/html/rfc7231#section-6.3.5
+Status 200 without a Content-Type response header and no response body.
+A status 204(https://tools.ietf.org/html/rfc7231#section-6.3.5) cannot be generally used in cloud environments, so that is
+not utilized in this specification.

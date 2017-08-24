@@ -47,7 +47,7 @@ public abstract class HealthCheckResponse {
     private static volatile HealthCheckResponseProvider factory = null;
 
     /**
-     * Set the SPIFactory instance. It is used by OSGi environment while service loader
+     * Set the HealthCheckResponseProvider instance. It is used by OSGi environment while service loader
      * pattern is not supported.
      *
      * @param factory the factory instance to use.
@@ -56,8 +56,11 @@ public abstract class HealthCheckResponse {
         HealthCheckResponse.factory = factory;
     }
 
-    public static HealthCheckResponseBuilder named(String name) {
-
+    /**
+     * Create an empty health check response
+     * @return the response builder instance
+     */
+    public static HealthCheckResponseBuilder builder() {
         if (factory == null) {
             synchronized (HealthCheckResponse.class) {
                 if (factory != null) {
@@ -67,14 +70,23 @@ public abstract class HealthCheckResponse {
                 HealthCheckResponseProvider newInstance = find(HealthCheckResponseProvider.class);
 
                 if (newInstance == null) {
-                    throw new IllegalStateException("No SPIFactory implementation found!");
+                    throw new IllegalStateException("No HealthCheckResponseProvider implementation found!");
                 }
 
                 factory = newInstance;
             }
         }
 
-        return factory.createResponseBuilder().name(name);
+        return factory.createResponseBuilder();
+    }
+
+    /**
+     * Create a health check response with a procedure with the given name.
+     * @param name - the name of the health check procedure
+     * @return the response builder instance
+     */
+    public static HealthCheckResponseBuilder named(String name) {
+        return builder().name(name);
     }
 
     // the actual contract
