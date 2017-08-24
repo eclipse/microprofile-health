@@ -87,9 +87,10 @@ public class SuccessfulCheck implements HealthCheck {
 
 ### Integration with CDI
 
-Within CDI contexts, beans that implement `HealthCheck` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
+Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
 
 ```
+@Health
 @ApplicationScoped
 public class CheckDiskpace implements HealthCheck {
 
