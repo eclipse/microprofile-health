@@ -19,27 +19,17 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  */
-package org.eclipse.microprofile.health.tck.deployment;
+package org.eclipse.microprofile.health;
 
-import org.eclipse.microprofile.health.Health;
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.HealthCheckResponse;
-
-import javax.enterprise.context.ApplicationScoped;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Created by hbraun on 29.06.17.
+ * Created by hbraun on 24.08.17.
  */
-@Health
-@ApplicationScoped
-public class CheckWithAttributes implements HealthCheck {
-
-    @Override
-    public HealthCheckResponse call() {
-        return HealthCheckResponse.named("attributes-check")
-                .withData("first-key", "first-val")
-                .withData("second-key", "second-val")
-                .up()
-                .build();
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface Health {
 }
