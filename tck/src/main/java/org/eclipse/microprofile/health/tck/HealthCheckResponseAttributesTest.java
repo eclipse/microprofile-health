@@ -76,13 +76,13 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
         JsonValue check = checks.get(0);
 
         Assert.assertEquals(
-                asJsonObject(check).getString("id"),
+                asJsonObject(check).getString("name"),
                 "attributes-check",
                 "Expected a CDI health check to be invoked, but it was not present in the response"
                 );
 
         Assert.assertEquals(
-                asJsonObject(check).getString("result"),
+                asJsonObject(check).getString("state"),
                 "UP",
                 "Expected a successful check result"
                 );

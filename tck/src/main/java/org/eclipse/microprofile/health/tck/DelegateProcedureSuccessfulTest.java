@@ -75,13 +75,13 @@ public class DelegateProcedureSuccessfulTest extends SimpleHttp {
 
         // single procedure response
         Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("id"),
+                asJsonObject(checks.get(0)).getString("name"),
                 "delegate-check",
                 "Expected a dependent CDI bean to be invoked, to resolve the system state"
                 );
 
         Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("result"),
+                asJsonObject(checks.get(0)).getString("state"),
                 "UP",
                 "Expected a successful check result"
         );

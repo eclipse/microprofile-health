@@ -76,7 +76,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
 
 
         for (JsonValue check : checks) {
-            String id = asJsonObject(check).getString("id");
+            String id = asJsonObject(check).getString("name");
             switch (id) {
                 case "successful-check":
                     verifySuccessPayload(check);
@@ -100,13 +100,13 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
     private void verifyFailurePayload(JsonValue check) {
         // single procedure response
         Assert.assertEquals(
-                asJsonObject(check).getString("id"),
+                asJsonObject(check).getString("name"),
                 "failed-check",
                 "Expected a CDI health check to be invoked, but it was not present in the response"
                 );
 
         Assert.assertEquals(
-                asJsonObject(check).getString("result"),
+                asJsonObject(check).getString("state"),
                 "DOWN",
                 "Expected a successful check result"
                 );
@@ -115,13 +115,13 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
     private void verifySuccessPayload(JsonValue check) {
         // single procedure response
         Assert.assertEquals(
-                asJsonObject(check).getString("id"),
+                asJsonObject(check).getString("name"),
                 "successful-check",
                 "Expected a CDI health check to be invoked, but it was not present in the response"
                 );
 
         Assert.assertEquals(
-                asJsonObject(check).getString("result"),
+                asJsonObject(check).getString("state"),
                 "UP",
                 "Expected a successful check result"
                 );

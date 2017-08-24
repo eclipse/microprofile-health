@@ -54,7 +54,7 @@ Note that the force of these words is modified by the requirement level of the d
 
 * WildFly Swarm
 * Eclipse Vert.x
-* Hawkular 
+* Hawkular
 
 
 ## Rational
@@ -70,21 +70,21 @@ Health checks are used to signal the state of a computing node to other machines
 ### Terms used
 
 |===
-| Term       | Description     
-| Producer 
-| The service/application that is checked 
+| Term       | Description
+| Producer
+| The service/application that is checked
 
-| Consumer 
-| The probing end, usually a machine, that needs to verify the liveness of a Producer 
+| Consumer
+| The probing end, usually a machine, that needs to verify the liveness of a Producer
 
-| Health Check Procedure 
-| The code executed to determine the liveliness of a Producer 
+| Health Check Procedure
+| The code executed to determine the liveliness of a Producer
 
-| Producer Outcome 
-| The overall outcome, determined by considering all health check procedure results 
+| Producer Outcome
+| The overall outcome, determined by considering all health check procedure results
 
-| Health check procedure result 
-| The result of single check 
+| Health check procedure result
+| The result of single check
 |===
 
 # Protocol Overview
@@ -101,7 +101,7 @@ Health checks are used to signal the state of a computing node to other machines
 # Protocol Specifics
 
 ## Interacting with producers
-How are the health checks accessed and invoked ? 
+How are the health checks accessed and invoked ?
 We don’t make any assumptions about this, except for the wire format and protocol.
 
 ## Protocol Mappings
@@ -129,16 +129,16 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 * The primary information MUST be boolean, it needs to be consumed by other machines. Anything between available/unavailable doesn’t make sense or would increase the complexity on the side of the consumer processing that information.
 * The response information MAY contain an additional information holder
 * Consumers MAY process the additional information holder or simply decide to ignore it
-* The response information MUST contain the boolean check state
-* The response information MAY contain the check id (or name)
+* The response information MUST contain the boolean state of each check
+* The response information MUST contain the name of each check
 
 ### Wireformats
 
 * Producer MUST  support JSON encoded payload with simple UP/DOWN states
 * Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
 * The JSON response payload MUST be compatible with the one described in Appendix B
-* The JSON response MUST contain the `id` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
-* The JSON response MUST contain the `result`entry specifying the state as String: “UP” or “DOWN”
+* The JSON response MUST contain the `name` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
+* The JSON response MUST contain the `state` entry specifying the state as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
 # Health Check Procedures
@@ -164,10 +164,10 @@ Aspects regarding the secure access of health check information.
 # Appendix A: REST interface specifications
 
 |===
-| Context       | Verb          | Status Code  | Response 
-| /health       
-| GET           
-| 200, 204, 500, 503 
+| Context       | Verb          | Status Code  | Response
+| /health
+| GET
+| 200, 204, 500, 503
 | See Appendix B
 |===
 
@@ -184,30 +184,30 @@ Aspects regarding the secure access of health check information.
 The following table give valid health check responses:
 
 |===
-| Request | HTTP Status       | JSON Payload         | State  | Comment 
-| /health       
-| 200           
-| Yes, see below  
-| UP 
-| Check with payload 
+| Request | HTTP Status       | JSON Payload         | State  | Comment
+| /health
+| 200
+| Yes, see below
+| UP
+| Check with payload
 
-| /health       
-| 204           
-| No  
-| UP 
-| Check without procedures installed 
+| /health
+| 204
+| No
+| UP
+| Check without procedures installed
 
-| /health       
-| 503           
-| Yes  
-| Down 
+| /health
+| 503
+| Yes
+| Down
 | Check failed
 
-| /health       
-| 500           
-| No  
-| No 
-| Request processing failed (i.e. error in procedure) 
+| /health
+| 500
+| No
+| No
+| Request processing failed (i.e. error in procedure)
 |===
 
 ## JSON Schema:
@@ -224,10 +224,10 @@ The following table give valid health check responses:
      "items": {
        "type": "object",
        "properties": {
-         "id": {
+         "name": {
            "type": "string"
          },
-         "result": {
+         "state": {
            "type": "string"
          },
          "data": {
@@ -243,8 +243,8 @@ The following table give valid health check responses:
          }
        },
        "required": [
-         "id",
-         "result"
+         "name",
+         "state"
          ]
      }
    }
@@ -264,8 +264,8 @@ Status 200
   "outcome": "UP",
   "checks": [
     {
-      "id": "myCheck",
-      "result": "UP",
+      "name": "myCheck",
+      "state": "UP",
       "data": {
         "key": "value",
         "foo": "bar"
@@ -282,8 +282,8 @@ Status 503
   "outcome": "DOWN",
   "checks": [
     {
-      "id": "myCheck",
-      "result": "DOWN",
+      "name": "myCheck",
+      "state": "DOWN",
       "data": {
         "key": "value",
         "foo": "bar"
