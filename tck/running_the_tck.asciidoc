@@ -36,25 +36,25 @@ To enable the tests in your project you need to add the following dependency to 
 
 [source, xml]
 ----
-<dependency>
-    <groupId>org.eclipse.microprofile.health.tck</groupId>
-    <artifactId>microprofile-health-tck</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <scope>test</scope>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.microprofile.apis</groupId>
-    <artifactId>microprofile-health-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <scope>provided</scope>
-</dependency>
+    <dependency>
+      <groupId>org.eclipse.microprofile.health</groupId>
+      <artifactId>microprofile-health-tck</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.microprofile.health</groupId>
+      <artifactId>microprofile-health-api</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
 ----
 
 == Configuration in Apache Maven pom.xml
 
-The TCK tests are provided by the `org.eclipse.microprofile.health.tck:microprofile-health-tck` Jar file.
+The TCK tests are provided by the `org.eclipse.microprofile.health:microprofile-health-tck` Jar file.
 
-If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, you need to add a `<dependenciesToScan>` configuration to scan the `org.eclipse.microprofile.health.tck:microprofile-health-tck` and run its tests.
+If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, you need to add a `<dependenciesToScan>` configuration to scan the `org.eclipse.microprofile.health:microprofile-health-tck` and run its tests.
 
 [source, xml]
 ----
@@ -68,7 +68,7 @@ If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, 
                     <org.eclipse.microprofile.health.tck.url>http://localhost:8080/health</org.eclipse.microprofile.health.tck.url>
                 </systemPropertyVariables>
                 <dependenciesToScan>
-                    <dependency>org.eclipse.microprofile.health.tck:microprofile-health-tck</dependency>
+                    <dependency>org.eclipse.microprofile.health:microprofile-health-tck</dependency>
                 </dependenciesToScan>
             </configuration>
         </plugin>
