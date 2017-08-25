@@ -36,7 +36,6 @@ endif::[]
 
 include::license-alv2.asciidoc[]
 
-=== Microprofile Proposal - WORK IN PROGRESS!
+include::architecture.asciidoc[]
 
-
-TODO
+include::protocol-wireformat.adoc[]
