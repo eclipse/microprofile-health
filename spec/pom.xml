@@ -76,7 +76,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDocumentName>microprofile-config-spec.asciidoc</sourceDocumentName>
+                    <sourceDocumentName>microprofile-health-spec.asciidoc</sourceDocumentName>
                     <sourceHighlighter>coderay</sourceHighlighter>
                     <attributes>
                         <license>Apache License v2.0</license>
