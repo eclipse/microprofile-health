@@ -54,7 +54,10 @@ public class EnforceQualifierTest extends SimpleHttp {
         Response response = getUrlContents(getHealthURL());
 
         // the procedure with an annotation shold not be discovered
-        Assert.assertEquals(response.getStatus(), 204);
+        Assert.assertEquals(response.getStatus(), 200);
+
+        // There should be no body
+        Assert.assertFalse(response.getBody().isPresent(), "Expected no body");
     }
 }
 
