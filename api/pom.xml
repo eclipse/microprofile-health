@@ -27,6 +27,13 @@
     <artifactId>microprofile-health-api</artifactId>
     <name>MicroProfile Health API</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
