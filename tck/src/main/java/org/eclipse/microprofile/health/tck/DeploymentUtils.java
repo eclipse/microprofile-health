@@ -27,6 +27,7 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 class DeploymentUtils {
+    private DeploymentUtils() {}
     static WebArchive createEmptyWarFile() {
         return ShrinkWrap.create(WebArchive.class, "tck.war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
