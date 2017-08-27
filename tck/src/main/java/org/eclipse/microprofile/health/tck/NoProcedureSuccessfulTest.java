@@ -24,11 +24,10 @@ package org.eclipse.microprofile.health.tck;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWarFile;
 import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 /**
@@ -39,8 +38,7 @@ public class NoProcedureSuccessfulTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        WebArchive deployment = ShrinkWrap.create(WebArchive.class, "tck.war");
-        return deployment;
+        return createEmptyWarFile();
     }
 
     /**

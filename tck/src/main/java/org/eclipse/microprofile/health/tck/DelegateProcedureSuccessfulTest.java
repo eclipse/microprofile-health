@@ -27,8 +27,6 @@ import org.eclipse.microprofile.health.tck.deployment.DelegationTarget;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -38,6 +36,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.StringReader;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
@@ -48,10 +47,7 @@ public class DelegateProcedureSuccessfulTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        WebArchive deployment = ShrinkWrap.create(WebArchive.class, "tck.war");
-        deployment.addClass(DelegateCheck.class);
-        deployment.addClass(DelegationTarget.class);
-        return deployment;
+        return createWarFileWithClasses(DelegateCheck.class, DelegationTarget.class);
     }
 
     /**

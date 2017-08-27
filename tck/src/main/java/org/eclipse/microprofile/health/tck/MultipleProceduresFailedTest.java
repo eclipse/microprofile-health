@@ -22,16 +22,11 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
-import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
-
 import org.eclipse.microprofile.health.tck.deployment.FailedCheck;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulCheck;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -42,6 +37,10 @@ import javax.json.JsonReader;
 import javax.json.JsonValue;
 import java.io.StringReader;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
+import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
+
 /**
  * @author Heiko Braun
  */
@@ -49,10 +48,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        WebArchive deployment = ShrinkWrap.create(WebArchive.class, "tck.war");
-        deployment.addClass(FailedCheck.class);
-        deployment.addClass(SuccessfulCheck.class);
-        return deployment;
+        return createWarFileWithClasses(FailedCheck.class, SuccessfulCheck.class);
     }
 
     /**
