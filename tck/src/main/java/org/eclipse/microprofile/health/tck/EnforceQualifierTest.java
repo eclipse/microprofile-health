@@ -29,6 +29,11 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.StringReader;
+
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
@@ -53,8 +58,13 @@ public class EnforceQualifierTest extends SimpleHttp {
         // the procedure with an annotation shold not be discovered
         Assert.assertEquals(response.getStatus(), 200);
 
-        // There should be no body
-        Assert.assertFalse(response.getBody().isPresent(), "Expected no body");
+        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
+        JsonObject json = jsonReader.readObject();
+        System.out.println(json);
+
+        Assert.assertEquals(json.getString("outcome"), "UP","Expected outcome UP");
+        Assert.assertTrue(json.getJsonArray("checks").isEmpty(), "Expected empty checks array");
+
     }
 }
 
