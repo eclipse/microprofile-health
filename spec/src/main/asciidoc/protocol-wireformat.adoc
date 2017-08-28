@@ -15,13 +15,7 @@
 // limitations under the License.
 //
 
-# ﻿Healthcheck specification 1.0
-December 2016
-
-## Authors
-- Heiko Braun
-- Clement Escoffier
-- Heiko Rupp
+# ﻿Healthcheck Specification Protocol 1.0
 
 # Abstract
 This document defines a health check specification to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” of computing nodes in a bigger system.

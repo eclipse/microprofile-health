@@ -16,10 +16,10 @@
 //
 
 = Health Checks for Microprofile
-:author: TODO-AUTHOR
-:email: TODO_AUTHOR_EMAIL
-:revnumber: 0.3
-:revdate: 2017-01-18
+:author: Heiko Braun, Clement Escoffier, Heiko Rupp, Scott Stark
+:email: hbraun@redhat.com
+:revnumber: 0.9
+:revdate: 2017-08-28
 :revremark: Proposal
 :version-label!:
 :sectanchors:
