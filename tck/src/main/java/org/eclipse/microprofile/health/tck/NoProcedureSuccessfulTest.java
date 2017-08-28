@@ -28,7 +28,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWarFile;
-import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 /**
  * Validates that a health check that includes no procedures returns a 200 status with no body.
@@ -47,7 +46,7 @@ public class NoProcedureSuccessfulTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testSuccessResponsePayload() throws Exception {
-        Response response = getUrlContents(getHealthURL());
+        Response response = getUrlContents();
 
         // status code
         Assert.assertEquals(response.getStatus(),200);

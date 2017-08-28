@@ -38,7 +38,6 @@ import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
-import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 /**
  * @author Heiko Braun
@@ -56,7 +55,7 @@ public class DelegateProcedureSuccessfulTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testSuccessfulDelegateInvocation() throws Exception {
-        Response response = getUrlContents(getHealthURL());
+        Response response = getUrlContents();
 
         // status code
         Assert.assertEquals(200, response.getStatus());

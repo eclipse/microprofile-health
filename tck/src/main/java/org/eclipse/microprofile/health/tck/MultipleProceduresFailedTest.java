@@ -39,7 +39,6 @@ import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
-import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 /**
  * @author Heiko Braun
@@ -57,7 +56,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testFailureResponsePayload() throws Exception {
-        Response response = getUrlContents(getHealthURL());
+        Response response = getUrlContents();
 
         // status code
         Assert.assertEquals(response.getStatus(),503);
