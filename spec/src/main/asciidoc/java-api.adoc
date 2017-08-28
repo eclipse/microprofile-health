@@ -1,0 +1,75 @@
+//
+// Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
+// See overview.adoc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+= Java API Usage
+
+The main API to provide health check procedures on the application level is the `HealthCheck` interface:
+
+```
+@FunctionalInterface
+public interface HealthCheck {
+
+    HealthCheckResponse call();
+}
+```
+
+Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the
+the framework or runtime hosting the application to verify the healthiness of the computing node.
+
+The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
+
+```
+public abstract class HealthCheckResponse {
+
+    public enum State { UP, DOWN }
+
+    public abstract String getName();
+
+    public abstract State getState();
+
+    public abstract Optional<Map<String, Object>> getAttributes();
+
+    [...]
+}
+```
+== Constructing `HealthCheckResponse`s
+
+Application level code is expected to use one of static methods on `HealthCheckResponse` to retrieve a `HealthCheckResponseBuilder` used to construct a response, i.e. :
+
+```
+public class SuccessfulCheck implements HealthCheck {
+    @Override
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.named("successful-check").up();
+    }
+}
+```
+
+= Integration with CDI
+
+Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
+
+```
+@Health
+@ApplicationScoped
+public class CheckDiskpace implements HealthCheck {
+
+    public HealthCheckResponse call() {
+        [...]
+    }
+}
+```

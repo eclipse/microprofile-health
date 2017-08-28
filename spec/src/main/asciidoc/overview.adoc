@@ -1,0 +1,45 @@
+//
+// Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
+// See overview.adoc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+= Service Health checks
+
+== Motivation
+
+Health checks are used to probe the state of a computing node from another other machine (i.e. kubernetes service controller) with the primary target being cloud infrastructure environments where automated processes maintain the state of computing nodes.
+
+In this scenario _health checks are used to determine if a computing node needs to be discarded (terminated, shutdown)_ and eventually replaced by another (healthy) instance.
+
+It’s not intended (although could be used) as a monitoring solution for human operators.
+
+== Proposed solution
+
+The proposed solution breaks down into two parts:
+
+- A Java API to implement health check procedures
+- A health checks protocol and wireformat
+
+== Contributors
+
+- Andrew Pielage
+- Emily Jiang
+- Heiko Braun
+- Jeff Mesnil
+- John Ament
+- John D. Ament
+- Kevin Sutter
+- Scott Stark
+- Werner Keil

@@ -30,7 +30,7 @@
     <properties>
         <arquillian.version>1.1.13.Final</arquillian.version>
         <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9_]*$</checkstyle.methodNameFormat>
-        <wildfly-swarm.version>2017.6.1</wildfly-swarm.version>
+        <wildfly-swarm.version>2017.9.0-SNAPSHOT</wildfly-swarm.version>
 
         <!-- skip the tests run's until we have a RI distribution -->
         <maven.test.skip>true</maven.test.skip>

@@ -1,6 +1,6 @@
 //
 // Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
-// TODO
+// See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
 // limitations under the License.
 //
 
-= Health Checks for Microprofile
-:author: TODO-AUTHOR
-:email: TODO_AUTHOR_EMAIL
-:revnumber: 0.3
-:revdate: 2017-01-18
+= Service Health Checks
+:author: The Microprofile community and it's contributors
+:revnumber: 1.0
+:revdate: 2017-08-28
 :revremark: Proposal
 :version-label!:
 :sectanchors:
@@ -34,8 +33,12 @@ ifdef::backend-pdf[]
 endif::[]
 
 
-include::license-alv2.asciidoc[]
+include::license-alv2.adoc[]
 
-include::architecture.asciidoc[]
+include::overview.adoc[]
+
+include::java-api.adoc[]
 
 include::protocol-wireformat.adoc[]
+
+include::architecture.adoc[]
