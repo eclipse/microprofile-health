@@ -17,13 +17,13 @@
 
 = Service Health checks
 
-== Motivation
+== Rationale
 
-Health checks are used to probe the state of a computing node from another other machine (i.e. kubernetes service controller) with the primary target being cloud infrastructure environments where automated processes maintain the state of computing nodes.
+Health checks are used to signal the state of a computing node to another machine (cloud orchstration frameworks, i.e. kubernetes service controller).
 
-In this scenario _health checks are used to determine if a computing node needs to be discarded (terminated, shutdown)_ and eventually replaced by another (healthy) instance.
+In this scenario health checks are used to determine if a computing node needs to be discarded (terminated, shutdown) and eventually replaced by another (healthy) instance.
 
-It’s not intended (although could be used) as a monitoring solution for human operators.
+It’s not intended (although could be used) as a monitoring solution for humans.
 
 == Proposed solution
 

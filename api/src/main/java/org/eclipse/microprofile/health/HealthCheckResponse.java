@@ -44,24 +44,23 @@ public abstract class HealthCheckResponse {
 
     private static final Logger LOGGER = Logger.getLogger(HealthCheckResponse.class.getName());
 
-    private static volatile HealthCheckResponseProvider factory = null;
+    private static volatile HealthCheckResponseProvider provider = null;
 
     /**
-     * Set the SPIFactory instance. It is used by OSGi environment while service loader
-     * pattern is not supported.
+     * Used by OSGi environment while service loader pattern is not supported.
      *
-     * @param factory the factory instance to use.
+     * @param provider the provider instance to use.
      */
-    public static void setFactory(HealthCheckResponseProvider factory) {
-        HealthCheckResponse.factory = factory;
+    public static void setResponseProvider(HealthCheckResponseProvider provider) {
+        HealthCheckResponse.provider = HealthCheckResponse.provider;
     }
 
     public static HealthCheckResponseBuilder named(String name) {
 
-        if (factory == null) {
+        if (provider == null) {
             synchronized (HealthCheckResponse.class) {
-                if (factory != null) {
-                    return factory.createResponseBuilder().name(name);
+                if (provider != null) {
+                    return provider.createResponseBuilder().name(name);
                 }
 
                 HealthCheckResponseProvider newInstance = find(HealthCheckResponseProvider.class);
@@ -70,11 +69,11 @@ public abstract class HealthCheckResponse {
                     throw new IllegalStateException("No SPIFactory implementation found!");
                 }
 
-                factory = newInstance;
+                provider = newInstance;
             }
         }
 
-        return factory.createResponseBuilder().name(name);
+        return provider.createResponseBuilder().name(name);
     }
 
     // the actual contract

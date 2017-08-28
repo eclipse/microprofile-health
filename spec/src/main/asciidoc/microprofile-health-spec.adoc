@@ -19,7 +19,7 @@
 :author: The Microprofile community and it's contributors
 :revnumber: 1.0
 :revdate: 2017-08-28
-:revremark: Proposal
+:revremark: Release Candidate
 :version-label!:
 :sectanchors:
 :doctype: book

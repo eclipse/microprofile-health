@@ -27,10 +27,12 @@ public interface HealthCheck {
 }
 ```
 
-Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the
-the framework or runtime hosting the application to verify the healthiness of the computing node.
+Applications provide health check procedures (implementation of a `HealthCheck`), which will be used by the
+the runtime hosting the application to verify the healthiness of the computing node.
 
-The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
+There can be one or several `HealthCheck` exposed, they will all be invoked when an inbound protocol request is received (i.e. HTTP).
+
+The runtime will `call()` each `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
 ```
 public abstract class HealthCheckResponse {
@@ -46,6 +48,9 @@ public abstract class HealthCheckResponse {
     [...]
 }
 ```
+
+The status of all `HealthCheck` 's determines the overall outcome.
+
 == Constructing `HealthCheckResponse`s
 
 Application level code is expected to use one of static methods on `HealthCheckResponse` to retrieve a `HealthCheckResponseBuilder` used to construct a response, i.e. :
@@ -59,14 +64,33 @@ public class SuccessfulCheck implements HealthCheck {
 }
 ```
 
+The `name` is used to tell the different checks apart when a human operator looks at the responses.
+It may be that one check of several fails and it's useful to know which one.
+
+`HealthCheckResponse` 's also support a free-form information holder, that be used to supply arbitrary data to the consuming end:
+
+```
+public class CheckDiskspace implements HealthCheck {
+
+    @Override
+    public HealthCheckResponse call() {
+        return HealthCheckResponse.named("diskspace")
+                .withData("free", "780mb")
+                .up()
+                .build();
+    }
+}
+```
+
 = Integration with CDI
 
-Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
+Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health`
+are discovered automatically and are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
 
 ```
 @Health
 @ApplicationScoped
-public class CheckDiskpace implements HealthCheck {
+public class MyCheck implements HealthCheck {
 
     public HealthCheckResponse call() {
         [...]
