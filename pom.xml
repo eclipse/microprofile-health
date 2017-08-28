@@ -54,7 +54,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.eclipse.microprofile.apis</groupId>
+                <groupId>org.eclipse.microprofile.health</groupId>
                 <artifactId>microprofile-health-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -64,21 +64,9 @@
                 <version>1.2</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.spec.javax.ws.rs</groupId>
-                <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
-                <version>1.0.0.Final</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
                 <version>1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.1.13.Final</version>
-                <scope>import</scope>
-                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
