@@ -35,7 +35,6 @@ import javax.json.JsonReader;
 import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-import static org.eclipse.microprofile.health.tck.TCKConfiguration.getHealthURL;
 
 /**
  * @author Heiko Braun
@@ -53,7 +52,7 @@ public class EnforceQualifierTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testFailureResponsePayload() throws Exception {
-        Response response = getUrlContents(getHealthURL());
+        Response response = getUrlContents();
 
         // the procedure with an annotation shold not be discovered
         Assert.assertEquals(response.getStatus(), 200);

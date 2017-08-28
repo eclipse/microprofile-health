@@ -22,10 +22,6 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Optional;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -34,7 +30,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.util.Optional;
 
 /**
  * @author Heiko Braun
@@ -42,8 +44,11 @@ import org.jboss.arquillian.testng.Arquillian;
  */
 public abstract class SimpleHttp extends Arquillian {
 
-    protected Response getUrlContents(String theUrl) {
-        return getUrlContents(theUrl, false);
+    @ArquillianResource
+    private URI uri;
+
+    protected Response getUrlContents() {
+        return getUrlContents(this.uri + "/health", false);
     }
 
     protected Response getUrlContents(String theUrl, boolean useAuth) {
