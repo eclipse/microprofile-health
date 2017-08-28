@@ -18,7 +18,7 @@
 =  Protocol and Wireformat
 
 == Abstract
-This document defines a health check specification to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” of computing nodes in a bigger system.
+This document defines the protocol to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” of computing nodes in a bigger system.
 
 === Guidelines
 
@@ -44,10 +44,6 @@ Note that the force of these words is modified by the requirement level of the d
 
 5. MAY – This word, or the adjective “OPTIONAL,” mean that an item is truly discretionary.
 
-
-== Rationale
-
-Health checks are used to signal the state of a computing node to other machines (cloud orchstration frameworks, i.e. kubernetes service controller). It’s not intended (although could be used) as a monitoring solution for humans.
 
 == Goals
 * MUST be compatibility with well known cloud platforms (i.e. http://kubernetes.io/docs/user-guide/liveness/)
@@ -184,7 +180,7 @@ The following table give valid health check responses:
 
 | /health
 | 200
-| No
+| Yes
 | UP
 | Check without procedures installed. See <<Without procedures installed into the runtime>>
 
@@ -197,7 +193,7 @@ The following table give valid health check responses:
 | /health
 | 500
 | No
-| No
+| Undetermined
 | Request processing failed (i.e. error in procedure)
 |===
 

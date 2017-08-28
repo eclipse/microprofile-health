@@ -19,13 +19,7 @@
  *******************************************************************************/
 
 /**
- * <p>Health Checks for Java Microprofile
- *
- * <h2>Rational</h2>
- *
- * TODO
- *
- * @version 1.0
- */
+ * <p>Microprofile Service Health Checks</p>
+ **/
 package org.eclipse.microprofile.health;
 

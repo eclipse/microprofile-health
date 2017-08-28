@@ -7,3 +7,5 @@ target
 /.settings/
 /.project
 /.DS_Store
+/spec/.DS_Store
+/api/.DS_Store
