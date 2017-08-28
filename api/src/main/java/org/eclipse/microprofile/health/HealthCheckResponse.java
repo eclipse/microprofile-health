@@ -61,7 +61,7 @@ public abstract class HealthCheckResponse {
         if (factory == null) {
             synchronized (HealthCheckResponse.class) {
                 if (factory != null) {
-                    return factory.createResponseBuilder();
+                    return factory.createResponseBuilder().name(name);
                 }
 
                 HealthCheckResponseProvider newInstance = find(HealthCheckResponseProvider.class);
