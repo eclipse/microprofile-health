@@ -140,12 +140,11 @@ When multiple procedures are installed all procedures MUST be executed and the o
 * Consumers MAY support custom policies to determine the outcome
 
 == Security
+
 Aspects regarding the secure access of health check information.
 
-* A producer MUST enforce security on all check invocations
-* A producer MAY ignore security for trusted origins (i.e. localhost)
-* HTTP Digest Auth MUST be one supported authentication mechanism
-* HTTP Digest Auth SHOULD be the default algorithm for the HTTP protocol binding
+* A producer MAY support security on all check invocations (i.e. authentication)
+* A producer MUST not enforce security by default, but it should be an opt-in configuration change
 
 == Appendix A: REST interface specifications
 
