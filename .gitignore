@@ -9,3 +9,5 @@ target
 /.DS_Store
 /spec/.DS_Store
 /api/.DS_Store
+bumpVersion.sh
+
