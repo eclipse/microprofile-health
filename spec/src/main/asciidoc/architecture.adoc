@@ -16,9 +16,9 @@
 //
 
 [[architecture]]
-== Architecture
+= Architecture
 
-=== SPI Usage
+== SPI Usage
 
 Implementors of the API are expected to supply implementations of `HealthCheckResponse` and `HealthCheckResponseBuilder` by providing a `HealthCheckResponseProvider` to their implementation. The `HealthCheckResponseProvider` is discovered using the default JDK service loader.
 

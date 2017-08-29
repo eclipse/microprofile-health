@@ -198,6 +198,7 @@ The following table give valid health check responses:
 |===
 
 === JSON Schema:
+
 ```
 {
  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -291,7 +292,7 @@ Status `200` and the following payload:
 
 ```
 {
-  "outcome": "DOWN",
+  "outcome": "UP",
   "checks": []
 }
 ```

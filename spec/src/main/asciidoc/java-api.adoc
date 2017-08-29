@@ -67,7 +67,7 @@ public class SuccessfulCheck implements HealthCheck {
 The `name` is used to tell the different checks apart when a human operator looks at the responses.
 It may be that one check of several fails and it's useful to know which one.
 
-`HealthCheckResponse` 's also support a free-form information holder, that be used to supply arbitrary data to the consuming end:
+`HealthCheckResponse` 's also support a free-form information holder, that can be used to supply arbitrary data to the consuming end:
 
 ```
 public class CheckDiskspace implements HealthCheck {
