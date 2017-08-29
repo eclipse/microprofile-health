@@ -57,23 +57,30 @@ public abstract class HealthCheckResponse {
 
     public static HealthCheckResponseBuilder named(String name) {
 
+        return getProvider().createResponseBuilder().name(name);
+    }
+
+    public static HealthCheckResponseBuilder builder() {
+        return getProvider().createResponseBuilder();
+    }
+
+    private static HealthCheckResponseProvider getProvider() {
         if (provider == null) {
             synchronized (HealthCheckResponse.class) {
                 if (provider != null) {
-                    return provider.createResponseBuilder().name(name);
+                    return provider;
                 }
 
                 HealthCheckResponseProvider newInstance = find(HealthCheckResponseProvider.class);
 
                 if (newInstance == null) {
-                    throw new IllegalStateException("No SPIFactory implementation found!");
+                    throw new IllegalStateException("No HealthCheckResponseProvider implementation found!");
                 }
 
                 provider = newInstance;
             }
         }
-
-        return provider.createResponseBuilder().name(name);
+        return provider;
     }
 
     // the actual contract
