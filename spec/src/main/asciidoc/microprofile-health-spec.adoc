@@ -17,7 +17,7 @@
 
 = Service Health Checks
 :author: The Microprofile community and it's contributors
-:revnumber: 1.0
+:revnumber: 1.0.0-RC1
 :revdate: 2017-08-28
 :revremark: Release Candidate
 :version-label!:

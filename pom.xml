@@ -20,7 +20,7 @@
     <groupId>org.eclipse.microprofile.health</groupId>
     <artifactId>microprofile-health-parent</artifactId>
     <name>MicroProfile Health</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-RC1</version>
     <packaging>pom</packaging>
 
     <url>http://microprofile.io</url>
