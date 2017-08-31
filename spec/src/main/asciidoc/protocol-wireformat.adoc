@@ -143,8 +143,8 @@ When multiple procedures are installed all procedures MUST be executed and the o
 
 Aspects regarding the secure access of health check information.
 
-* A producer MAY support security on all check invocations (i.e. authentication)
-* A producer MUST not enforce security by default, but it should be an opt-in configuration change
+* A producer MAY support security on all health check invocations (i.e. authentication)
+* A producer MUST not enforce security by default, it SHOULD be an opt-in feature (i.e. configuration change)
 
 == Appendix A: REST interface specifications
 
