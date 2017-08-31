@@ -111,11 +111,6 @@
             <artifactId>javax.json</artifactId>
             <version>${version.glassfish.json}</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.8.21</version>
-        </dependency>
 
     </dependencies>
 
