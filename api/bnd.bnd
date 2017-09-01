@@ -1,0 +1,5 @@
+-exportcontents: \
+    org.eclipse.microprofile.*
+Bundle-SymbolicName: org.eclipse.microprofile.health
+Bundle-Name: MicroProfile Health Check Bundle
+Bundle-License: Apache License, Version 2.0

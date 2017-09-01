@@ -22,5 +22,5 @@
  * <p>Microprofile Service Health Checks</p>
  **/
 @org.osgi.annotation.versioning.Version("1.0")
-package org.eclipse.microprofile.health;
+package org.eclipse.microprofile.health.spi;
 
