@@ -58,7 +58,7 @@ public class DelegateProcedureSuccessfulTest extends SimpleHttp {
         Response response = getUrlContents();
 
         // status code
-        Assert.assertEquals(200, response.getStatus());
+        Assert.assertEquals(response.getStatus(), 200);
 
         JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
         JsonObject json = jsonReader.readObject();
