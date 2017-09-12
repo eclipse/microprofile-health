@@ -52,7 +52,7 @@ public abstract class HealthCheckResponse {
      * @param provider the provider instance to use.
      */
     public static void setResponseProvider(HealthCheckResponseProvider provider) {
-        HealthCheckResponse.provider = HealthCheckResponse.provider;
+        HealthCheckResponse.provider = provider;
     }
 
     public static HealthCheckResponseBuilder named(String name) {
