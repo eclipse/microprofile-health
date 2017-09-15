@@ -21,6 +21,7 @@
     <artifactId>microprofile-health-parent</artifactId>
     <name>MicroProfile Health</name>
     <version>1.0.0-SNAPSHOT</version>
+    <description>Eclipse MicroProfile HealthCheck Feature - Parent POM</description>
     <packaging>pom</packaging>
 
     <url>http://microprofile.io</url>
