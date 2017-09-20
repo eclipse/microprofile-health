@@ -110,16 +110,16 @@ It's the responsibility of the runtime to gather all `HealthCheckResponse` s for
     "outcome": "UP",
     "checks": [
       {
-        "id": "first-check",
-        "result": "UP",
+        "name": "first-check",
+        "state": "UP",
         "data": {
           "key": "foo",
           "foo": "bar"
         }
       },
       {
-          "id": "second-check",
-          "result": "UP"
+          "name": "second-check",
+          "state": "UP"
       }
     ]
   }
