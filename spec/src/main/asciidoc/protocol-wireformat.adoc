@@ -97,7 +97,7 @@ Health checks (innermost) can and should be mapped to the actual invocation prot
 * Producers SHOULD define a well known default context to perform checks
 * Each response SHOULD integrate with the outermost protocol whenever it makes sense (i.e. using HTTP status codes to signal the overall state)
 * Inner protocol information items MUST NOT be replaced by outer protocol information items, rather kept redundantly.
-* The inner protocol response MUST be self-contained, that is carrying all information needed to reason about the the producer outcome
+* The inner protocol response MUST be self-contained, that is carrying all information needed to reason about the producer outcome
 
 === Mandatory and optional protocol types
 
