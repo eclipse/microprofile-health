@@ -53,8 +53,7 @@ public interface HealthCheck {
 }
 ```
 
-Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the
-the framework or runtime hosting the application to verify the healthiness of the computing node.
+Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the framework or runtime hosting the application to verify the healthiness of the computing node.
 
 The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
