@@ -59,7 +59,7 @@ Application level code is expected to use one of static methods on `HealthCheckR
 public class SuccessfulCheck implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("successful-check").up();
+        return HealthCheckResponse.named("successful-check").up().build();
     }
 }
 ```
