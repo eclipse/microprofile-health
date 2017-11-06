@@ -160,7 +160,7 @@ Aspects regarding the secure access of health check information.
 
 * 200 for a health check with a positive outcome
 * 503 in case the overall outcome is negative
-* 500 in case the consumer wasn’t able to process the health check request (i.e. error in procedure)
+* 500 in case the producer wasn’t able to process the health check request (i.e. error in procedure)
 
 
 == Appendix B: JSON payload specification
