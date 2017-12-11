@@ -91,7 +91,7 @@ Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Hea
 ```
 @Health
 @ApplicationScoped
-public class CheckDiskpace implements HealthCheck {
+public class CheckDiskSpace implements HealthCheck {
 
     public HealthCheckResponse call() {
         [...]
