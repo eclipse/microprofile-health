@@ -30,7 +30,6 @@ import javax.enterprise.context.ApplicationScoped;
 /**
  * Created by hbraun on 29.06.17.
  */
-@Health
 @ApplicationScoped
 public class CheckWithAttributes implements HealthCheck {
 

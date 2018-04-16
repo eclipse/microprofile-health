@@ -84,11 +84,14 @@ public class CheckDiskspace implements HealthCheck {
 
 = Integration with CDI
 
-Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health`
-are discovered automatically and are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
+Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and default qualifier that can be used as health check procedure.
+
+In addition, for backward compatibility with version 1.0 of the current specification, any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Health` qualifier.
+
+Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request
+
 
 ```
-@Health
 @ApplicationScoped
 public class MyCheck implements HealthCheck {
 

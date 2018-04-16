@@ -31,7 +31,6 @@ import javax.inject.Inject;
 /**
  * Created by hbraun on 18.08.17.
  */
-@Health
 @ApplicationScoped
 public class DelegateCheck implements HealthCheck {
 
