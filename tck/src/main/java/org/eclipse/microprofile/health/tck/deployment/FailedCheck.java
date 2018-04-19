@@ -31,7 +31,6 @@ import javax.enterprise.context.ApplicationScoped;
  * @author Heiko Braun
  * @since 13.06.17
  */
-@Health
 @ApplicationScoped
 public class FailedCheck implements HealthCheck {
     @Override

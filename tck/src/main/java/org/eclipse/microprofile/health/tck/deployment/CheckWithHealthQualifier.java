@@ -21,6 +21,7 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
+import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
@@ -30,11 +31,11 @@ import javax.enterprise.context.ApplicationScoped;
  * @author Heiko Braun
  * @since 13.06.17
  */
-// lacks the @Health annotation and should not be discovered
+@Health
 @ApplicationScoped
-public class CheckWithoutQualifier implements HealthCheck {
+public class CheckWithHealthQualifier implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("check-without-annotation").up().build();
+        return HealthCheckResponse.named("check-with-annotation").up().build();
     }
 }
