@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 
-= Microprofile Health Check
+= MicroProfile Health Check
 :author: The Microprofile community and it's contributors
 :revnumber: 1.0.0-RC2
 :revdate: 2017-08-30

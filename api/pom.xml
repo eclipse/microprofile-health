@@ -23,8 +23,8 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>microprofile-health-check-api</artifactId>
-    <name>MicroProfile Health Check API</name>
+    <artifactId>microprofile-health-api</artifactId>
+    <name>MicroProfile Health API</name>
 
     <dependencies>
         <dependency>

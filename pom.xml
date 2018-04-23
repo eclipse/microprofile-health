@@ -18,7 +18,7 @@
 
     <groupId>org.eclipse.microprofile.health</groupId>
     <artifactId>microprofile-health-parent</artifactId>
-    <name>MicroProfile Health Check</name>
+    <name>MicroProfile Health</name>
     <version>1.1-SNAPSHOT</version>
     <description>Eclipse MicroProfile Health Check - Parent POM</description>
     <packaging>pom</packaging>
