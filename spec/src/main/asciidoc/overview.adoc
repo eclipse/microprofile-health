@@ -50,12 +50,14 @@ The proposed solution breaks down into two parts:
 
 == Contributors
 
-- Andrew Pielage
-- Emily Jiang
-- Heiko Braun
-- Jeff Mesnil
 - John Ament
-- John D. Ament
-- Kevin Sutter
-- Scott Stark
+- Heiko Braun
+- Clément Escoffier
+- Emily Jiang
 - Werner Keil
+- Jeff Mesnil
+- Andrew Pielage
+- Heiko Rupp
+- Antoine Sabot-Durand
+- Scott Stark
+- Kevin Sutter
