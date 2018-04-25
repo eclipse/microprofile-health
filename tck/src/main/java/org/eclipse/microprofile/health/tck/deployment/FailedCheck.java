@@ -21,7 +21,6 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
-import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
