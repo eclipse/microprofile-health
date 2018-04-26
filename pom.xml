@@ -56,7 +56,20 @@
 
     <developers>
         <developer>
+            <name>Antoine Sabot-Durand</name>
+            <roles>
+                <role>Project Lead</role>
+            </roles>
+            <email>asd[at]redhat.com</email>
+            <url>https://github.com/antoinesd</url>
+            <organization>Red Hat</organization>
+            <organizationUrl>https://www.jboss.org</organizationUrl>
+        </developer>
+        <developer>
             <name>Heiko Braun</name>
+            <roles>
+                <role>Initial Project Lead</role>
+            </roles>
             <url>https://github.com/heiko-braun</url>
             <organization>Red Hat</organization>
             <organizationUrl>https://www.jboss.org</organizationUrl>
