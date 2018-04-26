@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-# MicroProfile Health Check
+# MicroProfile Health
 
 ## Motivation
 

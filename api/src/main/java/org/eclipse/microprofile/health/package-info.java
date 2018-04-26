@@ -19,7 +19,7 @@
  *******************************************************************************/
 
 /**
- * <p>Microprofile Health Check</p>
+ * <p>Microprofile Health</p>
  **/
 @org.osgi.annotation.versioning.Version("1.0")
 package org.eclipse.microprofile.health;
