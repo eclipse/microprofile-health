@@ -78,7 +78,7 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
                 );
 
         Assert.assertEquals(
-                asJsonObject(check).getString("state"),
+                asJsonObject(check).getString("status"),
                 "UP",
                 "Expected a successful check result"
                 );
@@ -97,7 +97,7 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
 
         // overall outcome
         Assert.assertEquals(
-                json.getString("outcome"),
+                json.getString("status"),
                 "UP",
                 "Expected overall outcome to be successful"
                 );
