@@ -49,7 +49,7 @@ public abstract class HealthCheckResponse {
 }
 ```
 
-The status of all `HealthCheck` 's determines the overall outcome.
+The status of all `HealthCheck` 's determines the overall status.
 
 == Constructing `HealthCheckResponse`s
 

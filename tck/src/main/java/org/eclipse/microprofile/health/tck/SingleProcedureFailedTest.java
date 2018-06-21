@@ -75,16 +75,16 @@ public class SingleProcedureFailedTest extends SimpleHttp {
         );
 
         Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("state"),
+                asJsonObject(checks.get(0)).getString("status"),
                 "DOWN",
                 "Expected a successful check result"
         );
 
         // overall outcome
         Assert.assertEquals(
-                json.getString("outcome"),
+                json.getString("status"),
                 "DOWN",
-                "Expected overall outcome to be unsuccessful"
+                "Expected overall status to be unsuccessful"
         );
     }
 }
