@@ -75,16 +75,16 @@ public class SingleProcedureSuccessfulTest extends SimpleHttp {
         );
 
         Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("state"),
+                asJsonObject(checks.get(0)).getString("status"),
                 "UP",
                 "Expected a successful check result"
         );
 
         // overall outcome
         Assert.assertEquals(
-                json.getString("outcome"),
+                json.getString("status"),
                 "UP",
-                "Expected overall outcome to be successful"
+                "Expected overall status to be successful"
         );
     }
 }

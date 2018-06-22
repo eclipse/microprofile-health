@@ -23,7 +23,6 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <groupId>org.eclipse.microprofile.health</groupId>
     <artifactId>microprofile-health-tck</artifactId>
     <name>MicroProfile Health TCK</name>
 
