@@ -21,7 +21,7 @@
 
 The Eclipse MicroProfile Health Check (MP-HC) specification defines a single container runtime mechanism for validating
 the availability and status of a MicroProfile implementation. This is primarily intended as a machine to machine (M2M)
-mechanism for use in containerized environments like cloud providers and containerized environments. Example of
+mechanism for use in containerized environments like cloud providers. Example of
 existing specifications from those environments include https://docs.cloudfoundry.org/devguide/deploy-apps/healthchecks.html[Cloud Foundry Health Checks] and
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes[Kubernetes Liveness and Readiness Probes].
 
