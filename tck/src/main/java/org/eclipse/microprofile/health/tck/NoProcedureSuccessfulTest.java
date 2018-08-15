@@ -40,7 +40,7 @@ import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWar
  */
 public class NoProcedureSuccessfulTest extends SimpleHttp {
 
-    @Deployment
+    @Deployment(testable = false)
     public static Archive getDeployment() throws Exception {
         return createEmptyWarFile();
     }

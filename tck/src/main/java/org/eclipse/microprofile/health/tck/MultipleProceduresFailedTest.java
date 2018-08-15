@@ -45,7 +45,7 @@ import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
  */
 public class MultipleProceduresFailedTest extends SimpleHttp {
 
-    @Deployment
+    @Deployment(testable = false)
     public static Archive getDeployment() throws Exception {
         return createWarFileWithClasses(FailedCheck.class, SuccessfulCheck.class);
     }
