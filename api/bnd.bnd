@@ -1,5 +1,20 @@
 -exportcontents: \
     org.eclipse.microprofile.*
+
+Import-Package: \
+    javax.inject;-remove-attribute:=version,\
+    *
+
+Require-Capability: \
+    osgi.contract;\
+        osgi.contract=JavaInject;\
+        filter:="(&(osgi.contract=JavaInject)(version=${inject.api.version}))",\
+    osgi.serviceloader;\
+        filter:="(osgi.serviceloader=org.eclipse.microprofile.health.spi.HealthCheckResponseProvider)";\
+        cardinality:=multiple,\
+    osgi.extender;\
+        filter:="(osgi.extender=osgi.serviceloader.processor)"
+
 Bundle-SymbolicName: org.eclipse.microprofile.health
 Bundle-Name: MicroProfile Health Check Bundle
 Bundle-License: Apache License, Version 2.0

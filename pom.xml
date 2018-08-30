@@ -33,6 +33,8 @@
         <checkstyle.version>2.17</checkstyle.version>
         <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9]*$</checkstyle.methodNameFormat>
         <autorelease>false</autorelease>
+        <cdi.api.version>1.2</cdi.api.version>
+        <inject.api.version>1</inject.api.version>
     </properties>
 
     <licenses>
@@ -95,12 +97,12 @@
             <dependency>
                 <groupId>javax.enterprise</groupId>
                 <artifactId>cdi-api</artifactId>
-                <version>1.2</version>
+                <version>${cdi.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
-                <version>1</version>
+                <version>${inject.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
