@@ -130,7 +130,8 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 == Health Check Procedures
 * A producer MUST support custom, application level health check procedures
 * A producer SHOULD support reasonable out-of-the-box procedures
-* A producer without health check procedures installed MUST returns positive overall status (i.e. HTTP 200)
+* A producer with no health check procedures expected or installed MUST return positive overall status (i.e. HTTP 200)
+* A producer with health check procedures expected but not yet installed MUST return negative overall status (i.e. HTTP 503)
 
 === Policies to determine the overall status
 
@@ -182,13 +183,19 @@ The following table give valid health check responses:
 | 200
 | Yes
 | UP
-| Check without procedures installed. See <<Without procedures installed into the runtime>>
+| Check with no procedures expected or installed. See <<With no procedures expected or installed into the runtime>>
 
 | /health
 | 503
 | Yes
 | Down
 | Check failed
+
+| /health
+| 503
+| Yes
+| Down
+| Check with procedures expected but not yet installed. See <<With procedures expected but not yet installed into the runtime>>
 
 | /health
 | 500
@@ -248,7 +255,8 @@ The following table give valid health check responses:
 == Example response payloads
 
 === With procedures installed into the runtime
-Status 200
+Status `200` and the following payload:
+
 ```
 {
   "status": "UP",
@@ -265,7 +273,8 @@ Status 200
 }
 ```
 
-Status 503
+Status `503` and the following payload:
+
 ```
 {
   "status": "DOWN",
@@ -286,13 +295,24 @@ Status 503
 }
 ```
 
-=== Without procedures installed into the runtime
+=== With no procedures expected or installed into the runtime
 
 Status `200` and the following payload:
 
 ```
 {
   "status": "UP",
+  "checks": []
+}
+```
+
+=== With procedures expected but not yet installed into the runtime
+
+Status `503` and the following payload:
+
+```
+{
+  "status": "DOWN",
   "checks": []
 }
 ```
