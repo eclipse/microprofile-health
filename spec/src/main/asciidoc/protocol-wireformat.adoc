@@ -140,6 +140,14 @@ When multiple procedures are installed all procedures MUST be executed and the o
 * Consumers MUST use the logical conjunction policy by default to determine the status
 * Consumers MAY support custom policies to determine the status
 
+==== Executing procedures
+
+When executing health check procedures a producer MUST handle any unchecked exceptions and synthesize a substitute respone.
+
+* The synthesized response MUST contain a `status` entry with a value of "DOWN".
+* The synthesized response MUST contain a `name` entry with a value set to the runtime class name of the failing check.
+* The synthesized response MAY contain additional information about the failure (i.e. exception message or stack trace)
+
 == Security
 
 Aspects regarding the secure access of health check information.
@@ -276,6 +284,26 @@ Status 503
       "data": {
         "key": "value",
         "foo": "bar"
+      }
+    },
+    {
+      "name": "secondCheck",
+      "status": "UP"
+    }
+  ]
+}
+```
+
+Status 500
+```
+{
+  "status": "DOWN",
+  "checks": [
+    {
+      "name": "example.health.FirstCheck",
+      "status": "DOWN",
+      "data": {
+        "rootCause": "timed out waiting for available connection"
       }
     },
     {
