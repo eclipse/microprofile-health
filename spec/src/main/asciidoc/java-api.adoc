@@ -17,7 +17,12 @@
 
 = Java API Usage
 
-The main API to provide health check procedures on the application level is the `HealthCheck` interface:
+The specification provides the following API to define health check procedures.
+
+
+== Common API check
+
+The main API to provide health check procedures (readiness or liveness) on the application level is the `HealthCheck` interface:
 
 ```
 @FunctionalInterface
@@ -29,7 +34,42 @@ public interface HealthCheck {
 
 Applications provide health check procedures (implementation of a `HealthCheck`), which will be used by the runtime hosting the application to verify the healthiness of the computing node.
 
-There can be one or several `HealthCheck` exposed, they will all be invoked when an inbound protocol request is received (i.e. HTTP).
+== Different kinds of Health Checks
+
+This specification provides different kind of health check procedures.
+Difference between them is only semantic.
+The nature of the procedure is defined by annotating the `HealthCheck` procedure with a specific annotation.
+
+* Readiness checks defined with `@Readiness` annotation
+* Liveness checks defined with `@Liveness` annotation
+* Backward compatible checks defined with `@Health` annotation
+
+
+A `HealthCheck` procedures with none of the above annotations is not an active procedure and should be ignored.
+
+=== Readiness check
+
+A Health Check for readiness allows third party services to know if the application is ready to process request or not.
+
+The `@Readiness` annotation must be applied on a `HealthCheck` implementation to define a readiness check procedure.
+
+=== Liveness check
+
+A Health Check for liveness allows third party services to determine if the application is running.
+This means that if this procedure fails the application can be discarded (terminated, shutdown).
+
+The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure.
+
+
+=== Backward compatible check
+
+To provide backward compatibility with previous specification version, a `HealthCheck` implementation with `@Health` annotation is still supported.
+
+`@Health` annotation is deprecated, new procedures shouldn't use it.
+
+== Multiple HealthChecks procedures for a given kind
+
+There can be one or several `HealthCheck` exposed for a given kind, they will all be invoked when an inbound protocol request is received (i.e. HTTP).
 
 If more than one `HealthCheck` are invoked, they will be called in an unpredictable order.
 
@@ -50,7 +90,28 @@ public abstract class HealthCheckResponse {
 }
 ```
 
-The status of all `HealthCheck` 's determines the overall status.
+The status of all `HealthCheck` 's determines the overall status for the given Health check kind.
+
+
+== Combining multiple kinds of checks
+
+A `HealthCheck` implementation may be annotated with multiple kinds of checks.
+The procedure will be used to resolve every kind of health check for which it is annotated.
+
+For instance this procedure will be used to resolve liveness and readiness health check.
+
+----
+@Liveness
+@Readiness
+public class MyCheck implements HealthCheck {
+
+  public HealthCheckResponse call() {
+    ...
+  }
+}
+----
+
+
 
 == Constructing `HealthCheckResponse` 's
 
@@ -85,9 +146,8 @@ public class CheckDiskspace implements HealthCheck {
 
 = Integration with CDI
 
-Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and default qualifier that can be used as health check procedure.
+Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness` or `@Health` qualifier can be used as health check procedure.
 
-In addition, for backward compatibility with version 1.0 of the current specification, any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Health` qualifier.
 
 Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request
 
@@ -102,7 +162,7 @@ public class MyCheck implements HealthCheck {
 }
 ```
 
-As health check procedures are CDI bean they can also be defined with CDI producers:
+Health check procedures are CDI beans, therefore, they can also be defined with CDI producers:
 
 
 ```
@@ -111,12 +171,14 @@ class MyChecks {
 
   @Produces
   @ApplicationScoped
+  @Liveness
   HealthCheck check1() {
     return () -> HealthStatus.state(getMemUsage() < 0.9);
   }
 
   @Produces
   @ApplicationScoped
+  @Readiness
   HealthCheck check2() {
     return () -> HealthStatus.state(getCpuUsage() < 0.9);
   }

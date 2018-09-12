@@ -18,7 +18,7 @@
 =  Protocol and Wireformat
 
 == Abstract
-This document defines the protocol to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” of computing nodes in a bigger system.
+This document defines the protocol to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” or "readiness" of computing nodes in a bigger system.
 
 === Guidelines
 
@@ -59,7 +59,7 @@ Note that the force of these words is modified by the requirement level of the d
 | The service/application that is checked
 
 | Consumer
-| The probing end, usually a machine, that needs to verify the liveness of a Producer
+| The probing end, usually a machine, that needs to verify the liveness or readiness of a Producer
 
 | Health Check Procedure
 | The code executed to determine the liveliness of a Producer
@@ -156,13 +156,27 @@ Aspects regarding the secure access of health check information.
 * A producer MAY support security on all health check invocations (i.e. authentication)
 * A producer MUST NOT enforce security by default, it SHOULD be an opt-in feature (i.e. configuration change)
 
-== Appendix A: REST interface specifications
+== Appendix A: REST interfaces specifications
+
 
 |===
-| Context       | Verb          | Status Code  | Response
+| Context       | Verb          | Status Code  | Kind of procedure called |Response
+| /health/live
+| GET
+| 200, 500, 503
+| Liveness
+| See Appendix B
+
+| /health/ready
+| GET
+| 200, 500, 503
+| Readiness
+| See Appendix B
+
 | /health
 | GET
 | 200, 500, 503
+| Backward compatible + Liveness + Readiness
 | See Appendix B
 |===
 
@@ -177,35 +191,45 @@ Aspects regarding the secure access of health check information.
 
 === Response Codes and status mappings
 
-The following table give valid health check responses:
+The following table gives valid health check responses for all kinds of health checks:
 
 |===
 | Request | HTTP Status       | JSON Payload         | State  | Comment
-| /health
+| /health/live
+  /health/ready
+  /health
 | 200
 | Yes
 | UP
 | Check with payload. See <<With procedures installed into the runtime>>.
 
-| /health
+| /health/live
+  /health/ready
+  /health
 | 200
 | Yes
 | UP
 | Check with no procedures expected or installed. See <<With no procedures expected or installed into the runtime>>
 
-| /health
+| /health/live
+  /health/ready
+  /health
 | 503
 | Yes
 | Down
 | Check failed
 
-| /health
+| /health/live
+  /health/ready
+  /health
 | 503
 | Yes
 | Down
 | Check with procedures expected but not yet installed. See <<With procedures expected but not yet installed into the runtime>>
 
-| /health
+| /health/live
+  /health/ready
+  /health
 | 500
 | No
 | Undetermined
