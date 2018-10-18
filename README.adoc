@@ -103,15 +103,15 @@ public class CheckDiskSpace implements HealthCheck {
 === On the wire
 
 It's the responsibility of the runtime to gather all `HealthCheckResponse` s for `HealthCheck` s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
- on health check procedures and the runtime will provide a composite response, with a single overall status, i.e.:
+ on health check procedures and the runtime will provide a composite response, with a single overall outcome, i.e.:
 
   ```
   {
-    "status": "UP",
+    "outcome": "UP",
     "checks": [
       {
         "name": "first-check",
-        "status": "UP",
+        "state": "UP",
         "data": {
           "key": "foo",
           "foo": "bar"
@@ -119,7 +119,7 @@ It's the responsibility of the runtime to gather all `HealthCheckResponse` s for
       },
       {
           "name": "second-check",
-          "status": "UP"
+          "state": "UP"
       }
     ]
   }

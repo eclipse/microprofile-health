@@ -58,8 +58,9 @@ public class NoProcedureSuccessfulTest extends SimpleHttp {
 
         JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
         JsonObject json = jsonReader.readObject();
+        System.out.println(json);
 
-        Assert.assertEquals(json.getString("status"), "UP","Expected status UP");
+        Assert.assertEquals(json.getString("outcome"), "UP","Expected outcome UP");
         Assert.assertTrue(json.getJsonArray("checks").isEmpty(), "Expected empty checks array");
 
     }

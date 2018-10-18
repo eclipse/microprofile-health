@@ -86,9 +86,9 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
 
         // overall outcome
         Assert.assertEquals(
-                json.getString("status"),
+                json.getString("outcome"),
                 "DOWN",
-                "Expected overall status to be unsuccessful"
+                "Expected overall outcome to be unsuccessful"
         );
     }
 
@@ -101,7 +101,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
                 );
 
         Assert.assertEquals(
-                asJsonObject(check).getString("status"),
+                asJsonObject(check).getString("state"),
                 "DOWN",
                 "Expected a successful check result"
                 );
@@ -116,7 +116,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
                 );
 
         Assert.assertEquals(
-                asJsonObject(check).getString("status"),
+                asJsonObject(check).getString("state"),
                 "UP",
                 "Expected a successful check result"
                 );

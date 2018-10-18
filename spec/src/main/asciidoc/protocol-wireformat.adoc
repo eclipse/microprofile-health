@@ -64,8 +64,8 @@ Note that the force of these words is modified by the requirement level of the d
 | Health Check Procedure
 | The code executed to determine the liveliness of a Producer
 
-| Producer status
-| The overall status, determined by considering all health check procedure results
+| Producer Outcome
+| The overall outcome, determined by considering all health check procedure results
 
 | Health check procedure result
 | The result of single check
@@ -76,11 +76,11 @@ Note that the force of these words is modified by the requirement level of the d
 1. Consumer invokes the health check of a Producer through any of the supported protocols
 2. Producer enforces security constraints on the invocation (i.e authentication)
 3. Producer executes a set of Health check procedures (could be a set with one element)
-4. Producer determines the overall status
-5. The status is mapped to outermost protocol (i.e. HTTP status codes)
+4. Producer determines the overall outcome (Producer outcome)
+5. The outcome is mapped to outermost protocol (i.e. HTTP status codes)
 6. The payload is written to the response stream
 7. The consumer reads the response
-8. The consumer determines the overall status
+8. The consumer determines the overall outcome
 
 === Protocol Specifics
 This section describes the specifics of the HTTP protocol usage.
@@ -95,10 +95,9 @@ Health checks (innermost) can and should be mapped to the actual invocation prot
 
 * Producers MAY support a variety of protocols but the information items in the response payload MUST remain the same.
 * Producers SHOULD define a well known default context to perform checks
-* Each response SHOULD integrate with the outermost protocol whenever it makes sense (i.e. using HTTP status codes to
-signal the overall status)
+* Each response SHOULD integrate with the outermost protocol whenever it makes sense (i.e. using HTTP status codes to signal the overall state)
 * Inner protocol information items MUST NOT be replaced by outer protocol information items, rather kept redundantly.
-* The inner protocol response MUST be self-contained, that is carrying all information needed to reason about the producer status
+* The inner protocol response MUST be self-contained, that is carrying all information needed to reason about the producer outcome
 
 === Mandatory and optional protocol types
 
@@ -115,7 +114,7 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 * The primary information MUST be boolean, it needs to be consumed by other machines. Anything between available/unavailable doesn’t make sense or would increase the complexity on the side of the consumer processing that information.
 * The response information MAY contain an additional information holder
 * Consumers MAY process the additional information holder or simply decide to ignore it
-* The response information MUST contain the boolean `status` of each check
+* The response information MUST contain the boolean state of each check
 * The response information MUST contain the name of each check
 
 === Wireformats
@@ -124,22 +123,22 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 * Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
 * The JSON response payload MUST be compatible with the one described in Appendix B
 * The JSON response MUST contain the `name` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
-* The JSON response MUST contain the `status` entry specifying the state as String: “UP” or “DOWN”
+* The JSON response MUST contain the `state` entry specifying the state as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
 == Health Check Procedures
 * A producer MUST support custom, application level health check procedures
 * A producer SHOULD support reasonable out-of-the-box procedures
-* A producer with no health check procedures expected or installed MUST return positive overall status (i.e. HTTP 200)
-* A producer with health check procedures expected but not yet installed MUST return negative overall status (i.e. HTTP 503)
+* A producer with no health check procedures expected or installed MUST return positive overall outcome (i.e. HTTP 200)
+* A producer with health check procedures expected but not yet installed MUST return negative overall outcome (i.e. HTTP 503)
 
-=== Policies to determine the overall status
+=== Policies to determine the overall outcome
 
-When multiple procedures are installed all procedures MUST be executed and the overall status needs to be determined.
+When multiple procedures are installed all procedures MUST be executed and the overall outcome needs to be determined.
 
-* Consumers MUST support a logical conjunction policy to determine the status
-* Consumers MUST use the logical conjunction policy by default to determine the status
-* Consumers MAY support custom policies to determine the status
+* Consumers MUST support a logical conjunction policy to determine the outcome
+* Consumers MUST use the logical conjunction policy by default to determine the outcome
+* Consumers MAY support custom policies to determine the outcome
 
 ==== Executing procedures
 
@@ -168,8 +167,8 @@ Aspects regarding the secure access of health check information.
 
 === Status Codes:
 
-* 200 for a health check with a positive status (`UP`)
-* 503 in case the overall status is negative (`DOWN`)
+* 200 for a health check with a positive outcome
+* 503 in case the overall outcome is negative
 * 500 in case the producer wasn’t able to process the health check request (i.e. error in procedure)
 
 
@@ -219,7 +218,7 @@ The following table give valid health check responses:
  "$schema": "http://json-schema.org/draft-04/schema#",
  "type": "object",
  "properties": {
-   "status": {
+   "outcome": {
      "type": "string"
    },
    "checks": {
@@ -230,7 +229,7 @@ The following table give valid health check responses:
          "name": {
            "type": "string"
          },
-         "status": {
+         "state": {
            "type": "string"
          },
          "data": {
@@ -247,13 +246,13 @@ The following table give valid health check responses:
        },
        "required": [
          "name",
-         "status"
+         "state"
          ]
      }
    }
  },
  "required": [
-   "status",
+   "outcome",
    "checks"
  ]
 }
@@ -267,11 +266,11 @@ Status `200` and the following payload:
 
 ```
 {
-  "status": "UP",
+  "outcome": "UP",
   "checks": [
     {
       "name": "myCheck",
-      "status": "UP",
+      "state": "UP",
       "data": {
         "key": "value",
         "foo": "bar"
@@ -285,11 +284,11 @@ Status `503` and the following payload:
 
 ```
 {
-  "status": "DOWN",
+  "outcome": "DOWN",
   "checks": [
     {
       "name": "firstCheck",
-      "status": "DOWN",
+      "state": "DOWN",
       "data": {
         "key": "value",
         "foo": "bar"
@@ -297,7 +296,7 @@ Status `503` and the following payload:
     },
     {
       "name": "secondCheck",
-      "status": "UP"
+      "state": "UP"
     }
   ]
 }
@@ -329,7 +328,7 @@ Status `200` and the following payload:
 
 ```
 {
-  "status": "UP",
+  "outcome": "UP",
   "checks": []
 }
 ```
