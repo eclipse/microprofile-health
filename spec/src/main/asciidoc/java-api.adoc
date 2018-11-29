@@ -32,6 +32,8 @@ the runtime hosting the application to verify the healthiness of the computing n
 
 There can be one or several `HealthCheck` exposed, they will all be invoked when an inbound protocol request is received (i.e. HTTP).
 
+If more than one `HealthCheck` are invoked, they will be called in an unpredictable order.
+
 The runtime will `call()` each `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
 ```
