@@ -53,7 +53,7 @@ public abstract class HealthCheckResponse {
 
 The status of all `HealthCheck` 's determines the overall status.
 
-== Constructing `HealthCheckResponse`s
+== Constructing `HealthCheckResponse` 's
 
 Application level code is expected to use one of static methods on `HealthCheckResponse` to retrieve a `HealthCheckResponseBuilder` used to construct a response, i.e. :
 
