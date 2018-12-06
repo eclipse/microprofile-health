@@ -112,13 +112,13 @@ class MyChecks {
   @Produces
   @ApplicationScoped
   HealthCheck check1() {
-    return () -> return HealthStatus.state(getMemUsage() < 90%);
+    return () -> return HealthStatus.state(getMemUsage() < 0.9);
   }
 
   @Produces
   @ApplicationScoped
   HealthCheck check2() {
-    return () -> HealthStatus.state(getCpuUsage() < 90%);
+    return () -> HealthStatus.state(getCpuUsage() < 0.9);
   }
 }}
 ```
