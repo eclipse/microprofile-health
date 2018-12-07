@@ -104,7 +104,7 @@ signal the overall status)
 
 ==== REST/HTTP interaction
 
-* Producer MUST provide a HTTP endpoint that follow the REST interface specifications described in Appendix A
+* Producer MUST provide a HTTP endpoint that follows the REST interface specifications described in Appendix A.
 
 ==== Protocol Adaptor
 
@@ -154,7 +154,7 @@ When executing health check procedures a producer MUST handle any unchecked exce
 Aspects regarding the secure access of health check information.
 
 * A producer MAY support security on all health check invocations (i.e. authentication)
-* A producer MUST not enforce security by default, it SHOULD be an opt-in feature (i.e. configuration change)
+* A producer MUST NOT enforce security by default, it SHOULD be an opt-in feature (i.e. configuration change)
 
 == Appendix A: REST interface specifications
 

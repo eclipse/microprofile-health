@@ -37,7 +37,7 @@ all of the procedure health status.
 
 The 1.0 version of the MP-HC specification does not define how the `/health` endpoint may be partitioned in the event
 that the MicroProfile runtime supports deployment of multiple applications. If an implementation wishes to
-support multiple applications within a MicroProfile runtime, the semantics of the /health endpoint are
+support multiple applications within a MicroProfile runtime, the semantics of the `/health` endpoint are
 expected to be the logical AND of all the application in the runtime. The exact details of this are deferred to
 a future version of the MP-HC specification.
 
