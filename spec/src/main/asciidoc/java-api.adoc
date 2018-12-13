@@ -27,8 +27,7 @@ public interface HealthCheck {
 }
 ```
 
-Applications provide health check procedures (implementation of a `HealthCheck`), which will be used by the
-the runtime hosting the application to verify the healthiness of the computing node.
+Applications provide health check procedures (implementation of a `HealthCheck`), which will be used by the runtime hosting the application to verify the healthiness of the computing node.
 
 There can be one or several `HealthCheck` exposed, they will all be invoked when an inbound protocol request is received (i.e. HTTP).
 
@@ -101,4 +100,25 @@ public class MyCheck implements HealthCheck {
         [...]
     }
 }
+```
+
+As health check procedures are CDI bean they can also be defined with CDI producers:
+
+
+```
+@ApplicationScoped
+class MyChecks {
+
+  @Produces
+  @ApplicationScoped
+  HealthCheck check1() {
+    return () -> HealthStatus.state(getMemUsage() < 0.9);
+  }
+
+  @Produces
+  @ApplicationScoped
+  HealthCheck check2() {
+    return () -> HealthStatus.state(getCpuUsage() < 0.9);
+  }
+}}
 ```
