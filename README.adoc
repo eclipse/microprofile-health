@@ -26,7 +26,7 @@ Do you want to contribute to this project? Here is what you can do:
 
 * Fork the repository, make changes, then do a pull request.
 * https://github.com/eclipse/microprofile-health/issues[Create or fix an issues].
-* Join our https://calendar.google.com/calendar/embed?src=gbnbc373ga40n0tvbl88nkc3r4%40group.calendar.google.com[weekly meeting] on Fridays at https://www.timeanddate.com/time/map/[14h00 GMT]. 
+* Join our https://calendar.google.com/calendar/embed?src=gbnbc373ga40n0tvbl88nkc3r4%40group.calendar.google.com[weekly meeting] on every second Friday at https://www.timeanddate.com/time/map/[14h00 GMT].
 ** https://zoom.us/j/460194898[Meeting room].
 * https://microprofile.io/blog/[Contribute a blog post].
 
