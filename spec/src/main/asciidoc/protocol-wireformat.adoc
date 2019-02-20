@@ -123,7 +123,7 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 * Producer MUST  support JSON encoded payload with simple UP/DOWN states
 * Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
 * The JSON response payload MUST be compatible with the one described in Appendix B
-* The JSON response MUST contain the `name` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
+* The JSON response MUST contain the `name` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI). This name MUST be unique within the context of the application.
 * The JSON response MUST contain the `status` entry specifying the state as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
@@ -143,7 +143,7 @@ When multiple procedures are installed all procedures MUST be executed and the o
 
 ==== Executing procedures
 
-When executing health check procedures a producer MUST handle any unchecked exceptions and synthesize a substitute respone.
+When executing health check procedures a producer MUST handle any unchecked exceptions and synthesize a substitute response.
 
 * The synthesized response MUST contain a `status` entry with a value of "DOWN".
 * The synthesized response MUST contain a `name` entry with a value set to the runtime class name of the failing check.
@@ -216,46 +216,47 @@ The following table give valid health check responses:
 
 ```
 {
- "$schema": "http://json-schema.org/draft-04/schema#",
- "type": "object",
- "properties": {
-   "status": {
-     "type": "string"
-   },
-   "checks": {
-     "type": "array",
-     "items": {
-       "type": "object",
-       "properties": {
-         "name": {
-           "type": "string"
-         },
-         "status": {
-           "type": "string"
-         },
-         "data": {
-           "type": "object",
-           "properties": {
-             "key": {
-               "type": "string"
-             },
-             "value": {
-               "type": "string|boolean|int"
-             }
-           }
-         }
-       },
-       "required": [
-         "name",
-         "status"
-         ]
-     }
-   }
- },
- "required": [
-   "status",
-   "checks"
- ]
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string"
+    },
+    "checks": {
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "boolean",
+                    "integer"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "status",
+    "checks"
+  ]
 }
 ```
 (See http://jsonschema.net/#/)
@@ -268,16 +269,15 @@ Status `200` and the following payload:
 ```
 {
   "status": "UP",
-  "checks": [
-    {
-      "name": "myCheck",
+  "checks": {
+    "myCheck": {
       "status": "UP",
       "data": {
         "key": "value",
         "foo": "bar"
       }
     }
-  ]
+  }
 }
 ```
 
@@ -286,20 +286,18 @@ Status `503` and the following payload:
 ```
 {
   "status": "DOWN",
-  "checks": [
-    {
-      "name": "firstCheck",
+  "checks": {
+    "firstCheck": {
       "status": "DOWN",
       "data": {
         "key": "value",
         "foo": "bar"
       }
     },
-    {
-      "name": "secondCheck",
+    "secondCheck": {
       "status": "UP"
     }
-  ]
+  }
 }
 ```
 
@@ -307,19 +305,17 @@ Status 500
 ```
 {
   "status": "DOWN",
-  "checks": [
-    {
-      "name": "example.health.FirstCheck",
+  "checks": {
+    "example.health.FirstCheck": {
       "status": "DOWN",
       "data": {
         "rootCause": "timed out waiting for available connection"
       }
     },
-    {
-      "name": "secondCheck",
+    "secondCheck": {
       "status": "UP"
     }
-  ]
+  }
 }
 ```
 
@@ -330,7 +326,7 @@ Status `200` and the following payload:
 ```
 {
   "status": "UP",
-  "checks": []
+  "checks": {}
 }
 ```
 
@@ -341,6 +337,6 @@ Status `503` and the following payload:
 ```
 {
   "status": "DOWN",
-  "checks": []
+  "checks": {}
 }
 ```
