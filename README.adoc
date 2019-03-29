@@ -105,7 +105,6 @@ public class CheckDiskSpace implements HealthCheck {
 It's the responsibility of the runtime to gather all `HealthCheckResponse` s for `HealthCheck` s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
  on health check procedures and the runtime will provide a composite response, with a single overall status, i.e.:
 
-  ```
   {
     "status": "UP",
     "checks": [
@@ -123,7 +122,6 @@ It's the responsibility of the runtime to gather all `HealthCheckResponse` s for
       }
     ]
   }
-  ```
 
 The link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document] contains further information on forms of interaction and the wireformat.
 
