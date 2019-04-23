@@ -36,7 +36,7 @@ Applications provide health check procedures (implementation of a `HealthCheck`)
 
 == Different kinds of Health Checks
 
-This specification provides different kind of health check procedures.
+This specification provides different kinds of health check procedures.
 Difference between them is only semantic.
 The nature of the procedure is defined by annotating the `HealthCheck` procedure with a specific annotation.
 
