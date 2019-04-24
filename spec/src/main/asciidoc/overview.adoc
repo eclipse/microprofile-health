@@ -19,7 +19,7 @@
 
 == Rationale
 
-The Eclipse MicroProfile Health Check (MP-HC) specification defines a single container runtime mechanism for validating
+The Eclipse MicroProfile Health Check specification defines a single container runtime mechanism for validating
 the availability and status of a MicroProfile implementation. This is primarily intended as a machine to machine (M2M)
 mechanism for use in containerized environments like cloud providers. Example of
 existing specifications from those environments include https://docs.cloudfoundry.org/devguide/deploy-apps/healthchecks.html[Cloud Foundry Health Checks] and
@@ -27,23 +27,22 @@ https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-read
 
 In this scenario health checks are used to determine if a computing node needs to be discarded (terminated, shutdown) and eventually replaced by another (healthy) instance.
 
-The MP-HC architecture consists of two `/health/ready` and `/health/live` endpoints in a MicroProfile runtime that respectively represent the readiness and the liveness of the entire runtime.
+The MicroProfile Health Check architecture consists of two `/health/ready` and `/health/live` endpoints in a MicroProfile runtime that respectively represent the readiness and the liveness of the entire runtime.
 These endpoints are linked to Health Check procedures defined with specifications API and annotated respectively with `@Liveness` and `@Readiness` annotations.
 
 For backward compatibility, a 3rd endpoint `/health` may also be used to provide a combination of previous endpoints and Health Check procedures annotated with the deprecated `@Health` annotation.
 
 These endpoints are expected to be associated with a configurable context, such as a web application deployment, that can be configured with settings such as port, virtual-host, security, etc.
-Further, the MP-HC defines the notion of a procedure that represents the health of a particular
-subcomponent of an application.
+Further, the MicroProfile Health Check defines the notion of a procedure that represents the health of a particular subcomponent of an application.
 
 In an application, there can be zero or more procedures bound to a given health endpoint.
 The overall application health for a given endpoint is the logical AND of all of the procedures bound to it.
 
-The current version of the MP-HC specification does not define how the defined endpoints may be partitioned in the event
+The current version of the MicroProfile Health Check specification does not define how the defined endpoints may be partitioned in the event
 that the MicroProfile runtime supports deployment of multiple applications. If an implementation wishes to
 support multiple applications within a MicroProfile runtime, the semantics of individual endpoints are
 expected to be the logical AND of all the application in the runtime. The exact details of this are deferred to
-a future version of the MP-HC specification.
+a future version of the MicroProfile Health Check specification.
 
 == Proposed solution
 

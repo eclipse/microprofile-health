@@ -17,7 +17,7 @@
 
 = Java API Usage
 
-The specification provides the following API to define health check procedures.
+This specification provides the following API to define health check procedures.
 
 
 == Common API check
@@ -49,16 +49,16 @@ A `HealthCheck` procedure with none of the above annotations is not an active pr
 
 === Readiness check
 
-A Health Check for readiness allows third party services to know if the application is ready to process request or not.
+A Health Check for readiness allows third party services to know if the application is ready to process requests or not.
 
-The `@Readiness` annotation must be applied on a `HealthCheck` implementation to define a readiness check procedure.
+The `@Readiness` annotation must be applied on a `HealthCheck` implementation to define a readiness check procedure, otherwise, this annotation is ignored.
 
 === Liveness check
 
 A Health Check for liveness allows third party services to determine if the application is running.
 This means that if this procedure fails the application can be discarded (terminated, shutdown).
 
-The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure.
+The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
 
 
 === Backward compatible check
