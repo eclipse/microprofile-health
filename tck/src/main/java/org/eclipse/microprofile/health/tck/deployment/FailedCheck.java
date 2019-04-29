@@ -21,6 +21,7 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
+import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
@@ -30,6 +31,7 @@ import javax.enterprise.context.ApplicationScoped;
  * @author Heiko Braun
  * @since 13.06.17
  */
+@Health
 @ApplicationScoped
 public class FailedCheck implements HealthCheck {
     @Override
