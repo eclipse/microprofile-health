@@ -52,7 +52,7 @@ public class EnforceQualifierTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testFailureResponsePayload() throws Exception {
-        Response response = getUrlContents();
+        Response response = getUrlHealthContents();
 
         // the procedure with an annotation shold not be discovered
         Assert.assertEquals(response.getStatus(), 200);

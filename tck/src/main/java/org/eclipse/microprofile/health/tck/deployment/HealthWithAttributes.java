@@ -26,20 +26,20 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 /**
- * Created by hbraun on 18.08.17.
+ * Created by hbraun on 29.06.17.
  */
 @Health
 @ApplicationScoped
-public class DelegateCheck implements HealthCheck {
-
-    @Inject
-    private DelegationTarget delegate;
+public class HealthWithAttributes implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("delegate-check").state(delegate.isTheSystemHealthy()).build();
+        return HealthCheckResponse.named("attributes-check")
+                .withData("first-key", "first-val")
+                .withData("second-key", "second-val")
+                .up()
+                .build();
     }
 }

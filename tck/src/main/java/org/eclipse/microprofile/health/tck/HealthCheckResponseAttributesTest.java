@@ -22,7 +22,7 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.CheckWithAttributes;
+import org.eclipse.microprofile.health.tck.deployment.HealthWithAttributes;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -46,7 +46,7 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        return createWarFileWithClasses(CheckWithAttributes.class);
+        return createWarFileWithClasses(HealthWithAttributes.class);
     }
 
     /**
@@ -55,7 +55,7 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testSuccessResponsePayload() throws Exception {
-        Response response = getUrlContents();
+        Response response = getUrlHealthContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 200);

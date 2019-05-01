@@ -22,7 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.FailedCheck;
+import org.eclipse.microprofile.health.tck.deployment.DelegateHealth;
+import org.eclipse.microprofile.health.tck.deployment.DelegationTarget;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -41,50 +42,50 @@ import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 /**
  * @author Heiko Braun
  */
-public class SingleProcedureFailedTest extends SimpleHttp {
+public class DelegateHealthSuccessfulTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        return createWarFileWithClasses(FailedCheck.class);
+        return createWarFileWithClasses(DelegateHealth.class, DelegationTarget.class);
     }
 
     /**
-     * Verifies the health integration with CDI at the scope of a server runtime
+     * Verifies CDI scoped beans can be used as delegate to resolve the system state
      */
     @Test
     @RunAsClient
-    public void testFailureResponsePayload() throws Exception {
-        Response response = getUrlContents();
+    public void testSuccessfulDelegateInvocation() throws Exception {
+        Response response = getUrlHealthContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(), 503);
+        Assert.assertEquals(response.getStatus(), 200);
 
         JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
         JsonObject json = jsonReader.readObject();
-        System.out.println(json);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(),1,"Expected a single check response");
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
+
 
         // single procedure response
         Assert.assertEquals(
                 asJsonObject(checks.get(0)).getString("name"),
-                "failed-check",
-                "Expected a CDI health check to be invoked, but it was not present in the response"
-        );
+                "delegate-check",
+                "Expected a dependent CDI bean to be invoked, to resolve the system state"
+                );
 
         Assert.assertEquals(
                 asJsonObject(checks.get(0)).getString("status"),
-                "DOWN",
+                "UP",
                 "Expected a successful check result"
         );
 
         // overall outcome
         Assert.assertEquals(
                 json.getString("status"),
-                "DOWN",
-                "Expected overall status to be unsuccessful"
+                "UP",
+                "Expected overall status to be successful"
         );
     }
 }

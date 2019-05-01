@@ -51,7 +51,7 @@ public class NoProcedureSuccessfulTest extends SimpleHttp {
     @Test
     @RunAsClient
     public void testSuccessResponsePayload() throws Exception {
-        Response response = getUrlContents();
+        Response response = getUrlHealthContents();
 
         // status code
         Assert.assertEquals(response.getStatus(),200);
