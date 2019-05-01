@@ -21,6 +21,7 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
+import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
@@ -29,6 +30,7 @@ import javax.enterprise.context.ApplicationScoped;
 /**
  * Created by hbraun on 29.06.17.
  */
+@Health
 @ApplicationScoped
 public class CheckWithAttributes implements HealthCheck {
 

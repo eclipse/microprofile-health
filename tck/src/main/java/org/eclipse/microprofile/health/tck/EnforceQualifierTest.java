@@ -22,7 +22,7 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.CheckWithHealthQualifier;
+import org.eclipse.microprofile.health.tck.deployment.CheckWithoutQualifier;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -30,28 +30,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
-
 import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 
 /**
- *
- * Test legacy {@link org.eclipse.microprofile.health.Health} qualifier
- *
  * @author Heiko Braun
- * @author Antoine Sabot-Durand
  */
-public class WithQualifierTest extends SimpleHttp {
+public class EnforceQualifierTest extends SimpleHttp {
 
     @Deployment(testable = false)
     public static Archive getDeployment() throws Exception {
-        return createWarFileWithClasses(CheckWithHealthQualifier.class);
+        return createWarFileWithClasses(CheckWithoutQualifier.class);
     }
 
     /**
@@ -69,18 +61,8 @@ public class WithQualifierTest extends SimpleHttp {
         JsonObject json = jsonReader.readObject();
         System.out.println(json);
 
-        // response size
-        JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
-
-        // single procedure response
-        JsonValue check = checks.get(0);
-
-        Assert.assertEquals(
-                asJsonObject(check).getString("name"),
-                "check-with-annotation",
-                "Expected a CDI health check to be invoked, but it was not present in the response"
-        );
+        Assert.assertEquals(json.getString("status"), "UP","Expected outcome UP");
+        Assert.assertTrue(json.getJsonArray("checks").isEmpty(), "Expected empty checks array");
 
     }
 }

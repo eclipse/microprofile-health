@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.eclipse.microprofile.health</groupId>
         <artifactId>microprofile-health-parent</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>2.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -27,7 +27,7 @@
     <groupId>org.eclipse.microprofile.health.specs</groupId>
     <artifactId>microprofile-health-spec</artifactId>
     <name>MicroProfile Health Spec</name>
-    <version>1.1-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
