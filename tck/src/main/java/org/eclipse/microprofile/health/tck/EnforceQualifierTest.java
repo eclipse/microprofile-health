@@ -61,7 +61,7 @@ public class EnforceQualifierTest extends SimpleHttp {
         JsonObject json = jsonReader.readObject();
         System.out.println(json);
 
-        Assert.assertEquals(json.getString("outcome"), "UP","Expected outcome UP");
+        Assert.assertEquals(json.getString("status"), "UP","Expected outcome UP");
         Assert.assertTrue(json.getJsonArray("checks").isEmpty(), "Expected empty checks array");
 
     }
