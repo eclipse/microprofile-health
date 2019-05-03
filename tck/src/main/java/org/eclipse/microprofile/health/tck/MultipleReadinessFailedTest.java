@@ -42,7 +42,7 @@ import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
  */
 public class MultipleReadinessFailedTest extends SimpleHttp {
 
-    @Deployment(testable = false)
+    @Deployment
     public static Archive getDeployment() throws Exception {
         return createWarFileWithClasses(FailedReadiness.class,
                                         SuccessfulLiveness.class,
