@@ -41,7 +41,7 @@ import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileW
  */
 public class EnforceQualifierTest extends SimpleHttp {
 
-    @Deployment(testable = false)
+    @Deployment
     public static Archive getDeployment() throws Exception {
         return createWarFileWithClasses(CheckWithoutQualifier.class);
     }

@@ -44,7 +44,7 @@ import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
  */
 public class DelegateProcedureSuccessfulTest extends SimpleHttp {
 
-    @Deployment(testable = false)
+    @Deployment
     public static Archive getDeployment() throws Exception {
         return createWarFileWithClasses(DelegateCheck.class, DelegationTarget.class);
     }
