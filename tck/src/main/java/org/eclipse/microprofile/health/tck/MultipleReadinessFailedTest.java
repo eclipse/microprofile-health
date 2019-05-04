@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2019 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,46 +22,40 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.FailedHealth;
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
+import java.io.StringReader;
+
+import javax.json.*;
+
+import org.eclipse.microprofile.health.tck.deployment.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import java.io.StringReader;
-
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 
 /**
  * @author Heiko Braun
+ * @author Antoine Sabot-Durand
  */
-public class MultipleProceduresFailedTest extends SimpleHttp {
+public class MultipleReadinessFailedTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        return createWarFileWithClasses(FailedHealth.class,
-                                        SuccessfulHealth.class,
+        return createWarFileWithClasses(FailedReadiness.class,
                                         SuccessfulLiveness.class,
                                         SuccessfulReadiness.class);
     }
 
     /**
-     * Verifies the legacy health integration with CDI at the scope of a server runtime
+     * Verifies the readiness health integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
     public void testFailureResponsePayload() throws Exception {
-        Response response = getUrlHealthContents();
+        Response response = getUrlReadyContents();
 
         // status code
         Assert.assertEquals(response.getStatus(),503);
@@ -72,7 +66,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(), 4, "Expected four check responses");
+        Assert.assertEquals(checks.size(), 2, "Expected two check responses");
 
 
         for (JsonValue check : checks) {
@@ -108,7 +102,7 @@ public class MultipleProceduresFailedTest extends SimpleHttp {
         Assert.assertEquals(
                 asJsonObject(check).getString("status"),
                 "DOWN",
-                "Expected a successful check result"
+                "Expected a failed check result"
                 );
     }
 

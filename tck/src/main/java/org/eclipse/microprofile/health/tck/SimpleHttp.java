@@ -47,8 +47,16 @@ public abstract class SimpleHttp extends Arquillian {
     @ArquillianResource
     private URI uri;
 
-    protected Response getUrlContents() {
+    protected Response getUrlHealthContents() {
         return getUrlContents(this.uri + "/health", false);
+    }
+
+    protected Response getUrlLiveContents() {
+        return getUrlContents(this.uri + "/health/live", false);
+    }
+
+    protected Response getUrlReadyContents() {
+        return getUrlContents(this.uri + "/health/ready", false);
     }
 
     protected Response getUrlContents(String theUrl, boolean useAuth) {

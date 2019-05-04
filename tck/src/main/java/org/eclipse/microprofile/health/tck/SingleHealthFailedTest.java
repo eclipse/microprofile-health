@@ -22,7 +22,7 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulCheck;
+import org.eclipse.microprofile.health.tck.deployment.FailedHealth;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -41,11 +41,11 @@ import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 /**
  * @author Heiko Braun
  */
-public class SingleProcedureSuccessfulTest extends SimpleHttp {
+public class SingleHealthFailedTest extends SimpleHttp {
 
     @Deployment
     public static Archive getDeployment() throws Exception {
-        return createWarFileWithClasses(SuccessfulCheck.class);
+        return createWarFileWithClasses(FailedHealth.class);
     }
 
     /**
@@ -53,11 +53,11 @@ public class SingleProcedureSuccessfulTest extends SimpleHttp {
      */
     @Test
     @RunAsClient
-    public void testSuccessResponsePayload() throws Exception {
-        Response response = getUrlContents();
+    public void testFailureResponsePayload() throws Exception {
+        Response response = getUrlHealthContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),200);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
         JsonObject json = jsonReader.readObject();
@@ -70,21 +70,21 @@ public class SingleProcedureSuccessfulTest extends SimpleHttp {
         // single procedure response
         Assert.assertEquals(
                 asJsonObject(checks.get(0)).getString("name"),
-                "successful-check",
+                "failed-check",
                 "Expected a CDI health check to be invoked, but it was not present in the response"
         );
 
         Assert.assertEquals(
                 asJsonObject(checks.get(0)).getString("status"),
-                "UP",
+                "DOWN",
                 "Expected a successful check result"
         );
 
         // overall outcome
         Assert.assertEquals(
                 json.getString("status"),
-                "UP",
-                "Expected overall status to be successful"
+                "DOWN",
+                "Expected overall status to be unsuccessful"
         );
     }
 }

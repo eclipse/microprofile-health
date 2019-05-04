@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2019 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,19 +21,20 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
-import org.eclipse.microprofile.health.Health;
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.HealthCheckResponse;
-
 import javax.enterprise.context.ApplicationScoped;
 
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Liveness;
+import org.eclipse.microprofile.health.Readiness;
+
 /**
- * @author Heiko Braun
- * @since 13.06.17
+ * @author Antoine Sabot-Durand
+ * @since 2.0
  */
-@Health
+@Readiness
 @ApplicationScoped
-public class SuccessfulCheck implements HealthCheck {
+public class SuccessfulReadiness implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.named("successful-check").up().build();
