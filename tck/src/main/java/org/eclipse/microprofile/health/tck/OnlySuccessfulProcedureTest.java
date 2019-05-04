@@ -29,7 +29,6 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
