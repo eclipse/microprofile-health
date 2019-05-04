@@ -24,9 +24,15 @@ package org.eclipse.microprofile.health.tck;
 
 import java.io.StringReader;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
 
-import org.eclipse.microprofile.health.tck.deployment.*;
+import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
+import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
+import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
