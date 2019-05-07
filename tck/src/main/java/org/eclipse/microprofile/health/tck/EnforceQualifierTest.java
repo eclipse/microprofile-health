@@ -29,20 +29,17 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
-import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Heiko Braun
  */
-public class EnforceQualifierTest extends SimpleHttp {
+public class EnforceQualifierTest extends TCKBase {
 
     @Deployment
-    public static Archive getDeployment() throws Exception {
+    public static Archive getDeployment() {
         return createWarFileWithClasses(CheckWithoutQualifier.class);
     }
 
@@ -51,17 +48,15 @@ public class EnforceQualifierTest extends SimpleHttp {
      */
     @Test
     @RunAsClient
-    public void testFailureResponsePayload() throws Exception {
+    public void testFailureResponsePayload() {
         Response response = getUrlHealthContents();
 
         // the procedure with an annotation shold not be discovered
         Assert.assertEquals(response.getStatus(), 200);
 
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
-        JsonObject json = jsonReader.readObject();
-        System.out.println(json);
+        JsonObject json = readJson(response);
 
-        Assert.assertEquals(json.getString("status"), "UP","Expected outcome UP");
+        assertOverallSuccess(json);
         Assert.assertTrue(json.getJsonArray("checks").isEmpty(), "Expected empty checks array");
 
     }

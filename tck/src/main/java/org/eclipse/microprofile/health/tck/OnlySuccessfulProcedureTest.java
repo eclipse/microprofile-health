@@ -22,12 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import java.io.StringReader;
-
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
@@ -39,15 +35,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 
 /**
  * @author Antoine Sabot-Durand
  */
-public class OnlySuccessfulProcedureTest extends SimpleHttp {
+public class OnlySuccessfulProcedureTest extends TCKBase {
 
     @Deployment
-    public static Archive getDeployment() throws Exception {
+    public static Archive getDeployment() {
         return createWarFileWithClasses(SuccessfulReadiness.class,
                                         SuccessfulLiveness.class,
                                         SuccessfulHealth.class);
@@ -58,77 +53,43 @@ public class OnlySuccessfulProcedureTest extends SimpleHttp {
      */
     @Test
     @RunAsClient
-    public void testSuccessfulLivenessResponsePayload() throws Exception {
+    public void testSuccessfulLivenessResponsePayload() {
         Response response = getUrlLiveContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 200);
 
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
-        JsonObject json = jsonReader.readObject();
-        System.out.println(json);
+        JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(),1,"Expected a single check response");
 
         // single procedure response
-        Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("name"),
-                "successful-check",
-                "Expected a CDI Liveness health check to be invoked, but it was not present in the response"
-        );
+        assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
 
-        Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("status"),
-                "UP",
-                "Expected a successful check result"
-        );
-
-        // overall outcome
-        Assert.assertEquals(
-                json.getString("status"),
-                "UP",
-                "Expected overall status to be unsuccessful"
-        );
+        assertOverallSuccess(json);
     }
 
 
     @Test
     @RunAsClient
-    public void testSuccessfulReadinessResponsePayload() throws Exception {
+    public void testSuccessfulReadinessResponsePayload() {
         Response response = getUrlReadyContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 200);
 
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
-        JsonObject json = jsonReader.readObject();
-        System.out.println(json);
+        JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(),1,"Expected a single check response");
 
         // single procedure response
-        Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("name"),
-                "successful-check",
-                "Expected a CDI Readiness health check to be invoked, but it was not present in the response"
-        );
+        assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
 
-        Assert.assertEquals(
-                asJsonObject(checks.get(0)).getString("status"),
-                "UP",
-                "Expected a successful check result"
-        );
-
-        // overall outcome
-        Assert.assertEquals(
-                json.getString("status"),
-                "UP",
-                "Expected overall status to be unsuccessful"
-        );
+        assertOverallSuccess(json);
     }
 }
 
