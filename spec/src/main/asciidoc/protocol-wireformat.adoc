@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 
-=  Protocol and Wireformat
+= Protocol and Wireformat
 
 == Abstract
 This document defines the protocol to be used by components that need to ensure a compatible wireformat, agreed upon semantics and possible forms of interactions between system components that need to determine the “liveliness” or "readiness" of computing nodes in a bigger system.
@@ -259,27 +259,30 @@ The following table gives valid health check responses for all kinds of health c
          },
          "data": {
            "type": "object",
-           "properties": {
-             "key": {
-               "type": "string"
-             },
-             "value": {
-               "type": "string|boolean|int"
+           "patternProperties": {
+             "[a-zA-Z_]*": {
+               "type": [
+                 "string",
+                 "boolean",
+                 "number"
+               ]
              }
-           }
+           },
+           "additionalProperties": false
          }
        },
        "required": [
          "name",
          "status"
-         ]
+       ]
      }
    }
  },
  "required": [
    "status",
    "checks"
- ]
+ ],
+ "additionalProperties": false
 }
 ```
 (See http://jsonschema.net/#/)
