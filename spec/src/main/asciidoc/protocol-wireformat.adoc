@@ -259,20 +259,22 @@ The following table gives valid health check responses for all kinds of health c
          },
          "data": {
            "type": "object",
-           "properties": {
-             "key": {
-               "type": "string"
-             },
-             "value": {
-               "type": ["string", "boolean", "number"]
+           "patternProperties": {
+             "[a-zA-Z_]*": {
+               "type": [
+                 "string",
+                 "boolean",
+                 "number"
+               ]
              }
-           }
+           },
+           "additionalProperties": false
          }
        },
        "required": [
          "name",
          "status"
-         ]
+       ]
      }
    }
  },
