@@ -281,7 +281,8 @@ The following table gives valid health check responses for all kinds of health c
  "required": [
    "status",
    "checks"
- ]
+ ],
+ "additionalProperties": false
 }
 ```
 (See http://jsonschema.net/#/)
