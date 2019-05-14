@@ -27,10 +27,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
-import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWarFile;
 
@@ -38,10 +35,10 @@ import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWar
  * Validates that a health check that includes no procedures returns a 200 status with no body.
  * @author Scott Stark
  */
-public class NoProcedureSuccessfulTest extends SimpleHttp {
+public class NoProcedureSuccessfulTest extends TCKBase {
 
     @Deployment
-    public static Archive getDeployment() throws Exception {
+    public static Archive getDeployment() {
         return createEmptyWarFile();
     }
 
@@ -50,16 +47,15 @@ public class NoProcedureSuccessfulTest extends SimpleHttp {
      */
     @Test
     @RunAsClient
-    public void testSuccessResponsePayload() throws Exception {
+    public void testSuccessResponsePayload() {
         Response response = getUrlHealthContents();
 
         // status code
         Assert.assertEquals(response.getStatus(),200);
 
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
-        JsonObject json = jsonReader.readObject();
+        JsonObject json = readJson(response);
 
-        Assert.assertEquals(json.getString("status"), "UP","Expected status UP");
+        assertOverallSuccess(json);
         Assert.assertTrue(json.getJsonArray("checks").isEmpty(), "Expected empty checks array");
 
     }

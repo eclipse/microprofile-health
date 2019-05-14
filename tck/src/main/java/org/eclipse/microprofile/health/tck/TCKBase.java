@@ -32,9 +32,14 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
+import org.testng.Assert;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URI;
 import java.util.Optional;
 
@@ -42,28 +47,28 @@ import java.util.Optional;
  * @author Heiko Braun
  * @since 29/03/16
  */
-public abstract class SimpleHttp extends Arquillian {
+public abstract class TCKBase extends Arquillian {
 
     @ArquillianResource
     private URI uri;
 
-    protected Response getUrlHealthContents() {
+    Response getUrlHealthContents() {
         return getUrlContents(this.uri + "/health", false);
     }
 
-    protected Response getUrlLiveContents() {
+    Response getUrlLiveContents() {
         return getUrlContents(this.uri + "/health/live", false);
     }
 
-    protected Response getUrlReadyContents() {
+    Response getUrlReadyContents() {
         return getUrlContents(this.uri + "/health/ready", false);
     }
 
-    protected Response getUrlContents(String theUrl, boolean useAuth) {
+    private Response getUrlContents(String theUrl, boolean useAuth) {
         return getUrlContents(theUrl, useAuth, true);
     }
 
-    protected Response getUrlContents(String theUrl, boolean useAuth, boolean followRedirects) {
+    private Response getUrlContents(String theUrl, boolean useAuth, boolean followRedirects) {
 
         StringBuilder content = new StringBuilder();
         int code;
@@ -107,6 +112,66 @@ public abstract class SimpleHttp extends Arquillian {
         }
 
         return new Response(code, content.toString());
+    }
+
+    JsonObject readJson(Response response) {
+        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
+        JsonObject json = jsonReader.readObject();
+        System.out.println(json);
+        
+        return json;
+    }
+
+    void assertSuccessfulCheck(JsonObject check, String expectedName) {
+        assertCheckName(check, expectedName);
+        verifySuccessStatus(check);
+    }
+
+    void assertFailureCheck(JsonObject check, String expectedName) {
+        assertCheckName(check, expectedName);
+        verifyFailureStatus(check);
+    }
+
+    private void assertCheckName(JsonObject check, String expectedName) {
+        Assert.assertEquals(
+            check.getString("name"),
+            expectedName,
+            String.format("Expected a CDI health check '%s' to be invoked, " +
+                "but it was not present in the response", expectedName)
+        );
+    }
+
+    void verifySuccessStatus(JsonObject check) {
+        Assert.assertEquals(
+            check.getString("status"),
+            "UP",
+            "Expected a successful check result"
+        );
+
+    }
+
+    void verifyFailureStatus(JsonObject check) {
+        Assert.assertEquals(
+            check.getString("status"),
+            "DOWN",
+            "Expected a failed check result"
+        );
+    }
+
+    void assertOverallSuccess(JsonObject json) {
+        Assert.assertEquals(
+            json.getString("status"),
+            "UP",
+            "Expected overall status to be successful"
+        );
+    }
+    
+    void assertOverallFailure(JsonObject json) {
+        Assert.assertEquals(
+            json.getString("status"),
+            "DOWN",
+            "Expected overall status to be unsuccessful"
+        );
     }
 
     public class Response {

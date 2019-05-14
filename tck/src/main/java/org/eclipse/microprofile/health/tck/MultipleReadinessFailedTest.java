@@ -22,13 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import java.io.StringReader;
-
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
 
 import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
@@ -40,16 +35,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 
 /**
  * @author Heiko Braun
  * @author Antoine Sabot-Durand
  */
-public class MultipleReadinessFailedTest extends SimpleHttp {
+public class MultipleReadinessFailedTest extends TCKBase {
 
     @Deployment
-    public static Archive getDeployment() throws Exception {
+    public static Archive getDeployment() {
         return createWarFileWithClasses(FailedReadiness.class,
                                         SuccessfulLiveness.class,
                                         SuccessfulReadiness.class);
@@ -60,72 +54,33 @@ public class MultipleReadinessFailedTest extends SimpleHttp {
      */
     @Test
     @RunAsClient
-    public void testFailureResponsePayload() throws Exception {
+    public void testFailureResponsePayload() {
         Response response = getUrlReadyContents();
 
         // status code
         Assert.assertEquals(response.getStatus(),503);
 
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
-        JsonObject json = jsonReader.readObject();
-        System.out.println(json);
+        JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(), 2, "Expected two check responses");
-
-
-        for (JsonValue check : checks) {
-            String id = asJsonObject(check).getString("name");
+        
+        for (JsonObject check : checks.getValuesAs(JsonObject.class)) {
+            String id = check.getString("name");
             switch (id) {
                 case "successful-check":
-                    verifySuccessPayload(check);
+                    verifySuccessStatus(check);
                     break;
                 case "failed-check":
-                    verifyFailurePayload(check);
+                    verifyFailureStatus(check);
                     break;
                 default:
-                    throw new IllegalArgumentException("Unexpected response payload structure");
+                    Assert.fail("Unexpected response payload structure");
             }
         }
 
-        // overall outcome
-        Assert.assertEquals(
-                json.getString("status"),
-                "DOWN",
-                "Expected overall status to be unsuccessful"
-        );
-    }
-
-    private void verifyFailurePayload(JsonValue check) {
-        // single procedure response
-        Assert.assertEquals(
-                asJsonObject(check).getString("name"),
-                "failed-check",
-                "Expected a CDI health check to be invoked, but it was not present in the response"
-                );
-
-        Assert.assertEquals(
-                asJsonObject(check).getString("status"),
-                "DOWN",
-                "Expected a failed check result"
-                );
-    }
-
-    private void verifySuccessPayload(JsonValue check) {
-        // single procedure response
-        Assert.assertEquals(
-                asJsonObject(check).getString("name"),
-                "successful-check",
-                "Expected a CDI health check to be invoked, but it was not present in the response"
-                );
-
-        Assert.assertEquals(
-                asJsonObject(check).getString("status"),
-                "UP",
-                "Expected a successful check result"
-                );
-
+        assertOverallFailure(json);
     }
 }
 

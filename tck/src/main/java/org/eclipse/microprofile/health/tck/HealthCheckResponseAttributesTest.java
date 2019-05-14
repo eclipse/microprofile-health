@@ -29,23 +29,18 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import java.io.StringReader;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-import static org.eclipse.microprofile.health.tck.JsonUtils.asJsonObject;
 
 /**
  * @author Heiko Braun
  */
-public class HealthCheckResponseAttributesTest extends SimpleHttp {
+public class HealthCheckResponseAttributesTest extends TCKBase {
 
     @Deployment
-    public static Archive getDeployment() throws Exception {
+    public static Archive getDeployment() {
         return createWarFileWithClasses(HealthWithAttributes.class);
     }
 
@@ -54,37 +49,26 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
      */
     @Test
     @RunAsClient
-    public void testSuccessResponsePayload() throws Exception {
+    public void testSuccessResponsePayload() {
         Response response = getUrlHealthContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 200);
 
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
-        JsonObject json = jsonReader.readObject();
-        System.out.println(json);
+        JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
         // single procedure response
-        JsonValue check = checks.get(0);
+        JsonObject check = checks.getJsonObject(0);
 
-        Assert.assertEquals(
-                asJsonObject(check).getString("name"),
-                "attributes-check",
-                "Expected a CDI health check to be invoked, but it was not present in the response"
-                );
-
-        Assert.assertEquals(
-                asJsonObject(check).getString("status"),
-                "UP",
-                "Expected a successful check result"
-                );
+        assertSuccessfulCheck(check, "attributes-check");
 
         // response payload attributes
-        JsonObject data = asJsonObject(check).getJsonObject("data");
+        JsonObject data = check.getJsonObject("data");
+        
         Assert.assertEquals(
                 data.getString("first-key"),
                 "first-val"
@@ -95,12 +79,7 @@ public class HealthCheckResponseAttributesTest extends SimpleHttp {
                 "second-val"
         );
 
-        // overall outcome
-        Assert.assertEquals(
-                json.getString("status"),
-                "UP",
-                "Expected overall outcome to be successful"
-                );
+        assertOverallSuccess(json);
     }
 }
 
