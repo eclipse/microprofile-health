@@ -101,7 +101,6 @@
         <module>api</module>
         <module>tck</module>
         <module>spec</module>
-        <module>sample-implementation</module>
     </modules>
 
     <dependencyManagement>
