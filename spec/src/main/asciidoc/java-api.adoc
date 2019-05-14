@@ -144,7 +144,7 @@ public class CheckDiskspace implements HealthCheck {
 }
 ```
 
-= Integration with CDI
+== Integration with CDI
 
 Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness` or `@Health` qualifier can be used as health check procedure.
 
