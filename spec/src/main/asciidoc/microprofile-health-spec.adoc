@@ -17,9 +17,6 @@
 
 = MicroProfile Health
 :author: The Microprofile community and it's contributors
-:revnumber: 1.0.0-RC2
-:revdate: 2017-08-30
-:revremark: Release Candidate
 :version-label!:
 :sectanchors:
 :doctype: book
