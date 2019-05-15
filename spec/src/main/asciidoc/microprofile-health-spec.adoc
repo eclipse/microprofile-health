@@ -39,3 +39,5 @@ include::java-api.adoc[]
 include::protocol-wireformat.adoc[]
 
 include::architecture.adoc[]
+
+include::release_notes.asciidoc[]
