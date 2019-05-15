@@ -34,7 +34,7 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 
 === Protocol and wireformat changes
 
-- In response JSON format replaced `outcome` by `status`. *This change breaks backward compatibility with version 1.0*
+- In response JSON format replaced `outcome` and `state` by `status`. *This change breaks backward compatibility with version 1.0*
 - Introduction of `/health/live` endpoint that must call all the liveness procedures
 - Introduction of `/health/ready` endpoint that must call all the readiness procedures
 - For backward compatibility, `/health` endpoint should now call all procedures having `@Health`, `@Liveness` or `@Readiness` qualifiers
