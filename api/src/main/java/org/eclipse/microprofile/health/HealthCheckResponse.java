@@ -38,7 +38,6 @@ import java.util.logging.Logger;
  * The HealthCheckResponse class is reserved for an extension by implementation providers.
  * An application should use one of the static methods to create a Response instance using a HealthCheckResponseBuilder.
  * </p>
- *
  */
 public abstract class HealthCheckResponse {
 
@@ -55,11 +54,24 @@ public abstract class HealthCheckResponse {
         HealthCheckResponse.provider = provider;
     }
 
+    /**
+     * Creates a health check response builder with a name.
+     *
+     * @param name the check name
+     * @return a new health check builder with a name
+     */
     public static HealthCheckResponseBuilder named(String name) {
 
         return getProvider().createResponseBuilder().name(name);
     }
 
+    /**
+     * Creates an empty health check response builder.
+     *
+     * <b>Note:</b> The health check response name is required and needs to be set before the response is constructed.
+     *
+     * @return an new, empty health check builder
+     */
     public static HealthCheckResponseBuilder builder() {
         return getProvider().createResponseBuilder();
     }
@@ -85,7 +97,7 @@ public abstract class HealthCheckResponse {
 
     // the actual contract
 
-    public enum State { UP, DOWN }
+    public enum State {UP, DOWN}
 
     public abstract String getName();
 
@@ -98,12 +110,12 @@ public abstract class HealthCheckResponse {
         T serviceInstance = find(service, HealthCheckResponse.getContextClassLoader());
 
         // alternate classloader
-        if(null==serviceInstance) {
+        if (null == serviceInstance) {
             serviceInstance = find(service, HealthCheckResponse.class.getClassLoader());
         }
 
         // service cannot be found
-        if(null==serviceInstance) {
+        if (null == serviceInstance) {
             throw new IllegalStateException("Unable to find service " + service.getName());
         }
 
@@ -126,8 +138,7 @@ public abstract class HealthCheckResponse {
                 }
                 serviceInstance = spi;
             }
-        }
-        catch (Throwable t) {
+        } catch (Throwable t) {
             LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
         }
 
@@ -135,14 +146,12 @@ public abstract class HealthCheckResponse {
     }
 
 
-
     private static ClassLoader getContextClassLoader() {
         return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> {
             ClassLoader cl = null;
             try {
                 cl = Thread.currentThread().getContextClassLoader();
-            }
-            catch (SecurityException ex) {
+            } catch (SecurityException ex) {
                 LOGGER.log(
                         Level.WARNING,
                         "Unable to get context classloader instance.",
