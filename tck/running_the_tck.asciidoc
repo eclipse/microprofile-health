@@ -30,7 +30,7 @@ Implementation of the MicroProfile Health TCK need to provide a reference to the
 Arquillian has `URIResourceProvider` to inject test application root to `URI`.   Create a class that extends `URIResourceProvider` and override `lookup` method.  For example:
 
 ```
-public class TCKURIResourceProvider extends ResourceProvider {
+public class TCKURIResourceProvider extends URIResourceProvider {
 
     @Override
     public Object lookup(ArquillianResource arquillianResource, Annotation... annotations) {
