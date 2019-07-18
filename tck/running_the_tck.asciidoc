@@ -92,6 +92,11 @@ If you use Apache Maven then the tests are run via the `maven-surefire-plugin`, 
 </build>
 ----
 
+== Disabling default vendor procedures
+
+As TCK asserts check also the number of returned health procedures, the TCK MUST run
+with the configuration property `mp.health.disable-default-procedures` set to `true`.
+
 == Examples
 
 The https://github.com/jmesnil/wildfly-microprofile-health[WildFly implementation] of the MicroProfile Health runs the TCK in its https://github.com/jmesnil/wildfly-microprofile-health/tree/master/tck[tck module].
