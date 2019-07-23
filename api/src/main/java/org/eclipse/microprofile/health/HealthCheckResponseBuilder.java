@@ -22,8 +22,6 @@
 
 package org.eclipse.microprofile.health;
 
-import static org.eclipse.microprofile.health.HealthCheckResponse.State;
-
 /**
  * A builder to construct a health procedure response.
  *
@@ -45,7 +43,7 @@ public abstract class HealthCheckResponseBuilder {
 
     /**
      * Adds additional string data to the health check response.
-     * Puts the {@value} identified by {@code key} to the data section of the health check response.
+     * Puts the {@code value} identified by {@code key} to the data section of the health check response.
      * Additional invocations of a {@code withData} method with the same {@code key} override the key-value pair.
      *
      * @param key   the identifier
@@ -56,7 +54,7 @@ public abstract class HealthCheckResponseBuilder {
 
     /**
      * Adds additional numeric data to the health check response.
-     * Puts the long {@value} identified by {@code key} to the data section of the health check response.
+     * Puts the long {@code value} identified by {@code key} to the data section of the health check response.
      * Additional invocations of a {@code withData} method with the same {@code key} override the key-value pair.
      *
      * @param key   the identifier
@@ -67,7 +65,7 @@ public abstract class HealthCheckResponseBuilder {
 
     /**
      * Adds additional boolean data to the health check response.
-     * Puts the boolean {@value} identified by {@code key} to the data section of the health check response.
+     * Puts the boolean {@code value} identified by {@code key} to the data section of the health check response.
      * Additional invocations of a {@code withData} method with the same {@code key} override the key-value pair.
      *
      * @param key   the identifier
@@ -77,7 +75,7 @@ public abstract class HealthCheckResponseBuilder {
     public abstract HealthCheckResponseBuilder withData(String key, boolean value);
 
     /**
-     * Sets the status of the health check response to {@link State#UP}.
+     * Sets the status of the health check response to {@link HealthCheckResponse.State#UP}.
      * This implies that the health check was successful.
      *
      * @return this builder
@@ -85,7 +83,7 @@ public abstract class HealthCheckResponseBuilder {
     public abstract HealthCheckResponseBuilder up();
 
     /**
-     * Sets the status of the health check response to {@link State#DOWN}.
+     * Sets the status of the health check response to {@link HealthCheckResponse.State#DOWN}.
      * This implies that the health check was <i>not</i> successful.
      *
      * @return this builder

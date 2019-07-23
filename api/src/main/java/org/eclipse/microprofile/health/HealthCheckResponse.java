@@ -70,7 +70,7 @@ public abstract class HealthCheckResponse {
      *
      * <b>Note:</b> The health check response name is required and needs to be set before the response is constructed.
      *
-     * @return an new, empty health check builder
+     * @return a new, empty health check builder
      */
     public static HealthCheckResponseBuilder builder() {
         return getProvider().createResponseBuilder();
@@ -138,7 +138,8 @@ public abstract class HealthCheckResponse {
                 }
                 serviceInstance = spi;
             }
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
             LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
         }
 
@@ -151,7 +152,8 @@ public abstract class HealthCheckResponse {
             ClassLoader cl = null;
             try {
                 cl = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException ex) {
+            }
+            catch (SecurityException ex) {
                 LOGGER.log(
                         Level.WARNING,
                         "Unable to get context classloader instance.",
