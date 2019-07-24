@@ -27,24 +27,20 @@ Implementation of the MicroProfile Health TCK need to provide a reference to the
  private URI uri;
 ```
 
-An example provider for that resource:
+Arquillian has `URIResourceProvider` to inject test application root to `URI`.   Create a class that extends `URIResourceProvider` and override `lookup` method.  For example:
 
 ```
-public class URIProvider implements ResourceProvider {
+public class TCKURIResourceProvider extends URIResourceProvider {
 
     @Override
     public Object lookup(ArquillianResource arquillianResource, Annotation... annotations) {
         return URI.create("http://localhost:8080");
     }
 
-    @Override
-    public boolean canProvide(Class<?> type) {
-        return type.isAssignableFrom(URI.class);
-    }
-
 }
-
 ```
+
+Override `URIResourceProvider` with `TCKURIResourceProvider` using `LoadableExtension.ExtensionBuilder.override(ResourceProvider.class, URIResourceProvider.class, TCKURIResourceProvider.class);`
 
 For any test runs, the TCK will append `/health`, so that a fully qualified URL to your health impoementation looks like `http://<HOST:<PORT>/health`
 
