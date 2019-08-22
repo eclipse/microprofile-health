@@ -45,7 +45,7 @@ A detailed description of the health check protocol can be found in the link:htt
 
 The main API to provide health check procedures on the application level is the `HealthCheck` interface:
 
-```
+```java
 @FunctionalInterface
 public interface HealthCheck {
 
@@ -57,7 +57,7 @@ Applications are expected to provide health check procedures (implementation of 
 
 The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
-```
+```java
 public abstract class HealthCheckResponse {
 
     public enum State { UP, DOWN }
@@ -76,7 +76,7 @@ public abstract class HealthCheckResponse {
 
 Application level code is expected to use one of static methods on `HealthCheckResponse` to retrieve a `HealthCheckResponseBuilder` used to construct a response, i.e. :
 
-```
+```java
 public class SuccessfulCheck implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
@@ -89,7 +89,7 @@ public class SuccessfulCheck implements HealthCheck {
 
 Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
 
-```
+```java
 @Health
 @ApplicationScoped
 public class CheckDiskSpace implements HealthCheck {
@@ -105,6 +105,7 @@ public class CheckDiskSpace implements HealthCheck {
 It's the responsibility of the runtime to gather all `HealthCheckResponse` s for `HealthCheck` s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
  on health check procedures and the runtime will provide a composite response, with a single overall status, i.e.:
 
+```json
   {
     "status": "UP",
     "checks": [
@@ -122,6 +123,7 @@ It's the responsibility of the runtime to gather all `HealthCheckResponse` s for
       }
     ]
   }
+```
 
 The link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document] contains further information on forms of interaction and the wireformat.
 
