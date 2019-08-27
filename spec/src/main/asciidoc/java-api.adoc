@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
+// Copyright (c) 2016-2019 Eclipse Microprofile Contributors:
 // See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -171,17 +171,15 @@ Health check procedures are CDI beans, therefore, they can also be defined with 
 class MyChecks {
 
   @Produces
-  @ApplicationScoped
   @Liveness
   HealthCheck check1() {
-    return () -> HealthStatus.state(getMemUsage() < 0.9);
+    return () -> HealthCheckResponse.named("heap-memory").state(getMemUsage() < 0.9).build();
   }
 
   @Produces
-  @ApplicationScoped
   @Readiness
   HealthCheck check2() {
-    return () -> HealthStatus.state(getCpuUsage() < 0.9);
+    return () -> HealthCheckResponse.named("cpu-usage").state(getCpuUsage() < 0.9).build();
   }
-}}
+}
 ```
