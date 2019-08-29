@@ -33,6 +33,7 @@
         <version.glassfish.json>1.0</version.glassfish.json>
         <httpclient.version>4.5.2</httpclient.version>
         <commons-logging.version>1.2</commons-logging.version>
+        <version.com.github.java-json-tools>2.2.10</version.com.github.java-json-tools>
     </properties>
 
     <dependencyManagement>
@@ -110,6 +111,26 @@
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
             <version>${version.glassfish.json}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${version.com.github.java-json-tools}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.sf.jopt-simple</groupId>
+                    <artifactId>jopt-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "patternProperties": {
+              "[a-zA-Z_]*": {
+                "type": [
+                  "string",
+                  "boolean",
+                  "number"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ]
+      }
+    }
+  },
+  "required": [
+    "status",
+    "checks"
+  ],
+  "additionalProperties": false
+}
