@@ -325,6 +325,7 @@
                         <exclude>.checkstyle</exclude>
                         <exclude>.factorypath</exclude>
                         <exclude>.editorconfig</exclude>
+                        <exclude>src/main/resources/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
