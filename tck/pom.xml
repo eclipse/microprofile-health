@@ -27,7 +27,7 @@
     <name>MicroProfile Health TCK</name>
 
     <properties>
-        <arquillian.version>1.1.13.Final</arquillian.version>
+        <arquillian.version>1.4.1.Final</arquillian.version>
         <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9_]*$</checkstyle.methodNameFormat>
         <testng.version>6.9.9</testng.version>
         <version.glassfish.json>1.0</version.glassfish.json>
