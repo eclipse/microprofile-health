@@ -36,6 +36,6 @@ import javax.enterprise.context.ApplicationScoped;
 public class SuccessfulHealth implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("successful-check").up().build();
+        return HealthCheckResponse.up("successful-check");
     }
 }

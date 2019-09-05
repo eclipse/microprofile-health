@@ -36,6 +36,6 @@ import org.eclipse.microprofile.health.Liveness;
 public class FailedLiveness implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("failed-check").down().build();
+        return HealthCheckResponse.down("failed-check");
     }
 }
