@@ -31,6 +31,11 @@ package org.eclipse.microprofile.health;
  */
 @FunctionalInterface
 public interface HealthCheck {
-    
+
+    /**
+     * Invokes the health check procedure provided by the implementation of this interface. 
+     * 
+     * @return {@link HealthCheckResponse} object containing information about the health check result
+     */
     HealthCheckResponse call();
 }

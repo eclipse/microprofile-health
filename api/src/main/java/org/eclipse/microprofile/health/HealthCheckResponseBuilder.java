@@ -23,10 +23,10 @@
 package org.eclipse.microprofile.health;
 
 /**
- * A builder to construct a health procedure response.
+ * A builder to construct a health check procedure response.
  *
  * <p>
- * The HealthCheckResponseBuilder class is reserved for an extension by implementation providers.
+ * The {@link HealthCheckResponseBuilder} class is reserved for an extension by implementation providers.
  * </p>
  */
 public abstract class HealthCheckResponseBuilder {
@@ -99,9 +99,9 @@ public abstract class HealthCheckResponseBuilder {
     public abstract HealthCheckResponseBuilder state(boolean up);
 
     /**
-     * Creates a health check response from the current builder.
+     * Creates a {@link HealthCheckResponse} from the current builder.
      *
-     * @return The health check response
+     * @return A new {@link HealthCheckResponse} defined by this builder
      */
     public abstract HealthCheckResponse build();
 

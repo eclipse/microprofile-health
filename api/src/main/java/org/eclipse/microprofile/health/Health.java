@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by hbraun on 24.08.17.
- * @deprecated in version 1.1 of the spec.
+ * @deprecated in version 2.0 of the spec.
  */
 @Qualifier
 @Documented

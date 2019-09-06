@@ -35,8 +35,9 @@ import java.util.logging.Logger;
 /**
  * The response to a health check invocation.
  * <p>
- * The HealthCheckResponse class is reserved for an extension by implementation providers.
- * An application should use one of the static methods to create a Response instance using a HealthCheckResponseBuilder.
+ * The {@link HealthCheckResponse} class is reserved for an extension by implementation providers.
+ * An application should use one of the static methods to create a Response instance using a 
+ * {@link HealthCheckResponseBuilder}.
  * </p>
  */
 public abstract class HealthCheckResponse {
@@ -46,7 +47,7 @@ public abstract class HealthCheckResponse {
     private static volatile HealthCheckResponseProvider provider = null;
 
     /**
-     * Used by OSGi environment while service loader pattern is not supported.
+     * Used by OSGi environment where the service loader pattern is not supported.
      *
      * @param provider the provider instance to use.
      */
@@ -55,7 +56,7 @@ public abstract class HealthCheckResponse {
     }
 
     /**
-     * Creates a health check response builder with a name.
+     * Creates a {@link HealthCheckResponseBuilder} with a name.
      *
      * @param name the check name
      * @return a new health check builder with a name
@@ -66,7 +67,7 @@ public abstract class HealthCheckResponse {
     }
 
     /**
-     * Creates an empty health check response builder.
+     * Creates an empty {@link HealthCheckResponseBuilder}.
      *
      * <b>Note:</b> The health check response name is required and needs to be set before the response is constructed.
      *
