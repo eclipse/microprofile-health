@@ -35,6 +35,6 @@ import javax.enterprise.context.ApplicationScoped;
 public class CheckWithoutQualifier implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("check-without-annotation").up().build();
+        return HealthCheckResponse.up("check-without-annotation");
     }
 }

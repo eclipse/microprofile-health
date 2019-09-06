@@ -44,6 +44,6 @@ public class DelayedCheck implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("delayed-check").down().build();
+        return HealthCheckResponse.down("delayed-check");
     }
 }

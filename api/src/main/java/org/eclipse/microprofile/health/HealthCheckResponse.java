@@ -76,6 +76,26 @@ public abstract class HealthCheckResponse {
         return getProvider().createResponseBuilder();
     }
 
+    /**
+     * Creates a successful health check with a name.
+     * 
+     * @param name the check name
+     * @return a new sucessful health check response with a name
+     */
+    public static HealthCheckResponse up(String name) {
+        return HealthCheckResponse.named(name).up().build();
+    }
+
+    /**
+     * Creates a failed health check with a name.
+     * 
+     * @param name the check name
+     * @return a new failed health check response with a name
+     */
+    public static HealthCheckResponse down(String name) {
+        return HealthCheckResponse.named(name).down().build();
+    }
+
     private static HealthCheckResponseProvider getProvider() {
         if (provider == null) {
             synchronized (HealthCheckResponse.class) {

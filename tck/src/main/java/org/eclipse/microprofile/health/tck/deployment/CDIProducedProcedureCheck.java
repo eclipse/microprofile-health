@@ -35,12 +35,12 @@ public class CDIProducedProcedureCheck {
     @Produces
     @Liveness
     HealthCheck cdiProducedLivenessCheck() {
-        return () -> HealthCheckResponse.named("cdi-produced-successful-check").up().build();
+        return () -> HealthCheckResponse.up("cdi-produced-successful-check");
     }
 
     @Produces
     @Readiness
     HealthCheck cdiProducedReadinessCheck() {
-        return () -> HealthCheckResponse.named("cdi-produced-failed-check").down().build();
+        return () -> HealthCheckResponse.down("cdi-produced-failed-check");
     }
 }

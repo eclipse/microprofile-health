@@ -36,6 +36,6 @@ import org.eclipse.microprofile.health.Readiness;
 public class FailedReadiness implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("failed-check").down().build();
+        return HealthCheckResponse.down("failed-check");
     }
 }
