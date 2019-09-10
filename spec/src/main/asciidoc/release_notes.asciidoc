@@ -20,6 +20,30 @@
 
 = Release Notes
 
+[[release_notes_2_1]]
+== Release Notes for MicroProfile Health Check 2.1
+
+The following changes occurred in the 2.1 release, compared to 2.0
+
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/3?closed=1+[MicroProfile Health Check 2.1]
+
+=== API/SPI Changes
+
+- Add new method to create responses
+- Add config property to disable implementation Health Check procedures
+- Improve javadoc
+
+=== TCK enhancement
+
+- Testing JSON format
+- Add delayed test
+- Add test name before each tests
+
+== Miscellaneous
+
+- Remove duplicate Arquillian import
+- Remove EL API transitive dependency
+
 [[release_notes_2]]
 == Release Notes for MicroProfile Health Check 2.0
 
@@ -44,7 +68,7 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 
 - Adding tests for new types of health check procedures
 - Cleaning existing tests
-- Testing JSON format
+
 
 
 
