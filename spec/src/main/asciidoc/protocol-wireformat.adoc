@@ -127,6 +127,7 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 * The JSON response MUST contain the `status` entry specifying the state as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
+[[health-check-procedures]]
 == Health Check Procedures
 * A producer MUST support custom, application level health check procedures
 * A producer SHOULD support reasonable out-of-the-box procedures
@@ -148,6 +149,16 @@ When executing health check procedures a producer MUST handle any unchecked exce
 * The synthesized response MUST contain a `status` entry with a value of "DOWN".
 * The synthesized response MUST contain a `name` entry with a value set to the runtime class name of the failing check.
 * The synthesized response MAY contain additional information about the failure (i.e. exception message or stack trace)
+
+==== Disabling default vendor procedures
+
+An implementation is allowed to supply a reasonable default (out-of-the-box) procedures as
+defined in the <<health-check-procedures,Health Check Procedures>> section. To disable
+all default vendor procedures users can specify a
+https://github.com/eclipse/microprofile-config[MicroProfile Config] configuration property
+`mp.health.disable-default-procedures` to `true`. This allows the application to process and
+display only the user-defined health check procedures.
+
 
 == Security
 
