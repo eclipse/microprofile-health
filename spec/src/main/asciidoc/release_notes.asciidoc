@@ -39,7 +39,7 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 - Add delayed test
 - Add test name before each tests
 
-== Miscellaneous
+=== Miscellaneous
 
 - Remove duplicate Arquillian import
 - Remove EL API transitive dependency
