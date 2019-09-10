@@ -43,9 +43,8 @@ public class OnlySuccessfulProcedureTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(SuccessfulReadiness.class,
-                                        SuccessfulLiveness.class,
-                                        SuccessfulHealth.class);
+        return createWarFileWithClasses(OnlySuccessfulProcedureTest.class.getSimpleName(),
+            SuccessfulReadiness.class, SuccessfulLiveness.class, SuccessfulHealth.class);
     }
 
     /**

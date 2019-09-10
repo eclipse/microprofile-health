@@ -42,7 +42,8 @@ public class DelegateHealthSuccessfulTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(DelegateHealth.class, DelegationTarget.class);
+        return createWarFileWithClasses(DelegateHealthSuccessfulTest.class.getSimpleName(),
+            DelegateHealth.class, DelegationTarget.class);
     }
 
     /**

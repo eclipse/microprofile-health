@@ -48,8 +48,8 @@ public class JsonSchemaValidationTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(SuccessfulHealth.class,
-            SuccessfulLiveness.class, SuccessfulReadiness.class);
+        return createWarFileWithClasses(JsonSchemaValidationTest.class.getSimpleName(),
+            SuccessfulHealth.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
     }
 
     /**
@@ -58,7 +58,7 @@ public class JsonSchemaValidationTest extends TCKBase {
      */
     @Test
     @RunAsClient
-    public void testFailureResponsePayload() throws Exception {
+    public void testPayloadJsonVerifiesWithTheSpecificationSchema() throws Exception {
         Response response = getUrlHealthContents();
 
         Assert.assertEquals(response.getStatus(), 200);

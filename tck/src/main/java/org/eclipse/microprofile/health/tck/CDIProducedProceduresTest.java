@@ -40,7 +40,8 @@ import org.testng.annotations.Test;
 public class CDIProducedProceduresTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(CDIProducedProcedureCheck.class);
+        return createWarFileWithClasses(CDIProducedProceduresTest.class.getSimpleName(),
+            CDIProducedProcedureCheck.class);
     }
 
     /**

@@ -39,7 +39,7 @@ public class NoProcedureSuccessfulTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createEmptyWarFile();
+        return createEmptyWarFile(NoProcedureSuccessfulTest.class.getSimpleName());
     }
 
     /**
