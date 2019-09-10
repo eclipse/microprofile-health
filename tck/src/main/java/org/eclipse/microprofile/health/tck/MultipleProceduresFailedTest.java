@@ -44,10 +44,8 @@ public class MultipleProceduresFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(FailedHealth.class,
-                                        SuccessfulHealth.class,
-                                        SuccessfulLiveness.class,
-                                        SuccessfulReadiness.class);
+        return createWarFileWithClasses(MultipleProceduresFailedTest.class.getSimpleName(),
+            FailedHealth.class, SuccessfulHealth.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
     }
 
     /**

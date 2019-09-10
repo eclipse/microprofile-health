@@ -41,7 +41,7 @@ public class SingleHealthSuccessfulTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(SuccessfulHealth.class);
+        return createWarFileWithClasses(SingleHealthSuccessfulTest.class.getSimpleName(), SuccessfulHealth.class);
     }
 
     /**

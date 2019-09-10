@@ -41,7 +41,8 @@ public class HealthCheckResponseAttributesTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(HealthWithAttributes.class);
+        return createWarFileWithClasses(HealthCheckResponseAttributesTest.class.getSimpleName(),
+            HealthWithAttributes.class);
     }
 
     /**

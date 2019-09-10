@@ -40,7 +40,7 @@ public class DelayedCheckTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(DelayedCheck.class);
+        return createWarFileWithClasses(DelayedCheckTest.class.getSimpleName(), DelayedCheck.class);
     }
 
     /**

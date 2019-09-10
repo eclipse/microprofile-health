@@ -33,6 +33,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -40,8 +41,10 @@ import javax.json.JsonReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * @author Heiko Braun
@@ -49,9 +52,16 @@ import java.util.Optional;
  */
 public abstract class TCKBase extends Arquillian {
 
+    private static final Logger LOG = Logger.getLogger(TCKBase.class.getName());
+
     @ArquillianResource
     private URI uri;
 
+    @BeforeMethod
+    public void beforeMethod(Method method) {
+        LOG.info(String.format("Running test: %s#%s", method.getDeclaringClass().getSimpleName(), method.getName()));
+    }
+    
     Response getUrlHealthContents() {
         return getUrlContents(this.uri + "/health", false);
     }

@@ -40,7 +40,7 @@ public class EnforceQualifierTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(CheckWithoutQualifier.class);
+        return createWarFileWithClasses(EnforceQualifierTest.class.getSimpleName(), CheckWithoutQualifier.class);
     }
 
     /**

@@ -29,13 +29,13 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 class DeploymentUtils {
     private DeploymentUtils() {}
     
-    static WebArchive createEmptyWarFile() {
-        return ShrinkWrap.create(WebArchive.class, "tck.war")
+    static WebArchive createEmptyWarFile(String name) {
+        return ShrinkWrap.create(WebArchive.class, name + ".war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
-    static WebArchive createWarFileWithClasses(Class<?>... classes) {
-        return createEmptyWarFile()
+    static WebArchive createWarFileWithClasses(String name, Class<?>... classes) {
+        return createEmptyWarFile(name)
                 .addClasses(classes);
     }
 }

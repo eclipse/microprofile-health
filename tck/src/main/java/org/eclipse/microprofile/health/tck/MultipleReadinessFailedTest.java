@@ -44,9 +44,8 @@ public class MultipleReadinessFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(FailedReadiness.class,
-                                        SuccessfulLiveness.class,
-                                        SuccessfulReadiness.class);
+        return createWarFileWithClasses(MultipleReadinessFailedTest.class.getSimpleName(),
+            FailedReadiness.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
     }
 
     /**
