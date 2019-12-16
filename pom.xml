@@ -122,6 +122,7 @@
                 <groupId>jakarta.enterprise</groupId>
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>
                 <version>${cdi-api.version}</version>
+                <scope>provided</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>jakarta.el</groupId>
@@ -133,11 +134,13 @@
                 <groupId>jakarta.inject</groupId>
                 <artifactId>jakarta.inject-api</artifactId>
                 <version>${inject.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.annotation.versioning</artifactId>
                 <version>${org.osgi.annotation.versioning.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
