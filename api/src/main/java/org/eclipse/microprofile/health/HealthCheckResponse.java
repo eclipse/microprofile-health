@@ -38,13 +38,41 @@ import java.util.logging.Logger;
  * The {@link HealthCheckResponse} class is reserved for an extension by implementation providers.
  * An application should use one of the static methods to create a Response instance using a 
  * {@link HealthCheckResponseBuilder}.
+ * When used on the consuming, The class can also be instantiated directly.
  * </p>
  */
-public abstract class HealthCheckResponse {
+public class HealthCheckResponse {
 
     private static final Logger LOGGER = Logger.getLogger(HealthCheckResponse.class.getName());
 
     private static volatile HealthCheckResponseProvider provider = null;
+
+    private final String name;
+
+    private final State state;
+
+    private final Optional<Map<String, Object>> data;
+
+    /**
+     * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
+     * @param name Health Check procedure's name
+     * @param state Health Check procedure's state
+     * @param data date for Health Check procedure
+     */
+    public HealthCheckResponse(String name, State state, Optional<Map<String, Object>> data) {
+        this.name = name;
+        this.state = state;
+        this.data = data;
+    }
+
+    /**
+     * Default constructor
+     */
+    public HealthCheckResponse() {
+        name = null;
+        state = null;
+        data = null;
+    }
 
     /**
      * Used by OSGi environment where the service loader pattern is not supported.
@@ -120,11 +148,17 @@ public abstract class HealthCheckResponse {
 
     public enum State {UP, DOWN}
 
-    public abstract String getName();
+    public String getName(){
+        return name;
+    }
 
-    public abstract State getState();
+    public State getState(){
+        return state;
+    }
 
-    public abstract Optional<Map<String, Object>> getData();
+    public Optional<Map<String, Object>> getData() {
+        return data;
+    }
 
     private static <T> T find(Class<T> service) {
 
