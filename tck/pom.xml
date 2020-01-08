@@ -30,7 +30,7 @@
         <arquillian.version>1.4.1.Final</arquillian.version>
         <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9_]*$</checkstyle.methodNameFormat>
         <testng.version>6.9.9</testng.version>
-        <version.glassfish.json>1.1.6</version.glassfish.json>
+        <version.glassfish.json>1.0</version.glassfish.json>
         <httpclient.version>4.5.2</httpclient.version>
         <commons-logging.version>1.2</commons-logging.version>
         <version.com.github.java-json-tools>2.2.10</version.com.github.java-json-tools>
@@ -59,8 +59,8 @@
         </dependency>
 
         <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -102,14 +102,14 @@
         </dependency>
 
         <dependency>
-            <groupId>jakarta.json</groupId>
-            <artifactId>jakarta.json-api</artifactId>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
             <version>${version.glassfish.json}</version>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.json</artifactId>
+            <artifactId>javax.json</artifactId>
             <version>${version.glassfish.json}</version>
         </dependency>
 
