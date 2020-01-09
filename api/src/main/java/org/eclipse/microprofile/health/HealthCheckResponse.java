@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  * The {@link HealthCheckResponse} class is reserved for an extension by implementation providers.
  * An application should use one of the static methods to create a Response instance using a 
  * {@link HealthCheckResponseBuilder}.
- * When used on the consuming, The class can also be instantiated directly.
+ * When used on the consuming end, The class can also be instantiated directly.
  * </p>
  */
 public class HealthCheckResponse {
@@ -57,7 +57,7 @@ public class HealthCheckResponse {
      * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
      * @param name Health Check procedure's name
      * @param state Health Check procedure's state
-     * @param data date for Health Check procedure
+     * @param data additional data for Health Check procedure
      */
     public HealthCheckResponse(String name, State state, Optional<Map<String, Object>> data) {
         this.name = name;

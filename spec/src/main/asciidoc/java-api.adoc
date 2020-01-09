@@ -145,7 +145,7 @@ public class CheckDiskspace implements HealthCheck {
 }
 ```
 
-`HealthCheckResponse` also provides default constructors to allow instantiation on the consuming end.
+`HealthCheckResponse` also provides a constructor to allow instantiation on the consuming end.
 
 == Integration with CDI
 
