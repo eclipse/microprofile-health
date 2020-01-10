@@ -76,7 +76,7 @@ If more than one `HealthCheck` are invoked, they will be called in an unpredicta
 The runtime will `call()` each `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
 ```
-public abstract class HealthCheckResponse {
+public class HealthCheckResponse {
 
     public enum State { UP, DOWN }
 
@@ -144,6 +144,8 @@ public class CheckDiskspace implements HealthCheck {
     }
 }
 ```
+
+`HealthCheckResponse` also provides a constructor to allow instantiation on the consuming end.
 
 == Integration with CDI
 
