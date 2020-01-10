@@ -48,12 +48,12 @@ public class MultipleCustomFailedTest extends TCKBase {
     }
 
     /**
-     * Verifies the liveness health integration with CDI at the scope of a server runtime
+     * Verifies the custom health integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
-    public void testFailureLivenessResponsePayload() {
-        Response response = getUrlCustomHealthContents("goup2");
+    public void testFailureResponsePayload() {
+        Response response = getUrlCustomHealthContents("group2");
 
         // status code
         Assert.assertEquals(response.getStatus(),503);

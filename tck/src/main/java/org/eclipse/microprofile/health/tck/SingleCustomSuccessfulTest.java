@@ -45,12 +45,12 @@ public class SingleCustomSuccessfulTest extends TCKBase {
     }
 
     /**
-     * Verifies the health integration with CDI at the scope of a server runtime
+     * Verifies the custom health integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
     public void testSuccessResponsePayload() {
-        Response response = getUrlCustomHealthContents("goup1");
+        Response response = getUrlCustomHealthContents("group1");
 
         // status code
         Assert.assertEquals(response.getStatus(),200);
