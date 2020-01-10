@@ -42,6 +42,7 @@ The nature of the procedure is defined by annotating the `HealthCheck` procedure
 
 * Readiness checks defined with `@Readiness` annotation
 * Liveness checks defined with `@Liveness` annotation
+* Custom checks defined with `@HealthGroup` annotation
 * Backward compatible checks defined with `@Health` annotation
 
 
@@ -59,6 +60,18 @@ A Health Check for liveness allows third party services to determine if the appl
 This means that if this procedure fails the application can be discarded (terminated, shutdown).
 
 The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
+
+=== Custom check
+
+A new kind of Health Check can be defined with the `@HealthGroup` annotation.
+
+One or more Health Check procedure(s) can be annotated with `@HealthGroup` to apply a custom group name to the procedure.
+
+All the Health Check procedures belonging to the same group defined a new kind of Health Check.
+
+The `@HealthGroup` annotation must be applied on a `HealthCheck` implementation to define a custom check procedure with the given name, otherwise, this annotation is ignored.
+
+An `HealthCheck` implementation can have multiple `@HealthGroup` annotation to make it member of multiple custom Health Check's group.
 
 
 === Backward compatible check
@@ -149,7 +162,7 @@ public class CheckDiskspace implements HealthCheck {
 
 == Integration with CDI
 
-Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness` or `@Health` qualifier can be used as health check procedure.
+Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness`, `@HealthGroup` or `@Health` qualifier can be used as health check procedure.
 
 
 Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request

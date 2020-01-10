@@ -184,6 +184,12 @@ Aspects regarding the secure access of health check information.
 | Readiness
 | See Appendix B
 
+| /health/group/{name}
+| GET
+| 200, 500, 503
+| Custom with given name
+| See Appendix B
+
 | /health
 | GET
 | 200, 500, 503
@@ -208,6 +214,7 @@ The following table gives valid health check responses for all kinds of health c
 | Request | HTTP Status       | JSON Payload         | State  | Comment
 | /health/live
   /health/ready
+  /health/group/{name}
   /health
 | 200
 | Yes
@@ -216,6 +223,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
+  /health/group/{name}
   /health
 | 200
 | Yes
@@ -224,6 +232,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
+  /health/group/{name}
   /health
 | 503
 | Yes
@@ -232,6 +241,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
+  /health/group/{name}
   /health
 | 503
 | Yes
@@ -240,6 +250,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
+  /health/group/{name}
   /health
 | 500
 | No
