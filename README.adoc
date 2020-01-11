@@ -50,6 +50,7 @@ The main API to provide health check procedures on the application level is the 
 public interface HealthCheck {
 
     HealthCheckResponse call();
+    
 }
 ```
 
@@ -135,4 +136,4 @@ A _HealthCheckResponseProvider_ is used internally to create a _HealthCheckRespo
 
 == Contributing
 
-Do you want to contribute to this project? link:CONTRIBUTING.adoc[Find out how you can help here].
+Do you want to contribute to this project? link:CONTRIBUTING.adoc[Find out how you can help here]. 
