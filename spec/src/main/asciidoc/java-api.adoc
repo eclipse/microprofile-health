@@ -71,7 +71,7 @@ All the Health Check procedures belonging to the same group define a new kind of
 
 The `@HealthGroup` annotation must be applied on a `HealthCheck` implementation to define a custom check procedure with the given name, otherwise, this annotation is ignored.
 
-An `HealthCheck` implementation can have multiple `@HealthGroup` annotation to make it member of multiple custom Health Check's group.
+A `HealthCheck` implementation can have multiple `@HealthGroup` annotations to make it a member of multiple custom Health Check's groups.
 
 
 === Backward compatible check
