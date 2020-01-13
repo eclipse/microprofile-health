@@ -67,7 +67,7 @@ A new kind of Health Check can be defined with the `@HealthGroup` annotation.
 
 One or more Health Check procedure(s) can be annotated with `@HealthGroup` to apply a custom group name to the procedure.
 
-All the Health Check procedures belonging to the same group defined a new kind of Health Check.
+All the Health Check procedures belonging to the same group define a new kind of Health Check.
 
 The `@HealthGroup` annotation must be applied on a `HealthCheck` implementation to define a custom check procedure with the given name, otherwise, this annotation is ignored.
 
