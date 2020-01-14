@@ -66,6 +66,10 @@ public abstract class TCKBase extends Arquillian {
         return getUrlContents(this.uri + "/health", false);
     }
 
+    Response getUrlCustomHealthContents(String name) {
+        return getUrlContents(this.uri + "/health/group/" + name , false);
+    }
+
     Response getUrlLiveContents() {
         return getUrlContents(this.uri + "/health/live", false);
     }
