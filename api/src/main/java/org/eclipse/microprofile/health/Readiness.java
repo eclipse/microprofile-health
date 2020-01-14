@@ -25,6 +25,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
 
 /**
@@ -38,4 +39,17 @@ import javax.inject.Qualifier;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Readiness {
+
+    /**
+     * Support inline instantiation of the {@link Readiness} qualifier.
+     *
+     * @author Antoine Sabot-Durand
+     * @since 2.2
+     */
+    public static final class Literal extends AnnotationLiteral<Readiness> implements Readiness {
+
+        public static final Literal INSTANCE = new Literal();
+
+        private static final long serialVersionUID = 1L;
+    }
 }
