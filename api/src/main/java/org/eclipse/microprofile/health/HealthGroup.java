@@ -21,6 +21,7 @@
  */
 package org.eclipse.microprofile.health;
 
+import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
 
 import java.lang.annotation.Documented;
@@ -53,5 +54,32 @@ public @interface HealthGroup {
      * @return name of the custom group
      */
     String value();
+
+    /**
+     * Support inline instantiation of the {@link HealthGroup} qualifier.
+     *
+     * @author Antoine Sabot-Durand
+     * @since 2.2
+     */
+    public static final class Literal extends AnnotationLiteral<HealthGroup> implements HealthGroup {
+
+        private static final long serialVersionUID = 1L;
+
+        private final String value;
+
+        public static Literal of(String value) {
+            return new Literal(value);
+        }
+
+        private Literal(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
+
 }
 
