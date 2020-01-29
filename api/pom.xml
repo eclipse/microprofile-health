@@ -88,9 +88,14 @@
             <plugin>
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-baseline-maven-plugin</artifactId>
+                <configuration>
+                    <base>
+                        <version>2.1</version>
+                    </base>
+                 </configuration>
                 <executions>
                     <execution>
-                        <id>baseline</id>
+                        <id>baseline</id> 
                         <goals>
                             <goal>baseline</goal>
                         </goals>
