@@ -20,6 +20,24 @@
 
 = Release Notes
 
+[[release_notes_2_2]]
+== Release Notes for MicroProfile Health Check 2.2
+
+The following changes occurred in the 2.2 release, compared to 2.1
+
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/4?closed=1[MicroProfile Health Check 2.2]
+
+=== API/SPI Changes
+
+- Add Annotation literals for all Qualifier in spec to ease programmatic lookup
+- Make HealthCheckResponse a concrete class to allow its usage on consuming end
+
+=== Miscellaneous
+
+- Update version of CDI API to 2.0
+- Remove Guava exclusion since its required to run TCK
+
+
 [[release_notes_2_1]]
 == Release Notes for MicroProfile Health Check 2.1
 
