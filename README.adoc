@@ -58,16 +58,16 @@ Applications are expected to provide health check procedures (implementation of 
 The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
 
 ```java
-public abstract class HealthCheckResponse {
+public class HealthCheckResponse {
 
     public enum State { UP, DOWN }
 
-    public abstract String getName();
-
-    public abstract State getState();
-
-    public abstract Optional<Map<String, Object>> getData();
-
+    private final String name;
+    
+    private final State state;
+    
+    private final Optional<Map<String, Object>> data;
+    
     [...]
 }
 ```
