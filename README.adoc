@@ -85,14 +85,53 @@ public class SuccessfulCheck implements HealthCheck {
 }
 ```
 
-=== Integration with CDI
+== Different kinds of Health Checks
 
-Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
+This specification provides different kinds of health check procedures.
+Difference between them is only semantic.
+The nature of the procedure is defined by annotating the `HealthCheck` procedure with a specific annotation.
 
-```java
-@Health
+* Readiness checks defined with `@Readiness` annotation
+* Liveness checks defined with `@Liveness` annotation
+* Backward compatible checks defined with `@Health` annotation
+
+
+A `HealthCheck` procedure with none of the above annotations is not an active procedure and should be ignored.
+
+=== Readiness check
+
+A Health Check for readiness allows third party services to know if the application is ready to process requests or not.
+
+The `@Readiness` annotation must be applied on a `HealthCheck` implementation to define a readiness check procedure, otherwise, this annotation is ignored.
+
+=== Liveness check
+
+A Health Check for liveness allows third party services to determine if the application is running.
+This means that if this procedure fails the application can be discarded (terminated, shutdown).
+
+The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
+
+
+=== Backward compatible check
+
+To provide backward compatibility with previous specification version, a `HealthCheck` implementation with `@Health` annotation is still supported.
+
+**`@Health` annotation is deprecated**, new procedures shouldn't use it.
+
+
+== Integration with CDI
+
+Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness` or `@Health` qualifier can be used as health check procedure.
+
+
+Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request
+
+
+```
 @ApplicationScoped
-public class CheckDiskSpace implements HealthCheck {
+@Liveness
+@Readiness
+public class MyCheck implements HealthCheck {
 
     public HealthCheckResponse call() {
         [...]
@@ -100,32 +139,26 @@ public class CheckDiskSpace implements HealthCheck {
 }
 ```
 
-=== On the wire
+Health check procedures are CDI beans, therefore, they can also be defined with CDI producers:
 
-It's the responsibility of the runtime to gather all `HealthCheckResponse` s for `HealthCheck` s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
- on health check procedures and the runtime will provide a composite response, with a single overall status, i.e.:
 
-```json
-  {
-    "status": "UP",
-    "checks": [
-      {
-        "name": "first-check",
-        "status": "UP",
-        "data": {
-          "key": "foo",
-          "foo": "bar"
-        }
-      },
-      {
-          "name": "second-check",
-          "status": "UP"
-      }
-    ]
-  }
 ```
+@ApplicationScoped
+class MyChecks {
 
-The link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document] contains further information on forms of interaction and the wireformat.
+  @Produces
+  @Liveness
+  HealthCheck check1() {
+    return () -> HealthCheckResponse.named("heap-memory").state(getMemUsage() < 0.9).build();
+  }
+
+  @Produces
+  @Readiness
+  HealthCheck check2() {
+    return () -> HealthCheckResponse.named("cpu-usage").state(getCpuUsage() < 0.9).build();
+  }
+}
+```
 
 == SPI Usage
 
