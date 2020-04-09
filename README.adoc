@@ -53,7 +53,11 @@ public interface HealthCheck {
 }
 ```
 
+<<<<<<< HEAD
 Applications are expected to provide health check procedures (implementation of a _HealthCheck_), which will be used by the framework or runtime hosting the application to verify the healthiness of the computing node.
+=======
+Applications are expected to provide health check procedures (implementation of a _HealthCheck_), which will be used by the framework or runtime hosting the application to verify the healthiness of the computing node. 
+>>>>>>> branch 'issue_222' of git@github.com:rsoika/microprofile-health.git
 
 The runtime will _call()_ the _HealthCheck_ which in turn creates a _HealthCheckResponse_ that signals the health status to a consuming end:
 
@@ -72,7 +76,11 @@ public class HealthCheckResponse {
 }
 ```
 
+<<<<<<< HEAD
 === Constructing HealthCheckResponse
+=======
+=== Constructing HealthCheckResponses
+>>>>>>> branch 'issue_222' of git@github.com:rsoika/microprofile-health.git
 
 Application level code is expected to use one of static methods on _HealthCheckResponse_ to retrieve a _HealthCheckResponseBuilder_ used to construct a response, i.e. :
 
