@@ -157,6 +157,8 @@ Contextual references of health check procedures are invoked by runtime when the
 
 ```
 @ApplicationScoped
+@Liveness
+@Readiness
 public class MyCheck implements HealthCheck {
 
     public HealthCheckResponse call() {
