@@ -43,7 +43,7 @@ A detailed description of the health check protocol can be found in the link:htt
 
 === API Usage
 
-The main API to provide health check procedures on the application level is the `HealthCheck` interface:
+The main API to provide health check procedures on the application level is the _HealthCheck_ interface:
 
 ```java
 @FunctionalInterface
@@ -53,9 +53,9 @@ public interface HealthCheck {
 }
 ```
 
-Applications are expected to provide health check procedures (implementation of a `HealthCheck`), which will be used by the framework or runtime hosting the application to verify the healthiness of the computing node.
+Applications are expected to provide health check procedures (implementation of a _HealthCheck_), which will be used by the framework or runtime hosting the application to verify the healthiness of the computing node.
 
-The runtime will `call()` the `HealthCheck` which in turn creates a `HealthCheckResponse` that signals the health status to a consuming end:
+The runtime will _call()_ the _HealthCheck_ which in turn creates a _HealthCheckResponse_ that signals the health status to a consuming end:
 
 ```java
 public class HealthCheckResponse {
@@ -72,9 +72,9 @@ public class HealthCheckResponse {
 }
 ```
 
-=== Constructing `HealthCheckResponse`s
+=== Constructing HealthCheckResponse
 
-Application level code is expected to use one of static methods on `HealthCheckResponse` to retrieve a `HealthCheckResponseBuilder` used to construct a response, i.e. :
+Application level code is expected to use one of static methods on _HealthCheckResponse_ to retrieve a _HealthCheckResponseBuilder_ used to construct a response, i.e. :
 
 ```java
 public class SuccessfulCheck implements HealthCheck {
@@ -87,7 +87,7 @@ public class SuccessfulCheck implements HealthCheck {
 
 === Integration with CDI
 
-Within CDI contexts, beans that implement `HealthCheck` and annotated with `@Health` are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
+Within CDI contexts, beans that implement _HealthCheck_ and annotated with _@Health_ are discovered automatically and are invoked by the framework or runtime when the outermost protocol entry point (i.e. _http://HOST:PORT/health_) receives an inbound request.
 
 ```java
 @Health
@@ -102,7 +102,7 @@ public class CheckDiskSpace implements HealthCheck {
 
 === On the wire
 
-It's the responsibility of the runtime to gather all `HealthCheckResponse` s for `HealthCheck` s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
+It's the responsibility of the runtime to gather all _HealthCheckResponse_ s for _HealthCheck_ s known to the runtime. This means an inbound HTTP request will lead to a series of invocations
  on health check procedures and the runtime will provide a composite response, with a single overall status, i.e.:
 
 ```json
@@ -129,9 +129,9 @@ The link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/mai
 
 == SPI Usage
 
-Implementors of the API are expected to supply implementations of `HealthCheckResponse` and `HealthCheckResponseBuilder` by providing a `HealthCheckResponseProvider` to their implementation. The `HealthCheckResponseProvider` is discovered using the default JDK service loader.
+Implementors of the API are expected to supply implementations of _HealthCheckResponse_ and _HealthCheckResponseBuilder_ by providing a _HealthCheckResponseProvider_ to their implementation. The _HealthCheckResponseProvider_ is discovered using the default JDK service loader.
 
-A `HealthCheckResponseProvider` is used internally to create a `HealthCheckResponseBuilder` which is used to construct a `HealthCheckResponse`. This pattern allows implementors to extend a `HealthCheckResponse` and adapt it to their implementation needs. Common implementation details that fall into this category are invocation and security contexts or anything else required to map a `HealthCheckResponse` to the outermost invocation protocol (i.e. HTTP/JSON).
+A _HealthCheckResponseProvider_ is used internally to create a _HealthCheckResponseBuilder_ which is used to construct a _HealthCheckResponse_. This pattern allows implementors to extend a _HealthCheckResponse_ and adapt it to their implementation needs. Common implementation details that fall into this category are invocation and security contexts or anything else required to map a _HealthCheckResponse_ to the outermost invocation protocol (i.e. HTTP/JSON).
 
 == Contributing
 
