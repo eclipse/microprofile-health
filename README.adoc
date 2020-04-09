@@ -110,7 +110,7 @@ It's the responsibility of the runtime to gather all _HealthCheckResponse_ s for
   {
     "status": "UP",
     "checks": [
-      {
+      { 
         "name": "first-check",
         "status": "UP",
         "data": {
