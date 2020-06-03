@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -75,7 +75,7 @@ public abstract class HealthCheckResponseBuilder {
     public abstract HealthCheckResponseBuilder withData(String key, boolean value);
 
     /**
-     * Sets the status of the health check response to {@link HealthCheckResponse.State#UP}.
+     * Sets the status of the health check response to {@link HealthCheckResponse.Status#UP}.
      * This implies that the health check was successful.
      *
      * @return this builder
@@ -83,7 +83,7 @@ public abstract class HealthCheckResponseBuilder {
     public abstract HealthCheckResponseBuilder up();
 
     /**
-     * Sets the status of the health check response to {@link HealthCheckResponse.State#DOWN}.
+     * Sets the status of the health check response to {@link HealthCheckResponse.Status#DOWN}.
      * This implies that the health check was <i>not</i> successful.
      *
      * @return this builder
@@ -96,7 +96,7 @@ public abstract class HealthCheckResponseBuilder {
      * @param up the status
      * @return this builder
      */
-    public abstract HealthCheckResponseBuilder state(boolean up);
+    public abstract HealthCheckResponseBuilder status(boolean up);
 
     /**
      * Creates a {@link HealthCheckResponse} from the current builder.
