@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
+// Copyright (c) 2016-2020 Eclipse Microprofile Contributors:
 // See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -120,11 +120,11 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 
 === Wireformats
 
-* Producer MUST  support JSON encoded payload with simple UP/DOWN states
+* Producer MUST  support JSON encoded payload with simple UP/DOWN statuses
 * Producers MAY  support an additional information holder with key/value pairs to provide further context (i.e. disk.free.space=120mb).
 * The JSON response payload MUST be compatible with the one described in Appendix B
 * The JSON response MUST contain the `name` entry specifying the name of the check, to support protocols that support external identifier (i.e. URI)
-* The JSON response MUST contain the `status` entry specifying the state as String: “UP” or “DOWN”
+* The JSON response MUST contain the `status` entry specifying the status as String: “UP” or “DOWN”
 * The JSON MAY support an additional information holder to carry key value pairs that provide additional context
 
 [[health-check-procedures]]
@@ -205,7 +205,7 @@ Aspects regarding the secure access of health check information.
 The following table gives valid health check responses for all kinds of health checks:
 
 |===
-| Request | HTTP Status       | JSON Payload         | State  | Comment
+| Request | HTTP Status       | JSON Payload         | Status  | Comment
 | /health/live
   /health/ready
   /health

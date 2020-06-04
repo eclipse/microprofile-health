@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -40,6 +40,6 @@ public class DelegateHealth implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("delegate-check").state(delegate.isTheSystemHealthy()).build();
+        return HealthCheckResponse.named("delegate-check").status(delegate.isTheSystemHealthy()).build();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -49,19 +49,19 @@ public class HealthCheckResponse {
 
     private final String name;
 
-    private final State state;
+    private final Status status;
 
     private final Optional<Map<String, Object>> data;
 
     /**
      * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
      * @param name Health Check procedure's name
-     * @param state Health Check procedure's state
+     * @param status Health Check procedure's status
      * @param data additional data for Health Check procedure
      */
-    public HealthCheckResponse(String name, State state, Optional<Map<String, Object>> data) {
+    public HealthCheckResponse(String name, Status status, Optional<Map<String, Object>> data) {
         this.name = name;
-        this.state = state;
+        this.status = status;
         this.data = data;
     }
 
@@ -70,7 +70,7 @@ public class HealthCheckResponse {
      */
     public HealthCheckResponse() {
         name = null;
-        state = null;
+        status = null;
         data = null;
     }
 
@@ -146,14 +146,14 @@ public class HealthCheckResponse {
 
     // the actual contract
 
-    public enum State {UP, DOWN}
+    public enum Status {UP, DOWN}
 
     public String getName(){
         return name;
     }
 
-    public State getState(){
-        return state;
+    public Status getStatus(){
+        return status;
     }
 
     public Optional<Map<String, Object>> getData() {
