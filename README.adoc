@@ -149,13 +149,13 @@ class MyChecks {
   @Produces
   @Liveness
   HealthCheck check1() {
-    return () -> HealthCheckResponse.named("heap-memory").status(getMemUsage() < 0.9).build();
+    return () -> HealthCheckResponse.named("heap-memory").state(getMemUsage() < 0.9).build();
   }
 
   @Produces
   @Readiness
   HealthCheck check2() {
-    return () -> HealthCheckResponse.named("cpu-usage").status(getCpuUsage() < 0.9).build();
+    return () -> HealthCheckResponse.named("cpu-usage").state(getCpuUsage() < 0.9).build();
   }
 }
 ```
