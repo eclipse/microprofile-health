@@ -187,7 +187,7 @@ Aspects regarding the secure access of health check information.
 | /health
 | GET
 | 200, 500, 503
-| Backward compatible + Liveness + Readiness
+| Liveness + Readiness
 | See Appendix B
 |===
 

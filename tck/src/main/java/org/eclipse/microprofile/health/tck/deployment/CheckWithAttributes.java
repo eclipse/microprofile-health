@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,21 +21,25 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
-import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Readiness;
 
 import javax.enterprise.context.ApplicationScoped;
 
 /**
- * @author Heiko Braun
- * @since 13.06.17
+ * Created by hbraun on 29.06.17.
  */
-@Health
+@Readiness
 @ApplicationScoped
-public class FailedHealth implements HealthCheck {
+public class CheckWithAttributes implements HealthCheck {
+
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.down("failed-check");
+        return HealthCheckResponse.named("attributes-check")
+                .withData("first-key", "first-val")
+                .withData("second-key", "second-val")
+                .up()
+                .build();
     }
 }

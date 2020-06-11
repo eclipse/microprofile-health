@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,7 +22,7 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
+import org.eclipse.microprofile.health.tck.deployment.FailedLiveness;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -36,24 +36,25 @@ import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileW
 
 /**
  * @author Heiko Braun
+ * @author Prashanth Gunapalasingam
  */
-public class SingleHealthSuccessfulTest extends TCKBase {
+public class SingleLivenessFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(SingleHealthSuccessfulTest.class.getSimpleName(), SuccessfulHealth.class);
+        return createWarFileWithClasses(SingleLivenessFailedTest.class.getSimpleName(), FailedLiveness.class);
     }
 
     /**
-     * Verifies the health integration with CDI at the scope of a server runtime
+     * Verifies the failed single Liveness integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
-    public void testSuccessResponsePayload() {
-        Response response = getUrlHealthContents();
+    public void testFailureResponsePayload() {
+        Response response = getUrlLiveContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),200);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonObject json = readJson(response);
 
@@ -62,9 +63,9 @@ public class SingleHealthSuccessfulTest extends TCKBase {
         Assert.assertEquals(checks.size(),1,"Expected a single check response");
 
         // single procedure response
-        assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
+        assertFailureCheck(checks.getJsonObject(0), "failed-check");
 
-        assertOverallSuccess(json);
+        assertOverallFailure(json);
     }
 }
 

@@ -93,8 +93,6 @@ The nature of the procedure is defined by annotating the _HealthCheck_ procedure
 
 * Readiness checks defined with _@Readiness_ annotation
 * Liveness checks defined with _@Liveness_ annotation
-* Backward compatible checks defined with _@Health_ annotation
-
 
 A _HealthCheck_ procedure with none of the above annotations is not an active procedure and should be ignored.
 
@@ -111,17 +109,9 @@ This means that if this procedure fails the application can be discarded (termin
 
 The _@Liveness_ annotation must be applied on a _HealthCheck_ implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
 
-
-=== Backward compatible check
-
-To provide backward compatibility with previous specification version, a _HealthCheck_ implementation with _@Health_ annotation is still supported.
-
-**@Health annotation is deprecated**, new procedures shouldn't use it.
-
-
 == Integration with CDI
 
-Any enabled bean with a bean of type _org.eclipse.microprofile.health.HealthCheck_ and _@Liveness_, _@Readiness_ or _@Health_ qualifier can be used as health check procedure.
+Any enabled bean with a bean of type _org.eclipse.microprofile.health.HealthCheck_ and _@Liveness_ or _@Readiness_ qualifier can be used as health check procedure.
 
 
 Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. _http://HOST:PORT/health_) receives an inbound request

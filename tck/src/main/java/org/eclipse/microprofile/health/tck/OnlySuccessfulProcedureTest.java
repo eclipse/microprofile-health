@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -25,7 +25,6 @@ package org.eclipse.microprofile.health.tck;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -44,7 +43,7 @@ public class OnlySuccessfulProcedureTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(OnlySuccessfulProcedureTest.class.getSimpleName(),
-            SuccessfulReadiness.class, SuccessfulLiveness.class, SuccessfulHealth.class);
+            SuccessfulReadiness.class, SuccessfulLiveness.class);
     }
 
     /**

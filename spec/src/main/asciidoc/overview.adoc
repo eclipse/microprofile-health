@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
+// Copyright (c) 2016-2020 Eclipse Microprofile Contributors:
 // See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,7 @@ In this scenario health checks are used to determine if a computing node needs t
 The MicroProfile Health Check architecture consists of two `/health/ready` and `/health/live` endpoints in a MicroProfile runtime that respectively represent the readiness and the liveness of the entire runtime.
 These endpoints are linked to Health Check procedures defined with specifications API and annotated respectively with `@Liveness` and `@Readiness` annotations.
 
-For backward compatibility, a 3rd endpoint `/health` may also be used to provide a combination of previous endpoints and Health Check procedures annotated with the deprecated `@Health` annotation.
+A 3rd endpoint `/health` is also available and can be used to provide a combination of the previous endpoints.
 
 These endpoints are expected to be associated with a configurable context, such as a web application deployment, that can be configured with settings such as port, virtual-host, security, etc.
 Further, the MicroProfile Health Check defines the notion of a procedure that represents the health of a particular subcomponent of an application.

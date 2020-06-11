@@ -21,9 +21,9 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
-import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Liveness;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ import javax.inject.Inject;
 /**
  * Created by hbraun on 18.08.17.
  */
-@Health
+@Liveness
 @ApplicationScoped
 public class DelegateHealth implements HealthCheck {
 

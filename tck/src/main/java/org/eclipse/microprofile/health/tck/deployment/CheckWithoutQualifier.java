@@ -30,7 +30,7 @@ import javax.enterprise.context.ApplicationScoped;
  * @author Heiko Braun
  * @since 13.06.17
  */
-// lacks the @Health annotation and should not be discovered
+// lacks the @Liveness/@Readiness annotations and should not be discovered
 @ApplicationScoped
 public class CheckWithoutQualifier implements HealthCheck {
     @Override

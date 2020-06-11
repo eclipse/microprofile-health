@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -25,6 +25,7 @@ package org.eclipse.microprofile.health.tck;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
+import org.eclipse.microprofile.health.tck.TCKBase.Response;
 import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
@@ -80,6 +81,29 @@ public class MultipleReadinessFailedTest extends TCKBase {
         }
 
         assertOverallFailure(json);
+    }
+    
+    /**
+     * Test that Liveness is up
+     */
+    @Test
+    @RunAsClient
+    public void testSuccessfulLivenessResponsePayload() {
+        Response response = getUrlLiveContents();
+
+        // status code
+        Assert.assertEquals(response.getStatus(), 200);
+
+        JsonObject json = readJson(response);
+
+        // response size
+        JsonArray checks = json.getJsonArray("checks");
+        Assert.assertEquals(checks.size(),1,"Expected a single check response");
+
+        // single procedure response
+        assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
+
+        assertOverallSuccess(json);
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,7 +22,7 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.CheckWithAttributes;
+import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -35,52 +35,36 @@ import javax.json.JsonObject;
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
- * @author Heiko Braun
+ * @author Prashanth Gunapalasingam
  */
-public class HealthCheckResponseAttributesTest extends TCKBase {
+public class SingleReadinessFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(HealthCheckResponseAttributesTest.class.getSimpleName(),
-            CheckWithAttributes.class);
+        return createWarFileWithClasses(SingleReadinessFailedTest.class.getSimpleName(), FailedReadiness.class);
     }
 
     /**
-     * Verifies the health integration with CDI at the scope of a server runtime
+     * Verifies the failed Readiness integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
-    public void testSuccessResponsePayload() {
-        Response response = getUrlHealthContents();
+    public void testFailureResponsePayload() {
+        Response response = getUrlReadyContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(), 200);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
+        Assert.assertEquals(checks.size(),1,"Expected a single check response");
 
         // single procedure response
-        JsonObject check = checks.getJsonObject(0);
+        assertFailureCheck(checks.getJsonObject(0), "failed-check");
 
-        assertSuccessfulCheck(check, "attributes-check");
-
-        // response payload attributes
-        JsonObject data = check.getJsonObject("data");
-        
-        Assert.assertEquals(
-                data.getString("first-key"),
-                "first-val"
-        );
-
-        Assert.assertEquals(
-                data.getString("second-key"),
-                "second-val"
-        );
-
-        assertOverallSuccess(json);
+        assertOverallFailure(json);
     }
 }
 
