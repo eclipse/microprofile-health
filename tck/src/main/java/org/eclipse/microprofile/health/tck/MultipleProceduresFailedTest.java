@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,8 +22,7 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import org.eclipse.microprofile.health.tck.deployment.FailedHealth;
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
+import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -45,11 +44,11 @@ public class MultipleProceduresFailedTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(MultipleProceduresFailedTest.class.getSimpleName(),
-            FailedHealth.class, SuccessfulHealth.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
+                SuccessfulLiveness.class, SuccessfulReadiness.class, FailedReadiness.class);
     }
 
     /**
-     * Verifies the legacy health integration with CDI at the scope of a server runtime
+     * Verifies the /health endpoint with the liveness and readiness integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
@@ -63,9 +62,9 @@ public class MultipleProceduresFailedTest extends TCKBase {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(), 4, "Expected four check responses");
+        Assert.assertEquals(checks.size(), 3, "Expected four check responses");
         
-        // verify that all 4 procedures are present
+        // verify that all 3 procedures are present
         for (JsonObject check : checks.getValuesAs(JsonObject.class)) {
             String id = check.getString("name");
             switch (id) {

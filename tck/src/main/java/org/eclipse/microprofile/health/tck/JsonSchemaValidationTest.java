@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Contributors to the Eclipse Foundation
+ * Copyright (c) 2019-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulHealth;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -49,7 +48,7 @@ public class JsonSchemaValidationTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(JsonSchemaValidationTest.class.getSimpleName(),
-            SuccessfulHealth.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
+            SuccessfulLiveness.class, SuccessfulReadiness.class);
     }
 
     /**
