@@ -24,19 +24,15 @@ package org.eclipse.microprofile.health;
 
 import org.eclipse.microprofile.health.spi.HealthCheckResponseProvider;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Map;
 import java.util.Optional;
-import java.util.ServiceLoader;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * The response to a health check invocation.
  * <p>
  * The {@link HealthCheckResponse} class is reserved for an extension by implementation providers.
- * An application should use one of the static methods to create a Response instance using a 
+ * An application should use one of the static methods to create a Response instance using a
  * {@link HealthCheckResponseBuilder}.
  * When used on the consuming end, The class can also be instantiated directly.
  * </p>
@@ -44,8 +40,6 @@ import java.util.logging.Logger;
 public class HealthCheckResponse {
 
     private static final Logger LOGGER = Logger.getLogger(HealthCheckResponse.class.getName());
-
-    private static volatile HealthCheckResponseProvider provider = null;
 
     private final String name;
 
@@ -78,9 +72,10 @@ public class HealthCheckResponse {
      * Used by OSGi environment where the service loader pattern is not supported.
      *
      * @param provider the provider instance to use.
+     * @deprecated use {{@link HealthCheckResponseProviderResolver#setProvider}} instead
      */
     public static void setResponseProvider(HealthCheckResponseProvider provider) {
-        HealthCheckResponse.provider = provider;
+        HealthCheckResponseProviderResolver.setProvider(provider);
     }
 
     /**
@@ -91,7 +86,7 @@ public class HealthCheckResponse {
      */
     public static HealthCheckResponseBuilder named(String name) {
 
-        return getProvider().createResponseBuilder().name(name);
+        return HealthCheckResponseProviderResolver.getProvider().createResponseBuilder().name(name);
     }
 
     /**
@@ -102,12 +97,12 @@ public class HealthCheckResponse {
      * @return a new, empty health check builder
      */
     public static HealthCheckResponseBuilder builder() {
-        return getProvider().createResponseBuilder();
+        return HealthCheckResponseProviderResolver.getProvider().createResponseBuilder();
     }
 
     /**
      * Creates a successful health check with a name.
-     * 
+     *
      * @param name the check name
      * @return a new sucessful health check response with a name
      */
@@ -117,31 +112,12 @@ public class HealthCheckResponse {
 
     /**
      * Creates a failed health check with a name.
-     * 
+     *
      * @param name the check name
      * @return a new failed health check response with a name
      */
     public static HealthCheckResponse down(String name) {
         return HealthCheckResponse.named(name).down().build();
-    }
-
-    private static HealthCheckResponseProvider getProvider() {
-        if (provider == null) {
-            synchronized (HealthCheckResponse.class) {
-                if (provider != null) {
-                    return provider;
-                }
-
-                HealthCheckResponseProvider newInstance = find(HealthCheckResponseProvider.class);
-
-                if (newInstance == null) {
-                    throw new IllegalStateException("No HealthCheckResponseProvider implementation found!");
-                }
-
-                provider = newInstance;
-            }
-        }
-        return provider;
     }
 
     // the actual contract
@@ -160,61 +136,4 @@ public class HealthCheckResponse {
         return data;
     }
 
-    private static <T> T find(Class<T> service) {
-
-        T serviceInstance = find(service, HealthCheckResponse.getContextClassLoader());
-
-        // alternate classloader
-        if (null == serviceInstance) {
-            serviceInstance = find(service, HealthCheckResponse.class.getClassLoader());
-        }
-
-        // service cannot be found
-        if (null == serviceInstance) {
-            throw new IllegalStateException("Unable to find service " + service.getName());
-        }
-
-        return serviceInstance;
-    }
-
-    private static <T> T find(Class<T> service, ClassLoader cl) {
-
-        T serviceInstance = null;
-
-        try {
-            ServiceLoader<T> services = ServiceLoader.load(service, cl);
-
-            for (T spi : services) {
-                if (serviceInstance != null) {
-                    throw new IllegalStateException(
-                            "Multiple service implementations found: "
-                                    + spi.getClass().getName() + " and "
-                                    + serviceInstance.getClass().getName());
-                }
-                serviceInstance = spi;
-            }
-        }
-        catch (Throwable t) {
-            LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
-        }
-
-        return serviceInstance;
-    }
-
-
-    private static ClassLoader getContextClassLoader() {
-        return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> {
-            ClassLoader cl = null;
-            try {
-                cl = Thread.currentThread().getContextClassLoader();
-            }
-            catch (SecurityException ex) {
-                LOGGER.log(
-                        Level.WARNING,
-                        "Unable to get context classloader instance.",
-                        ex);
-            }
-            return cl;
-        });
-    }
 }

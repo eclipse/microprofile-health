@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -35,7 +35,7 @@ public interface HealthCheckResponseProvider {
 
     /**
      * Provides an implementation of {@link HealthCheckResponseBuilder}.
-     * 
+     *
      * @return a vendor specific implemenatation of {@link HealthCheckResponseBuilder}
      */
     HealthCheckResponseBuilder createResponseBuilder();

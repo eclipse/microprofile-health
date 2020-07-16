@@ -46,6 +46,8 @@
         <org.osgi.annotation.versioning.version>1.0.0</org.osgi.annotation.versioning.version>
         <bnd-maven-plugin.version>3.4.0</bnd-maven-plugin.version>
         <bnd-baseline-maven-plugin.version>4.2.0</bnd-baseline-maven-plugin.version>
+        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+        <testng.version>6.9.9</testng.version>
     </properties>
 
     <licenses>
@@ -145,6 +147,12 @@
                 <artifactId>org.osgi.annotation.versioning</artifactId>
                 <version>${org.osgi.annotation.versioning.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -331,6 +339,7 @@
                         <exclude>.factorypath</exclude>
                         <exclude>.editorconfig</exclude>
                         <exclude>src/main/resources/**/*</exclude>
+                        <exclude>src/test/resources/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

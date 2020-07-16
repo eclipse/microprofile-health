@@ -37,6 +37,10 @@
             <artifactId>org.osgi.annotation.versioning</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -97,12 +101,27 @@
                  </configuration>
                 <executions>
                     <execution>
-                        <id>baseline</id> 
+                        <id>baseline</id>
                         <goals>
                             <goal>baseline</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${maven-surefire-plugin.version}</version>
+            <executions>
+            <execution>
+                <id>default-test</id>
+                <configuration>
+                    <systemPropertyVariables>
+                        <serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
+                    </systemPropertyVariables>
+                </configuration>
+            </execution>
+            </executions>
             </plugin>
         </plugins>
     </build>
