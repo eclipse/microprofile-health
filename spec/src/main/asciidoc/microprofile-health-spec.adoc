@@ -16,7 +16,7 @@
 //
 
 = MicroProfile Health
-:author: The Microprofile community and it's contributors
+:author: The Microprofile community and its contributors
 :version-label!:
 :sectanchors:
 :doctype: book
