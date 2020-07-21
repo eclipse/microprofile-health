@@ -20,6 +20,21 @@
 
 = Release Notes
 
+[[release_notes_3_0]]
+== Release Notes for MicroProfile Health 3.0
+
+The following changes occurred in the 3.0 release, compared to 2.2.
+
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?q=is%3Aissue+milestone%3A3.0+is%3Aclosed[MicroProfile Health 3.0]
+
+Items in bold are breaking changes.
+
+- *Pruning `@Health` qualifier*
+- *Fix `HealthCheckResponse` deserialization issue*
+- Add configuration value for default readiness status
+- Update dependencies scope and version to align on latest Jakarta EE 8 version
+
+
 [[release_notes_2_2]]
 == Release Notes for MicroProfile Health 2.2
 
