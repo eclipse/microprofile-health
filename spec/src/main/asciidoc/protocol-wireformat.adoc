@@ -170,7 +170,7 @@ https://github.com/eclipse/microprofile-config[MicroProfile Config] configuratio
 value `mp.health.default.readiness.empty.response` to `UP` to give the container
 a hint that it can become ready.
 
-==== Executing procedures
+=== Executing procedures
 
 When executing health check procedures a producer MUST handle any unchecked exceptions and synthesize a substitute respone.
 
@@ -178,7 +178,7 @@ When executing health check procedures a producer MUST handle any unchecked exce
 * The synthesized response MUST contain a `name` entry with a value set to the runtime class name of the failing check.
 * The synthesized response MAY contain additional information about the failure (i.e. exception message or stack trace)
 
-==== Disabling default vendor procedures
+=== Disabling default vendor procedures
 
 An implementation is allowed to supply a reasonable default (out-of-the-box) procedures as
 defined in the <<health-check-procedures,Health Check Procedures>> section. To disable
