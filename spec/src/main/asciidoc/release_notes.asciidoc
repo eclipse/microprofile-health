@@ -21,11 +21,11 @@
 = Release Notes
 
 [[release_notes_2_2]]
-== Release Notes for MicroProfile Health Check 2.2
+== Release Notes for MicroProfile Health 2.2
 
 The following changes occurred in the 2.2 release, compared to 2.1
 
-A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/4?closed=1[MicroProfile Health Check 2.2]
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/4?closed=1[MicroProfile Health 2.2]
 
 === API/SPI Changes
 
@@ -39,16 +39,16 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 
 
 [[release_notes_2_1]]
-== Release Notes for MicroProfile Health Check 2.1
+== Release Notes for MicroProfile Health 2.1
 
 The following changes occurred in the 2.1 release, compared to 2.0
 
-A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/3?closed=1+[MicroProfile Health Check 2.1]
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/3?closed=1+[MicroProfile Health 2.1]
 
 === API/SPI Changes
 
 - Add new method to create responses
-- Add config property to disable implementation Health Check procedures
+- Add config property to disable implementation health check procedures
 - Improve javadoc
 
 === TCK enhancement
@@ -63,11 +63,11 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 - Remove EL API transitive dependency
 
 [[release_notes_2]]
-== Release Notes for MicroProfile Health Check 2.0
+== Release Notes for MicroProfile Health 2.0
 
 The following changes occurred in the 2.0 release, compared to 1.0
 
-A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?utf8=✓&q=is%3Aissue+milestone%3A2.0+[MicroProfile Health Check 2.0]
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?utf8=✓&q=is%3Aissue+milestone%3A2.0+[MicroProfile Health 2.0]
 
 === API/SPI Changes
 
