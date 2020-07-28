@@ -19,7 +19,7 @@
     <groupId>org.eclipse.microprofile.health</groupId>
     <artifactId>microprofile-health-parent</artifactId>
     <name>MicroProfile Health</name>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0-RC3</version>
     <description>Eclipse MicroProfile Health - Parent POM</description>
     <packaging>pom</packaging>
 
@@ -93,7 +93,7 @@
         <connection>scm:git:https://github.com/eclipse/microprofile-health.git</connection>
         <developerConnection>scm:git:git@github.com:eclipse/microprofile-health.git</developerConnection>
         <url>https://github.com/eclipse/microprofile-health</url>
-        <tag>HEAD</tag>
+        <tag>3.0-RC3</tag>
     </scm>
 
     <distributionManagement>
