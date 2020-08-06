@@ -24,8 +24,6 @@ package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
-import java.util.List;
-
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
@@ -37,7 +35,6 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -65,18 +62,22 @@ public class HealthCheckResponseValidationTest extends TCKBase {
         JsonObject json = readJson(response);
         JsonArray checks = json.getJsonArray("checks");
         
-        ObjectMapper mapper = new ObjectMapper(); 
-        List<HealthCheckResponse> hcr = mapper.readValue(checks.toString(), new TypeReference<List<HealthCheckResponse>>() {});
+        // Single check procedure
+        JsonObject check = checks.getJsonObject(0);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
+        HealthCheckResponse hcr = mapper.readValue(check.toString(), HealthCheckResponse.class);
     
         // Validates the name property from the HealthCheckResponse class
         Assert.assertEquals(
-                hcr.get(0).getName(),
+                hcr.getName(),
                 "successful-check",
-                String.format("Unexpected value for the HealthCheckResponse \"name\" property : %s", hcr.get(0).getName())
+                String.format("Unexpected value for the HealthCheckResponse \"name\" property : %s", hcr.getName())
             );
         
         // Validates the status property from the HealthCheckResponse class
-        Assert.assertEquals(hcr.get(0).getStatus(), HealthCheckResponse.Status.UP, 
+        Assert.assertEquals(hcr.getStatus(), HealthCheckResponse.Status.UP, 
                 "Expected a successful check status for the HealthCheckResponse \"status\" property.");
     }
 }
