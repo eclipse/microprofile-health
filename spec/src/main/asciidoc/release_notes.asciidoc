@@ -27,12 +27,15 @@ The following changes occurred in the 3.0 release, compared to 2.2.
 
 A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?q=is%3Aissue+milestone%3A3.0+is%3Aclosed[MicroProfile Health 3.0]
 
-Items in bold are breaking changes.
+=== Incompatible changes
 
-- *Pruning `@Health` qualifier*
-- *Fix `HealthCheckResponse` deserialization issue*
-- Add configuration value for default readiness status
-- Update dependencies scope and version to align on latest Jakarta EE 8 version
+- Pruning `@Health` qualifier (https://github.com/eclipse/microprofile-health/issues/252[#252])
+- Fix `HealthCheckResponse` deserialization issue (https://github.com/eclipse/microprofile-health/issues/243[#243])
+
+=== Other changes
+
+- Add configuration value for default readiness status (https://github.com/eclipse/microprofile-health/issues/244[#244])
+- Update dependencies scope and version to align on latest Jakarta EE 8 version (https://github.com/eclipse/microprofile-health/issues/214[#214])
 
 
 [[release_notes_2_2]]
