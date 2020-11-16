@@ -37,6 +37,8 @@
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
         <revremark>Draft</revremark>
+        <health.spec.pdf>${project.build.directory}/generated-docs/${project.build.finalName}.pdf</health.spec.pdf>
+        <health.spec.html>${project.build.directory}/generated-docs/${project.build.finalName}.html</health.spec.html>
     </properties>
 
     <build>
@@ -61,12 +63,8 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <outputFile>${health.spec.pdf}</outputFile>
                             <backend>pdf</backend>
-                            <attributes>
-                                <revnumber>${project.version}</revnumber>
-                                <revremark>${revremark}</revremark>
-                                <revdate>${revisiondate}</revdate>
-                            </attributes>
                         </configuration>
                     </execution>
                     <execution>
@@ -76,12 +74,8 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <outputFile>${health.spec.html}</outputFile>
                             <backend>html5</backend>
-                            <attributes>
-                                <revnumber>${project.version}</revnumber>
-                                <revremark>${revremark}</revremark>
-                                <revdate>${revisiondate}</revdate>
-                            </attributes>
                         </configuration>
                     </execution>
                 </executions>
@@ -90,8 +84,36 @@
                     <sourceHighlighter>coderay</sourceHighlighter>
                     <attributes>
                         <license>Apache License v2.0</license>
+                        <revnumber>${project.version}</revnumber>
+                        <revremark>${revremark}</revremark>
+                        <revdate>${revisiondate}</revdate>
                     </attributes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${health.spec.pdf}</file>
+                                    <type>pdf</type>
+                                </artifact>
+                                <artifact>
+                                    <file>${health.spec.html}</file>
+                                    <type>html</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
