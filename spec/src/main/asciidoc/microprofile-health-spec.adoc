@@ -30,7 +30,9 @@ ifdef::backend-pdf[]
 endif::[]
 
 
-include::license-alv2.adoc[]
+// == License
+:sectnums!:
+include::license-efsl.adoc[]
 
 include::overview.adoc[]
 

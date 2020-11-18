@@ -30,6 +30,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
+        <revremark>Draft</revremark>
+        <inceptionYear>2016</inceptionYear>
+
         <checkstyle.methodNameFormat>^_?[a-z][a-zA-Z0-9]*$</checkstyle.methodNameFormat>
         <autorelease>false</autorelease>
         <checkstyle.version>2.17</checkstyle.version>
@@ -41,11 +44,13 @@
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <apache-rat-plugin.version>0.13</apache-rat-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <org.osgi.annotation.versioning.version>1.0.0</org.osgi.annotation.versioning.version>
         <bnd-maven-plugin.version>3.4.0</bnd-maven-plugin.version>
         <bnd-baseline-maven-plugin.version>4.2.0</bnd-baseline-maven-plugin.version>
+        <build-helper-maven-plugin.version>1.12</build-helper-maven-plugin.version>
     </properties>
 
     <licenses>
@@ -194,6 +199,11 @@
                     <version>${maven-gpg-plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.rat</groupId>
                     <artifactId>apache-rat-plugin</artifactId>
                     <version>${apache-rat-plugin.version}</version>
@@ -212,6 +222,11 @@
                     <groupId>biz.aQute.bnd</groupId>
                     <artifactId>bnd-baseline-maven-plugin</artifactId>
                     <version>${bnd-baseline-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -324,17 +339,37 @@
                 <configuration>
                     <excludes>
                         <exclude>.travis.yml.*</exclude>
-                        <exclude>*.adoc</exclude>
                         <exclude>bnd.bnd</exclude>
                         <exclude>*.log</exclude>
                         <exclude>.checkstyle</exclude>
                         <exclude>.factorypath</exclude>
                         <exclude>.editorconfig</exclude>
-                        <exclude>src/main/resources/**/*</exclude>
+                        <exclude>.github/**</exclude>
+                        <exclude>.cache/**</exclude>
+                        <exclude>**/*.html</exclude>
+                        <exclude>**/license-efsl.adoc</exclude>
+                        <exclude>**/*.asciidoc</exclude>
+                        <exclude>**/*LICENSE*.md</exclude>
                     </excludes>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <name>currentYear</name>
+                            <pattern>yyyy</pattern>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
