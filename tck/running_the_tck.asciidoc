@@ -44,6 +44,19 @@ Override `URIResourceProvider` with `TCKURIResourceProvider` using `LoadableExte
 
 For any test runs, the TCK will append `/health`, so that a fully qualified URL to your health impoementation looks like `http://<HOST:<PORT>/health`
 
+== Hardware Requirements
+
+All systems should meet the following recommended hardware requirements:
+
+* CPU running at 2.0 GHz or higher
+* 4 GB of RAM or more
+
+== Software Requirements
+
+You can run this TCK on platforms running the Solaris, Linux, Windows, and Mac OS with the following software installed:
+
+* Maven
+* JDK8+
 
 == Dependencies
 
