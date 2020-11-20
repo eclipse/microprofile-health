@@ -350,6 +350,7 @@
                         <exclude>**/license-efsl.adoc</exclude>
                         <exclude>**/*.asciidoc</exclude>
                         <exclude>**/*LICENSE*.md</exclude>
+                        <exclude>**/*.json</exclude>
                     </excludes>
                 </configuration>
             </plugin>
