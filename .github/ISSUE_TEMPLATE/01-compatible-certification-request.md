@@ -1,5 +1,5 @@
 ---
-[Implementation Name]: Compatible Certification Request
+name: [Implementation Name]: Compatible Certification Request
 about: Start a request for a compatible certification 
 title: 'MicroProfile Health [Version] Compatible Certification Request'
 labels: 'Certification :trophy:'
