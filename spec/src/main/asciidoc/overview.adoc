@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2020 Eclipse Microprofile Contributors:
+// Copyright (c) 2016-2021 Eclipse Microprofile Contributors:
 // See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,14 +23,14 @@ The Eclipse MicroProfile Health specification defines a single container runtime
 the availability and status of a MicroProfile implementation. This is primarily intended as a machine to machine (M2M)
 mechanism for use in containerized environments like cloud providers. Example of
 existing specifications from those environments include https://docs.cloudfoundry.org/devguide/deploy-apps/healthchecks.html[Cloud Foundry Health Checks] and
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes[Kubernetes Liveness and Readiness Probes].
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes[Kubernetes Liveness, Readiness and Startup Probes].
 
 In this scenario health checks are used to determine if a computing node needs to be discarded (terminated, shutdown) and eventually replaced by another (healthy) instance.
 
-The MicroProfile Health architecture consists of two `/health/ready` and `/health/live` endpoints in a MicroProfile runtime that respectively represent the readiness and the liveness of the entire runtime.
-These endpoints are linked to health check procedures defined with specifications API and annotated respectively with `@Liveness` and `@Readiness` annotations.
+The MicroProfile Health architecture consists of three `/health/ready`, `/health/live` and `/health/start` endpoints in a MicroProfile runtime that respectively represent the readiness, the liveness and the startness of the entire runtime.
+These endpoints are linked to health check procedures defined with specifications API and annotated respectively with `@Readiness`, `@Liveness` and `@Startness` annotations.
 
-A 3rd endpoint `/health` is also available and can be used to provide a combination of the previous endpoints.
+A 4th endpoint `/health` is also available and can be used to provide a combination of the previous endpoints.
 
 These endpoints are expected to be associated with a configurable context, such as a web application deployment, that can be configured with settings such as port, virtual-host, security, etc.
 Further, MicroProfile Health defines the notion of a procedure that represents the health of a particular subcomponent of an application.

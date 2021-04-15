@@ -109,6 +109,13 @@ This means that if this procedure fails the application can be discarded (termin
 
 The _@Liveness_ annotation must be applied on a _HealthCheck_ implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
 
+=== Startness check
+
+A Health check for startness allows applications to define startup probes that are used for initial verification of the application before the liveness probe takes over.
+
+The _@Startness_ annotation must be applied on a _HealthCheck_ implementation to define a startness check procedure, otherwise, this annotation is ignored.
+
+
 == Integration with CDI
 
 Any enabled bean with a bean of type _org.eclipse.microprofile.health.HealthCheck_ and _@Liveness_ or _@Readiness_ qualifier can be used as health check procedure.
