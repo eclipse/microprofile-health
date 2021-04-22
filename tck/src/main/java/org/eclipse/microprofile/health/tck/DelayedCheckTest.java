@@ -21,17 +21,17 @@
  */
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.DelayedCheck;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Martin Stefanko
@@ -44,8 +44,7 @@ public class DelayedCheckTest extends TCKBase {
     }
 
     /**
-     * Verifies the health integration with CDI when the bean creation takes longer than
-     * the first request
+     * Verifies the health integration with CDI when the bean creation takes longer than the first request
      */
     @Test
     @RunAsClient
@@ -53,7 +52,7 @@ public class DelayedCheckTest extends TCKBase {
         Response response = getUrlReadyContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),503);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonObject json = readJson(response);
 
@@ -67,4 +66,3 @@ public class DelayedCheckTest extends TCKBase {
         assertOverallFailure(json);
     }
 }
-

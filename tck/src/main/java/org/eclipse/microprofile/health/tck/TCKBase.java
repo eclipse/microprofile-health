@@ -22,6 +22,18 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.util.Optional;
+import java.util.logging.Logger;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -34,17 +46,6 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * @author Heiko Braun
@@ -109,8 +110,7 @@ public abstract class TCKBase extends Arquillian {
             if (response.getEntity() != null) {
 
                 BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(response.getEntity().getContent())
-                );
+                        new InputStreamReader(response.getEntity().getContent()));
 
                 String line;
 
@@ -120,8 +120,7 @@ public abstract class TCKBase extends Arquillian {
                 bufferedReader.close();
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -148,44 +147,39 @@ public abstract class TCKBase extends Arquillian {
 
     private void assertCheckName(JsonObject check, String expectedName) {
         Assert.assertEquals(
-            check.getString("name"),
-            expectedName,
-            String.format("Expected a CDI health check '%s' to be invoked, " +
-                "but it was not present in the response", expectedName)
-        );
+                check.getString("name"),
+                expectedName,
+                String.format("Expected a CDI health check '%s' to be invoked, " +
+                        "but it was not present in the response", expectedName));
     }
 
     void verifySuccessStatus(JsonObject check) {
         Assert.assertEquals(
-            check.getString("status"),
-            "UP",
-            "Expected a successful check result"
-        );
+                check.getString("status"),
+                "UP",
+                "Expected a successful check result");
 
     }
 
     void verifyFailureStatus(JsonObject check) {
         Assert.assertEquals(
-            check.getString("status"),
-            "DOWN",
-            "Expected a failed check result"
-        );
+                check.getString("status"),
+                "DOWN",
+                "Expected a failed check result");
     }
 
     void assertOverallSuccess(JsonObject json) {
         Assert.assertEquals(
-            json.getString("status"),
-            "UP",
-            "Expected overall status to be successful"
-        );
+                json.getString("status"),
+                "UP",
+                "Expected overall status to be successful");
     }
 
     void assertOverallFailure(JsonObject json) {
         Assert.assertEquals(
-            json.getString("status"),
-            "DOWN",
-            "Expected overall status to be unsuccessful"
-        );
+                json.getString("status"),
+                "DOWN",
+                "Expected overall status to be unsuccessful");
     }
 
     public class Response {
@@ -199,7 +193,7 @@ public abstract class TCKBase extends Arquillian {
         }
 
         public Optional<String> getBody() {
-            return (body!=null && !body.equals("")) ? Optional.of(body) : Optional.empty();
+            return (body != null && !body.equals("")) ? Optional.of(body) : Optional.empty();
         }
 
         private int status;

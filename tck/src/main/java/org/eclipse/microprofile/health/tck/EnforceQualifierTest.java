@@ -22,16 +22,16 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.CheckWithoutQualifier;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Heiko Braun
@@ -61,4 +61,3 @@ public class EnforceQualifierTest extends TCKBase {
 
     }
 }
-

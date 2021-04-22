@@ -26,8 +26,8 @@ import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 
 /**
  * <p>
- * Reserved for implementors as means to supply their own HealthCheckResponseBuilder. This provider is located using the default
- * service loader and instantiated from the {@link org.eclipse.microprofile.health.HealthCheckResponse}
+ * Reserved for implementors as means to supply their own HealthCheckResponseBuilder. This provider is located using the
+ * default service loader and instantiated from the {@link org.eclipse.microprofile.health.HealthCheckResponse}
  * </p>
  * Created by hbraun on 07.07.17.
  */

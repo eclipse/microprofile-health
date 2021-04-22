@@ -41,12 +41,12 @@ public class CDIProducedProceduresTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(CDIProducedProceduresTest.class.getSimpleName(),
-            CDIProducedProcedureCheck.class);
+                CDIProducedProcedureCheck.class);
     }
 
     /**
-     * Verifies the liveness and readiness health integration with CDI when the
-     * Health Check procedures are defined with CDI Producers.
+     * Verifies the liveness and readiness health integration with CDI when the Health Check procedures are defined with
+     * CDI Producers.
      */
     @Test
     @RunAsClient
@@ -69,8 +69,7 @@ public class CDIProducedProceduresTest extends TCKBase {
     }
 
     /**
-     * Tests that Readiness is down, for Readiness health check procedure
-     * defined with CDI Producers.
+     * Tests that Readiness is down, for Readiness health check procedure defined with CDI Producers.
      */
     @Test
     @RunAsClient

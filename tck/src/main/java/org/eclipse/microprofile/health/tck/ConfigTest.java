@@ -22,17 +22,17 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Martin Stefanko
@@ -42,12 +42,13 @@ public class ConfigTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(ConfigTest.class.getSimpleName())
-            .addAsManifestResource(new StringAsset("mp.health.default.readiness.empty.response=UP"), "microprofile-config.properties");
+                .addAsManifestResource(new StringAsset("mp.health.default.readiness.empty.response=UP"),
+                        "microprofile-config.properties");
     }
 
     /**
-     * Verifies the default processing of the empty readiness checks with
-     * "mp.health.default.readiness.empty.response" defined is respected.
+     * Verifies the default processing of the empty readiness checks with "mp.health.default.readiness.empty.response"
+     * defined is respected.
      */
     @Test
     @RunAsClient
@@ -61,9 +62,8 @@ public class ConfigTest extends TCKBase {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(),0,"Didn't expect any checks");
+        Assert.assertEquals(checks.size(), 0, "Didn't expect any checks");
 
         assertOverallSuccess(json);
     }
 }
-

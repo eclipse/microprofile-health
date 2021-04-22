@@ -22,6 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
@@ -33,8 +35,6 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-
 /**
  * @author Antoine Sabot-Durand
  */
@@ -43,7 +43,7 @@ public class OnlySuccessfulProcedureTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(OnlySuccessfulProcedureTest.class.getSimpleName(),
-            SuccessfulReadiness.class, SuccessfulLiveness.class);
+                SuccessfulReadiness.class, SuccessfulLiveness.class);
     }
 
     /**
@@ -61,14 +61,13 @@ public class OnlySuccessfulProcedureTest extends TCKBase {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(),1,"Expected a single check response");
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
         // single procedure response
         assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
 
         assertOverallSuccess(json);
     }
-
 
     @Test
     @RunAsClient
@@ -82,7 +81,7 @@ public class OnlySuccessfulProcedureTest extends TCKBase {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(),1,"Expected a single check response");
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
         // single procedure response
         assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
@@ -90,4 +89,3 @@ public class OnlySuccessfulProcedureTest extends TCKBase {
         assertOverallSuccess(json);
     }
 }
-
