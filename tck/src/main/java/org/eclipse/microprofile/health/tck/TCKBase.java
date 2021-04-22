@@ -61,7 +61,7 @@ public abstract class TCKBase extends Arquillian {
     public void beforeMethod(Method method) {
         LOG.info(String.format("Running test: %s#%s", method.getDeclaringClass().getSimpleName(), method.getName()));
     }
-    
+
     Response getUrlHealthContents() {
         return getUrlContents(this.uri + "/health", false);
     }
@@ -72,6 +72,10 @@ public abstract class TCKBase extends Arquillian {
 
     Response getUrlReadyContents() {
         return getUrlContents(this.uri + "/health/ready", false);
+    }
+
+    Response getUrlStartContents() {
+        return getUrlContents(this.uri + "/health/start", false);
     }
 
     private Response getUrlContents(String theUrl, boolean useAuth) {
@@ -128,7 +132,7 @@ public abstract class TCKBase extends Arquillian {
         JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
         JsonObject json = jsonReader.readObject();
         System.out.println(json);
-        
+
         return json;
     }
 
@@ -175,7 +179,7 @@ public abstract class TCKBase extends Arquillian {
             "Expected overall status to be successful"
         );
     }
-    
+
     void assertOverallFailure(JsonObject json) {
         Assert.assertEquals(
             json.getString("status"),

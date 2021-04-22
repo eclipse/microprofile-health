@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2020 Eclipse Microprofile Contributors:
+// Copyright (c) 2016-2021 Eclipse Microprofile Contributors:
 // See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,6 +42,7 @@ The nature of the procedure is defined by annotating the `HealthCheck` procedure
 
 * Readiness checks defined with `@Readiness` annotation
 * Liveness checks defined with `@Liveness` annotation
+* Startness checks defined with `@Startness` annotation
 
 
 A `HealthCheck` procedure with none of the above annotations is not an active procedure and should be ignored.
@@ -58,6 +59,14 @@ A Health Check for liveness allows third party services to determine if the appl
 This means that if this procedure fails the application can be discarded (terminated, shutdown).
 
 The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
+
+=== Startness check
+
+A Health check for startness allows applications to define startup probes that
+are used for initial verification of the application before the liveness probe takes over.
+This is useful for applications which require additional startup time on their first initialization.
+
+The `@Startness` annotation must be applied on a `HealthCheck` implementation to define a startness check procedure, otherwise, this annotation is ignored.
 
 == Multiple HealthChecks procedures for a given kind
 
@@ -141,16 +150,17 @@ public class CheckDiskspace implements HealthCheck {
 
 == Integration with CDI
 
-Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness` or `@Readiness` qualifier can be used as health check procedure.
+Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness`, or `@Startness` qualifier can be used as health check procedure.
 
 
-Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request
+Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
 
 
 ```
 @ApplicationScoped
 @Liveness
 @Readiness
+@Startness
 public class MyCheck implements HealthCheck {
 
     public HealthCheckResponse call() {
@@ -176,6 +186,12 @@ class MyChecks {
   @Readiness
   HealthCheck check2() {
     return () -> HealthCheckResponse.named("cpu-usage").status(getCpuUsage() < 0.9).build();
+  }
+
+  @Produces
+  @Startness
+  HealthCheck check3() {
+    return () -> HealthCheckResponse.named("startup-cpu-usage").status(getCpuUsage() < 0.95).build();
   }
 }
 ```
