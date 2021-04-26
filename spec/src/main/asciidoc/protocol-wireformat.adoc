@@ -42,7 +42,7 @@ Note that the force of these words is modified by the requirement level of the d
   before implementing any behavior described with this label.
 
 
-5. MAY – This word, or the adjective “OPTIONAL,” mean that an item is truly discretionary.
+5. MAY – This word, or the adjective “OPTIONAL”, mean that an item is truly discretionary.
 
 
 == Goals
@@ -74,7 +74,7 @@ Note that the force of these words is modified by the requirement level of the d
 == Protocol Overview
 
 1. Consumer invokes the health check of a Producer through any of the supported protocols
-2. Producer enforces security constraints on the invocation (i.e authentication)
+2. Producer enforces security constraints on the invocation (i.e. authentication)
 3. Producer executes a set of Health check procedures (could be a set with one element)
 4. Producer determines the overall status
 5. The status is mapped to outermost protocol (i.e. HTTP status codes)
@@ -178,7 +178,7 @@ startup probes.
 
 === Executing procedures
 
-When executing health check procedures a producer MUST handle any unchecked exceptions and synthesize a substitute respone.
+When executing health check procedures a producer MUST handle any unchecked exceptions and synthesize a substitute response.
 
 * The synthesized response MUST contain a `status` entry with a value of "DOWN".
 * The synthesized response MUST contain a `name` entry with a value set to the runtime class name of the failing check.
