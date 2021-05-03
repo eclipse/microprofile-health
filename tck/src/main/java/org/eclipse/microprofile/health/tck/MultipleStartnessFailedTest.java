@@ -22,6 +22,11 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.FailedStartness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
@@ -31,11 +36,6 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-
 /**
  * @author Martin Stefanko
  */
@@ -44,7 +44,7 @@ public class MultipleStartnessFailedTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(MultipleStartnessFailedTest.class.getSimpleName(),
-            SuccessfulLiveness.class, SuccessfulReadiness.class, FailedStartness.class);
+                SuccessfulLiveness.class, SuccessfulReadiness.class, FailedStartness.class);
     }
 
     /**
@@ -136,13 +136,13 @@ public class MultipleStartnessFailedTest extends TCKBase {
         for (JsonObject check : checks.getValuesAs(JsonObject.class)) {
             String id = check.getString("name");
             switch (id) {
-                case "successful-check":
+                case "successful-check" :
                     verifySuccessStatus(check);
                     break;
-                case "failed-check":
+                case "failed-check" :
                     verifyFailureStatus(check);
                     break;
-                default:
+                default :
                     Assert.fail("Unexpected response payload structure");
             }
         }
@@ -150,4 +150,3 @@ public class MultipleStartnessFailedTest extends TCKBase {
         assertOverallFailure(json);
     }
 }
-

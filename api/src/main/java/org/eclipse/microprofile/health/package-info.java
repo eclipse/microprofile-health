@@ -1,6 +1,6 @@
 /*
  *******************************************************************************
- * Copyright (c) 2016-2020 Contributors to the Eclipse Foundation
+ * Copyright (c) 2016-2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,5 +23,5 @@
  * Microprofile Health
  * </p>
  **/
-@org.osgi.annotation.versioning.Version("2.0")
+@org.osgi.annotation.versioning.Version("2.1")
 package org.eclipse.microprofile.health;
