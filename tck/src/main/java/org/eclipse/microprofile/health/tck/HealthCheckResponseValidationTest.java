@@ -41,16 +41,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Prashanth Gunapalasingam
  */
 public class HealthCheckResponseValidationTest extends TCKBase {
-    
+
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(HealthCheckResponseValidationTest.class.getSimpleName(), SuccessfulLiveness.class);
+        return createWarFileWithClasses(HealthCheckResponseValidationTest.class.getSimpleName(),
+                SuccessfulLiveness.class);
     }
 
     /**
-     * Validates the HealthCheckResponse concrete class definition by verifying if its 
-     * deserialized properties correctly maps to the JSON schema protocol defined by the 
-     * specification and the JSON health check response returned by the implementation.
+     * Validates the HealthCheckResponse concrete class definition by verifying if its deserialized properties correctly
+     * maps to the JSON schema protocol defined by the specification and the JSON health check response returned by the
+     * implementation.
      */
     @Test
     @RunAsClient
@@ -58,26 +59,25 @@ public class HealthCheckResponseValidationTest extends TCKBase {
         Response response = getUrlHealthContents();
 
         Assert.assertEquals(response.getStatus(), 200);
-        
+
         JsonObject json = readJson(response);
         JsonArray checks = json.getJsonArray("checks");
-        
+
         // Single check procedure
         JsonObject check = checks.getJsonObject(0);
-        
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         HealthCheckResponse hcr = mapper.readValue(check.toString(), HealthCheckResponse.class);
-    
+
         // Validates the name property from the HealthCheckResponse class
         Assert.assertEquals(
                 hcr.getName(),
                 "successful-check",
-                String.format("Unexpected value for the HealthCheckResponse \"name\" property : %s", hcr.getName())
-            );
-        
+                String.format("Unexpected value for the HealthCheckResponse \"name\" property : %s", hcr.getName()));
+
         // Validates the status property from the HealthCheckResponse class
-        Assert.assertEquals(hcr.getStatus(), HealthCheckResponse.Status.UP, 
+        Assert.assertEquals(hcr.getStatus(), HealthCheckResponse.Status.UP,
                 "Expected a successful check status for the HealthCheckResponse \"status\" property.");
     }
 }

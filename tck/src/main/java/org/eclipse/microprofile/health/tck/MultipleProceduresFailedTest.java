@@ -22,6 +22,11 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.FailedReadiness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
@@ -30,11 +35,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Heiko Braun
@@ -48,7 +48,8 @@ public class MultipleProceduresFailedTest extends TCKBase {
     }
 
     /**
-     * Verifies the /health endpoint with the liveness and readiness integration with CDI at the scope of a server runtime
+     * Verifies the /health endpoint with the liveness and readiness integration with CDI at the scope of a server
+     * runtime
      */
     @Test
     @RunAsClient
@@ -56,25 +57,25 @@ public class MultipleProceduresFailedTest extends TCKBase {
         Response response = getUrlHealthContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),503);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(), 3, "Expected four check responses");
-        
+
         // verify that all 3 procedures are present
         for (JsonObject check : checks.getValuesAs(JsonObject.class)) {
             String id = check.getString("name");
             switch (id) {
-                case "successful-check":
+                case "successful-check" :
                     verifySuccessStatus(check);
                     break;
-                case "failed-check":
+                case "failed-check" :
                     verifyFailureStatus(check);
                     break;
-                default:
+                default :
                     Assert.fail("Unexpected response payload structure");
             }
         }
@@ -82,4 +83,3 @@ public class MultipleProceduresFailedTest extends TCKBase {
         assertOverallFailure(json);
     }
 }
-

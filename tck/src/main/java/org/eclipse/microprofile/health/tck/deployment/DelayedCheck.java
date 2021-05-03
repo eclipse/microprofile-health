@@ -21,26 +21,24 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import javax.enterprise.context.ApplicationScoped;
-
 @Readiness
 @ApplicationScoped
 public class DelayedCheck implements HealthCheck {
-    
+
     public DelayedCheck() {
         // delay the bean creation
         try {
             Thread.sleep(3000);
-        } 
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public HealthCheckResponse call() {

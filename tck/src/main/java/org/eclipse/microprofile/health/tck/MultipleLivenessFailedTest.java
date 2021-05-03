@@ -22,6 +22,8 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
@@ -34,8 +36,6 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
-
 /**
  * @author Heiko Braun
  * @author Antoine Sabot-Durand
@@ -44,8 +44,8 @@ public class MultipleLivenessFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(MultipleLivenessFailedTest.class.getSimpleName(), 
-            FailedLiveness.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
+        return createWarFileWithClasses(MultipleLivenessFailedTest.class.getSimpleName(),
+                FailedLiveness.class, SuccessfulLiveness.class, SuccessfulReadiness.class);
     }
 
     /**
@@ -57,25 +57,25 @@ public class MultipleLivenessFailedTest extends TCKBase {
         Response response = getUrlLiveContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),503);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(), 2, "Expected two check responses");
-        
+
         for (JsonObject check : checks.getValuesAs(JsonObject.class)) {
             String id = check.getString("name");
             switch (id) {
-                case "successful-check":
+                case "successful-check" :
                     verifySuccessStatus(check);
                     break;
-                case "failed-check":
+                case "failed-check" :
                     verifyFailureStatus(check);
                     break;
-                default:
-                   Assert.fail("Unexpected response payload structure");
+                default :
+                    Assert.fail("Unexpected response payload structure");
             }
         }
 
@@ -97,7 +97,7 @@ public class MultipleLivenessFailedTest extends TCKBase {
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(),1,"Expected a single check response");
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
         // single procedure response
         assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
@@ -105,4 +105,3 @@ public class MultipleLivenessFailedTest extends TCKBase {
         assertOverallSuccess(json);
     }
 }
-

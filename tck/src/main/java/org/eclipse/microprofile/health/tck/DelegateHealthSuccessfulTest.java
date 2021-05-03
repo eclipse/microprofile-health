@@ -22,6 +22,11 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.DelegateHealth;
 import org.eclipse.microprofile.health.tck.deployment.DelegationTarget;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -29,11 +34,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Heiko Braun
@@ -43,7 +43,7 @@ public class DelegateHealthSuccessfulTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(DelegateHealthSuccessfulTest.class.getSimpleName(),
-            DelegateHealth.class, DelegationTarget.class);
+                DelegateHealth.class, DelegationTarget.class);
     }
 
     /**
@@ -62,11 +62,10 @@ public class DelegateHealthSuccessfulTest extends TCKBase {
         // response size
         JsonArray checks = json.getJsonArray("checks");
         Assert.assertEquals(checks.size(), 1, "Expected a single check response");
-        
+
         // single procedure response
         assertSuccessfulCheck(checks.getJsonObject(0), "delegate-check");
 
         assertOverallSuccess(json);
     }
 }
-

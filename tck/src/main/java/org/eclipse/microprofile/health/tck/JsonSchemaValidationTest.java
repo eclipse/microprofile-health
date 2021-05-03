@@ -22,11 +22,12 @@
 
 package org.eclipse.microprofile.health.tck;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonschema.core.report.ProcessingReport;
-import com.github.fge.jsonschema.main.JsonSchema;
-import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import java.io.IOException;
+
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -35,10 +36,11 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.JsonObject;
-import java.io.IOException;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchema;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 /**
  * @author Martin Stefanko
@@ -48,12 +50,12 @@ public class JsonSchemaValidationTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(JsonSchemaValidationTest.class.getSimpleName(),
-            SuccessfulLiveness.class, SuccessfulReadiness.class);
+                SuccessfulLiveness.class, SuccessfulReadiness.class);
     }
 
     /**
-     * Verifies that the JSON object returned by the implementation is following the 
-     * JSON schema defined by the specification
+     * Verifies that the JSON object returned by the implementation is following the JSON schema defined by the
+     * specification
      */
     @Test
     @RunAsClient
@@ -66,18 +68,18 @@ public class JsonSchemaValidationTest extends TCKBase {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode schemaJson = mapper.readTree(Thread.currentThread()
-            .getContextClassLoader().getResourceAsStream("health-check-schema.json"));
+                .getContextClassLoader().getResourceAsStream("health-check-schema.json"));
 
         final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
         final JsonSchema schema = factory.getJsonSchema(schemaJson);
 
         ProcessingReport report = schema.validate(toJsonNode(json));
-        Assert.assertTrue(report.isSuccess(), "Returned Health JSON does not validate against the specification schema");
+        Assert.assertTrue(report.isSuccess(),
+                "Returned Health JSON does not validate against the specification schema");
     }
-    
+
     private JsonNode toJsonNode(JsonObject jsonObject) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readTree(jsonObject.toString());
     }
 }
-

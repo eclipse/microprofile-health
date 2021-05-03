@@ -22,17 +22,17 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Heiko Braun
@@ -54,13 +54,13 @@ public class SingleLivenessSuccessfulTest extends TCKBase {
         Response response = getUrlLiveContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),200);
+        Assert.assertEquals(response.getStatus(), 200);
 
         JsonObject json = readJson(response);
 
         // response size
         JsonArray checks = json.getJsonArray("checks");
-        Assert.assertEquals(checks.size(),1,"Expected a single check response");
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
         // single procedure response
         assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
@@ -68,4 +68,3 @@ public class SingleLivenessSuccessfulTest extends TCKBase {
         assertOverallSuccess(json);
     }
 }
-

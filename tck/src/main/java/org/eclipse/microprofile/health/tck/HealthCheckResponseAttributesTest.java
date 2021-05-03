@@ -22,17 +22,17 @@
 
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.eclipse.microprofile.health.tck.deployment.CheckWithAttributes;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
 /**
  * @author Heiko Braun
@@ -42,7 +42,7 @@ public class HealthCheckResponseAttributesTest extends TCKBase {
     @Deployment
     public static Archive getDeployment() {
         return createWarFileWithClasses(HealthCheckResponseAttributesTest.class.getSimpleName(),
-            CheckWithAttributes.class);
+                CheckWithAttributes.class);
     }
 
     /**
@@ -69,18 +69,15 @@ public class HealthCheckResponseAttributesTest extends TCKBase {
 
         // response payload attributes
         JsonObject data = check.getJsonObject("data");
-        
+
         Assert.assertEquals(
                 data.getString("first-key"),
-                "first-val"
-        );
+                "first-val");
 
         Assert.assertEquals(
                 data.getString("second-key"),
-                "second-val"
-        );
+                "second-val");
 
         assertOverallSuccess(json);
     }
 }
-

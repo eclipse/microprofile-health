@@ -21,18 +21,19 @@
  */
 package org.eclipse.microprofile.health.tck;
 
+import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWarFile;
+
+import javax.json.JsonObject;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.JsonObject;
-
-import static org.eclipse.microprofile.health.tck.DeploymentUtils.createEmptyWarFile;
-
 /**
  * Validates that a health check that includes no procedures returns a 200 status with no body.
+ * 
  * @author Scott Stark
  */
 public class NoProcedureSuccessfulTest extends TCKBase {
@@ -51,7 +52,7 @@ public class NoProcedureSuccessfulTest extends TCKBase {
         Response response = getUrlHealthContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(),200);
+        Assert.assertEquals(response.getStatus(), 200);
 
         JsonObject json = readJson(response);
 

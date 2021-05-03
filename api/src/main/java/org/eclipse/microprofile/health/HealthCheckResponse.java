@@ -22,8 +22,6 @@
 
 package org.eclipse.microprofile.health;
 
-import org.eclipse.microprofile.health.spi.HealthCheckResponseProvider;
-
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Map;
@@ -32,13 +30,14 @@ import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.microprofile.health.spi.HealthCheckResponseProvider;
+
 /**
  * The response to a health check invocation.
  * <p>
- * The {@link HealthCheckResponse} class is reserved for an extension by implementation providers.
- * An application should use one of the static methods to create a Response instance using a 
- * {@link HealthCheckResponseBuilder}.
- * When used on the consuming end, The class can also be instantiated directly.
+ * The {@link HealthCheckResponse} class is reserved for an extension by implementation providers. An application should
+ * use one of the static methods to create a Response instance using a {@link HealthCheckResponseBuilder}. When used on
+ * the consuming end, The class can also be instantiated directly.
  * </p>
  */
 public class HealthCheckResponse {
@@ -55,9 +54,13 @@ public class HealthCheckResponse {
 
     /**
      * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
-     * @param name Health Check procedure's name
-     * @param status Health Check procedure's status
-     * @param data additional data for Health Check procedure
+     * 
+     * @param name
+     *            Health Check procedure's name
+     * @param status
+     *            Health Check procedure's status
+     * @param data
+     *            additional data for Health Check procedure
      */
     public HealthCheckResponse(String name, Status status, Optional<Map<String, Object>> data) {
         this.name = name;
@@ -77,7 +80,8 @@ public class HealthCheckResponse {
     /**
      * Used by OSGi environment where the service loader pattern is not supported.
      *
-     * @param provider the provider instance to use.
+     * @param provider
+     *            the provider instance to use.
      */
     public static void setResponseProvider(HealthCheckResponseProvider provider) {
         HealthCheckResponse.provider = provider;
@@ -86,7 +90,8 @@ public class HealthCheckResponse {
     /**
      * Creates a {@link HealthCheckResponseBuilder} with a name.
      *
-     * @param name the check name
+     * @param name
+     *            the check name
      * @return a new health check builder with a name
      */
     public static HealthCheckResponseBuilder named(String name) {
@@ -108,7 +113,8 @@ public class HealthCheckResponse {
     /**
      * Creates a successful health check with a name.
      * 
-     * @param name the check name
+     * @param name
+     *            the check name
      * @return a new sucessful health check response with a name
      */
     public static HealthCheckResponse up(String name) {
@@ -118,7 +124,8 @@ public class HealthCheckResponse {
     /**
      * Creates a failed health check with a name.
      * 
-     * @param name the check name
+     * @param name
+     *            the check name
      * @return a new failed health check response with a name
      */
     public static HealthCheckResponse down(String name) {
@@ -146,13 +153,15 @@ public class HealthCheckResponse {
 
     // the actual contract
 
-    public enum Status {UP, DOWN}
+    public enum Status {
+        UP, DOWN
+    }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return status;
     }
 
@@ -193,22 +202,19 @@ public class HealthCheckResponse {
                 }
                 serviceInstance = spi;
             }
-        }
-        catch (Throwable t) {
+        } catch (Throwable t) {
             LOGGER.log(Level.SEVERE, "Error loading service " + service.getName() + ".", t);
         }
 
         return serviceInstance;
     }
 
-
     private static ClassLoader getContextClassLoader() {
         return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> {
             ClassLoader cl = null;
             try {
                 cl = Thread.currentThread().getContextClassLoader();
-            }
-            catch (SecurityException ex) {
+            } catch (SecurityException ex) {
                 LOGGER.log(
                         Level.WARNING,
                         "Unable to get context classloader instance.",

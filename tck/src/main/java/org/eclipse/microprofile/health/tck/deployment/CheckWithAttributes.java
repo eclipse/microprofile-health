@@ -21,11 +21,11 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
-
-import javax.enterprise.context.ApplicationScoped;
 
 /**
  * Created by hbraun on 29.06.17.

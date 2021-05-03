@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2017 Eclipse Microprofile Contributors:
+// Copyright (c) 2016-2021 Eclipse Microprofile Contributors:
 // See overview.adoc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,14 +32,14 @@ endif::[]
 
 // == License
 :sectnums!:
-include::license-efsl.adoc[]
+include::license-efsl.asciidoc[]
 
-include::overview.adoc[]
+include::overview.asciidoc[]
 
-include::java-api.adoc[]
+include::java-api.asciidoc[]
 
-include::protocol-wireformat.adoc[]
+include::protocol-wireformat.asciidoc[]
 
-include::architecture.adoc[]
+include::architecture.asciidoc[]
 
 include::release_notes.asciidoc[]
