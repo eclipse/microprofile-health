@@ -172,7 +172,14 @@ https://github.com/eclipse/microprofile-config[MicroProfile Config] configuratio
 value `mp.health.default.readiness.empty.response` to `UP` to give the container
 a hint that it can become ready.
 
-Similarly, for the startness the users can define additionally also
+The property `mp.health.default.readiness.empty.response` which defaults to `DOWN` (if not configured) should only be taken into account,
+when the user defined readiness check procedures are not processed or deployed yet. In other words, if the container is still starting up, the
+overall default readiness check status will reflect the `mp.health.default.readiness.empty.response` property status, with an empty 
+payload response. Once the container has started up, the overall readiness check status and the payload response will reflect the processed readiness check 
+procedures that are defined by the user. If there are not any readiness check procedures defined by the user, after the container has started, 
+the overall default readiness check status MUST return a positive `UP` overall status (i.e. HTTP 200).
+
+Similarly, for the startness health check, the users can additionally define
 `mp.health.default.startness.empty.response` to `UP` to achieve the same effect for the
 startup probes.
 
