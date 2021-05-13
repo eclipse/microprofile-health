@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.eclipse.microprofile.health</groupId>
         <artifactId>microprofile-health-parent</artifactId>
-        <version>3.1-SNAPSHOT</version>
+        <version>3.1-RC1</version>
     </parent>
 
     <artifactId>microprofile-health-tck</artifactId>
