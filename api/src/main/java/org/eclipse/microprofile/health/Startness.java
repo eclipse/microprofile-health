@@ -25,10 +25,10 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import javax.enterprise.util.AnnotationLiteral;
@@ -41,10 +41,10 @@ import javax.inject.Qualifier;
  * @author Martin Stefanko
  * @since 3.1
  */
-@Target({TYPE, METHOD, PARAMETER, FIELD})
-@Retention(RUNTIME)
-@Documented
 @Qualifier
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({TYPE, METHOD, PARAMETER, FIELD})
 public @interface Startness {
 
     /**
@@ -53,7 +53,7 @@ public @interface Startness {
      * @author Martin Stefanko
      * @since 3.1
      */
-    final class Literal extends AnnotationLiteral<Startness> implements Startness {
+    public static final class Literal extends AnnotationLiteral<Startness> implements Startness {
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
