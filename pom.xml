@@ -31,7 +31,6 @@
     <url>https://microprofile.io/project/eclipse/microprofile-health</url>
     <description>Eclipse MicroProfile Health - Parent POM</description>
 
-
     <properties>
         <inceptionYear>2016</inceptionYear>
     </properties>
