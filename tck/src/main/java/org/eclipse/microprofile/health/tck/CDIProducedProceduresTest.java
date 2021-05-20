@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Contributors to the Eclipse Foundation
+ * Copyright (c) 2019, 2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -35,6 +35,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
+ * Verifies the liveness, readiness, and startup health integration with CDI when the Health Check procedures are
+ * defined with CDI method Producers.
+ * 
  * @author Prashanth Gunapalasingam
  */
 public class CDIProducedProceduresTest extends TCKBase {
@@ -45,8 +48,7 @@ public class CDIProducedProceduresTest extends TCKBase {
     }
 
     /**
-     * Verifies the liveness and readiness health integration with CDI when the Health Check procedures are defined with
-     * CDI Producers.
+     * Verifies the successful Liveness Health Check integration with CDI method producers.
      */
     @Test
     @RunAsClient
@@ -69,7 +71,7 @@ public class CDIProducedProceduresTest extends TCKBase {
     }
 
     /**
-     * Tests that Readiness is down, for Readiness health check procedure defined with CDI Producers.
+     * Verifies the failed Readiness Health Check integration with CDI method producers.
      */
     @Test
     @RunAsClient
@@ -89,5 +91,28 @@ public class CDIProducedProceduresTest extends TCKBase {
         assertFailureCheck(checks.getJsonObject(0), "cdi-produced-failed-check");
 
         assertOverallFailure(json);
+    }
+
+    /**
+     * Verifies the successful Startup Health Check integration with CDI method producers.
+     */
+    @Test
+    @RunAsClient
+    public void testSuccessStartupResponsePayload() {
+        Response response = getUrlStartContents();
+
+        // status code
+        Assert.assertEquals(response.getStatus(), 200);
+
+        JsonObject json = readJson(response);
+
+        // response size
+        JsonArray checks = json.getJsonArray("checks");
+        Assert.assertEquals(checks.size(), 1, "Expected a single check response");
+
+        // single procedure response
+        assertSuccessfulCheck(checks.getJsonObject(0), "cdi-produced-successful-check");
+
+        assertOverallSuccess(json);
     }
 }
