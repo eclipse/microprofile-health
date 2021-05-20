@@ -25,7 +25,7 @@ package org.eclipse.microprofile.health.tck;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
-import org.eclipse.microprofile.health.tck.deployment.SuccessfulStartness;
+import org.eclipse.microprofile.health.tck.deployment.FailedStartup;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -35,24 +35,24 @@ import org.testng.annotations.Test;
 /**
  * @author Martin Stefanko
  */
-public class SingleStartnessSuccessfulTest extends TCKBase {
+public class SingleStartupFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return DeploymentUtils.createWarFileWithClasses(SingleStartnessSuccessfulTest.class.getSimpleName(),
-                SuccessfulStartness.class, TCKBase.class);
+        return DeploymentUtils.createWarFileWithClasses(SingleStartupFailedTest.class.getSimpleName(),
+                FailedStartup.class, TCKBase.class);
     }
 
     /**
-     * Verifies the startness integration with CDI at the scope of a server runtime
+     * Verifies the startup integration with CDI at the scope of a server runtime
      */
     @Test
     @RunAsClient
-    public void testSuccessResponsePayload() {
+    public void testFailedResponsePayload() {
         Response response = getUrlStartContents();
 
         // status code
-        Assert.assertEquals(response.getStatus(), 200);
+        Assert.assertEquals(response.getStatus(), 503);
 
         JsonObject json = readJson(response);
 
@@ -61,8 +61,8 @@ public class SingleStartnessSuccessfulTest extends TCKBase {
         Assert.assertEquals(checks.size(), 1, "Expected a single check response");
 
         // single procedure response
-        assertSuccessfulCheck(checks.getJsonObject(0), "successful-check");
+        assertFailureCheck(checks.getJsonObject(0), "failed-check");
 
-        assertOverallSuccess(json);
+        assertOverallFailure(json);
     }
 }
