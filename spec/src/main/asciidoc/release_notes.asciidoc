@@ -20,6 +20,32 @@
 
 = Release Notes
 
+[[release_notes_3_1]]
+== Release Notes for MicroProfile Health 3.1
+
+The following changes occurred in the 3.1 release, compared to 3.0.
+
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?q=is%3Aissue+milestone%3A3.1+is%3Aclosed[MicroProfile Health 3.1]
+
+=== Incompatible Changes
+
+- None
+
+=== API/SPI Changes
+
+- Added `@Startup` qualifier for the Kubernetes startup probes health check procedures (https://github.com/eclipse/microprofile-health/issues/274[#274])
+
+=== Functional Changes
+
+- Specify the behavior of the startup health checks (https://github.com/eclipse/microprofile-health/issues/274[#274])
+- Specify the `mp.health.default.startup.empty.response` config property (https://github.com/eclipse/microprofile-health/issues/274[#274])
+
+=== Other Changes
+
+- Integrated MicroProfile Parent POM (https://github.com/eclipse/microprofile-health/issues/282[#282])
+- Clarified `mp.health.default.readiness.empty.response` usage (https://github.com/eclipse/microprofile-health/issues/283[#283])
+
+
 [[release_notes_3_0]]
 == Release Notes for MicroProfile Health 3.0
 
