@@ -36,7 +36,7 @@ import javax.inject.Qualifier;
 
 /**
  *
- * This qualifier is used to define a Startness Health Check procedure mapped to the Startup Kubernetes probes.
+ * This qualifier is used to define a Startup Health Check procedure mapped to the Startup Kubernetes probes.
  *
  * @author Martin Stefanko
  * @since 3.1
@@ -45,15 +45,15 @@ import javax.inject.Qualifier;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({TYPE, METHOD, PARAMETER, FIELD})
-public @interface Startness {
+public @interface Startup {
 
     /**
-     * Support inline instantiation of the {@link Startness} qualifier.
+     * Support inline instantiation of the {@link Startup} qualifier.
      *
      * @author Martin Stefanko
      * @since 3.1
      */
-    public static final class Literal extends AnnotationLiteral<Startness> implements Startness {
+    public static final class Literal extends AnnotationLiteral<Startup> implements Startup {
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

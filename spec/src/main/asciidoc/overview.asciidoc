@@ -27,8 +27,8 @@ https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-read
 
 In this scenario health checks are used to determine if a computing node needs to be discarded (terminated, shutdown) and eventually replaced by another (healthy) instance.
 
-The MicroProfile Health architecture consists of three `/health/ready`, `/health/live` and `/health/start` endpoints in a MicroProfile runtime that respectively represent the readiness, the liveness and the startness of the entire runtime.
-These endpoints are linked to health check procedures defined with specifications API and annotated respectively with `@Readiness`, `@Liveness` and `@Startness` annotations.
+The MicroProfile Health architecture consists of three `/health/ready`, `/health/live` and `/health/start` endpoints in a MicroProfile runtime that respectively represent the readiness, the liveness and the startup health of the entire runtime.
+These endpoints are linked to health check procedures defined with specifications API and annotated respectively with `@Readiness`, `@Liveness` and `@Startup` annotations.
 
 A 4th endpoint `/health` is also available and can be used to provide a combination of the previous endpoints.
 

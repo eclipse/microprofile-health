@@ -134,21 +134,21 @@ Each provider MUST provide the REST/HTTP interaction, but MAY provide other prot
 
 * A producer with no liveness procedures expected or installed MUST return positive overall status (i.e. HTTP 200)
 * A producer with no readiness procedures expected or installed MUST return positive overall status (i.e. HTTP 200)
-* A producer with no startness procedures expected or installed MUST return positive overall status (i.e. HTTP 200)
+* A producer with no startup procedures expected or installed MUST return positive overall status (i.e. HTTP 200)
 
 * A producer with liveness procedures expected but not yet installed MUST return positive overall status (i.e. HTTP 200)
 * A producer with readiness procedures expected but not yet installed MUST return negative overall status (i.e. HTTP 503)
-* A producer with startness procedures expected but not yet installed MUST return negative overall status (i.e. HTTP 503)
+* A producer with startup procedures expected but not yet installed MUST return negative overall status (i.e. HTTP 503)
 
-A producer with no procedures expected or installed can be for instance 
+A producer with no procedures expected or installed can be for instance
 an application server without any deployments (focusing on some different function).
 
 A producer with procedures expected but not yet installed can be for instance a
 standalone runtime packaged with the user application, or
 an application server with already deployed user applications. User defined health
 check procedures thus can be expected but they do not have to be already processed
-when the first invocations of `/health/*` endpoints are received. See also 
-the <<empty-readiness-and-startness, Empty default readiness and startness health check responses>> section.
+when the first invocations of `/health/*` endpoints are received. See also
+the <<empty-readiness-and-startup, Empty default readiness and startup health check responses>> section.
 
 === Policies to determine the overall status
 
@@ -158,11 +158,11 @@ When multiple procedures are installed all procedures MUST be executed and the o
 * Consumers MUST use the logical conjunction policy by default to determine the status
 * Consumers MAY support custom policies to determine the status
 
-[[empty-readiness-and-startness]]
-== Empty default readiness and startness health check responses
+[[empty-readiness-and-startup]]
+== Empty default readiness and startup health check responses
 
 As readiness determines whether the container may consume requests, the container
-is <<health-check-procedures, required to return negative overall status>> 
+is <<health-check-procedures, required to return negative overall status>>
 until the user defined readiness checks can be executed. However, in some cases
 (e.g., the containers allowing multiple deployments) the container itself may be
 required to become ready before user defined readiness procedures can be deployed.
@@ -174,13 +174,13 @@ a hint that it can become ready.
 
 The property `mp.health.default.readiness.empty.response` which defaults to `DOWN` (if not configured) should only be taken into account,
 when the user defined readiness check procedures are not processed or deployed yet. In other words, if the container is still starting up, the
-overall default readiness check status will reflect the `mp.health.default.readiness.empty.response` property status, with an empty 
-payload response. Once the container has started up, the overall readiness check status and the payload response will reflect the processed readiness check 
-procedures that are defined by the user. If there are not any readiness check procedures defined by the user, after the container has started, 
+overall default readiness check status will reflect the `mp.health.default.readiness.empty.response` property status, with an empty
+payload response. Once the container has started up, the overall readiness check status and the payload response will reflect the processed readiness check
+procedures that are defined by the user. If there are not any readiness check procedures defined by the user, after the container has started,
 the overall default readiness check status MUST return a positive `UP` overall status (i.e. HTTP 200).
 
-Similarly, for the startness health check, the users can additionally define
-`mp.health.default.startness.empty.response` to `UP` to achieve the same effect for the
+Similarly, for the startup health check, the users can additionally define
+`mp.health.default.startup.empty.response` to `UP` to achieve the same effect for the
 startup probes.
 
 === Executing procedures
@@ -228,13 +228,13 @@ Aspects regarding the secure access of health check information.
 | /health/start
 | GET
 | 200, 500, 503
-| Startness
+| Startup
 | See Appendix B
 
 | /health
 | GET
 | 200, 500, 503
-| Liveness + Readiness + Startness
+| Liveness + Readiness + Startup
 | See Appendix B
 |===
 

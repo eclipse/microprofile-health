@@ -25,11 +25,11 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
-import org.eclipse.microprofile.health.Startness;
+import org.eclipse.microprofile.health.Startup;
 
-@Startness
+@Startup
 @ApplicationScoped
-public class SuccessfulStartness implements HealthCheck {
+public class SuccessfulStartup implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.up("successful-check");

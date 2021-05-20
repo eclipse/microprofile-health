@@ -27,7 +27,7 @@ import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileW
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
-import org.eclipse.microprofile.health.tck.deployment.FailedStartness;
+import org.eclipse.microprofile.health.tck.deployment.FailedStartup;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -39,20 +39,20 @@ import org.testng.annotations.Test;
 /**
  * @author Martin Stefanko
  */
-public class MultipleStartnessFailedTest extends TCKBase {
+public class MultipleStartupFailedTest extends TCKBase {
 
     @Deployment
     public static Archive getDeployment() {
-        return createWarFileWithClasses(MultipleStartnessFailedTest.class.getSimpleName(),
-                SuccessfulLiveness.class, SuccessfulReadiness.class, FailedStartness.class);
+        return createWarFileWithClasses(MultipleStartupFailedTest.class.getSimpleName(),
+                SuccessfulLiveness.class, SuccessfulReadiness.class, FailedStartup.class);
     }
 
     /**
-     * Test that Startness is down
+     * Test that Startup is down
      */
     @Test
     @RunAsClient
-    public void testFailingStartnessResponsePayload() {
+    public void testFailingStartupResponsePayload() {
         Response response = getUrlStartContents();
 
         // status code

@@ -42,7 +42,7 @@ The nature of the procedure is defined by annotating the `HealthCheck` procedure
 
 * Readiness checks defined with `@Readiness` annotation
 * Liveness checks defined with `@Liveness` annotation
-* Startness checks defined with `@Startness` annotation
+* Startup checks defined with `@Startup` annotation
 
 
 A `HealthCheck` procedure with none of the above annotations is not an active procedure and should be ignored.
@@ -60,13 +60,13 @@ This means that if this procedure fails the application can be discarded (termin
 
 The `@Liveness` annotation must be applied on a `HealthCheck` implementation to define a Liveness check procedure, otherwise, this annotation is ignored.
 
-=== Startness check
+=== Startup check
 
-A Health check for startness allows applications to define startup probes that
+A Health check for startup allows applications to define startup probes that
 are used for initial verification of the application before the liveness probe takes over.
 This is useful for applications which require additional startup time on their first initialization.
 
-The `@Startness` annotation must be applied on a `HealthCheck` implementation to define a startness check procedure, otherwise, this annotation is ignored.
+The `@Startup` annotation must be applied on a `HealthCheck` implementation to define a startup check procedure, otherwise, this annotation is ignored.
 
 == Multiple HealthChecks procedures for a given kind
 
@@ -150,7 +150,7 @@ public class CheckDiskspace implements HealthCheck {
 
 == Integration with CDI
 
-Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness`, or `@Startness` qualifier can be used as health check procedure.
+Any enabled bean with a bean of type `org.eclipse.microprofile.health.HealthCheck` and `@Liveness`, `@Readiness`, or `@Startup` qualifier can be used as health check procedure.
 
 
 Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. `http://HOST:PORT/health`) receives an inbound request.
@@ -160,7 +160,7 @@ Contextual references of health check procedures are invoked by runtime when the
 @ApplicationScoped
 @Liveness
 @Readiness
-@Startness
+@Startup
 public class MyCheck implements HealthCheck {
 
     public HealthCheckResponse call() {
@@ -189,7 +189,7 @@ class MyChecks {
   }
 
   @Produces
-  @Startness
+  @Startup
   HealthCheck check3() {
     return () -> HealthCheckResponse.named("startup-cpu-usage").status(getCpuUsage() < 0.95).build();
   }
