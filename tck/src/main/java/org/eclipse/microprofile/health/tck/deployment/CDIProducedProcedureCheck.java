@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Contributors to the Eclipse Foundation
+ * Copyright (c) 2019, 2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -29,9 +29,16 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
 import org.eclipse.microprofile.health.Readiness;
+import org.eclipse.microprofile.health.Startup;
 
 @ApplicationScoped
 public class CDIProducedProcedureCheck {
+    @Produces
+    @Startup
+    HealthCheck cdiProducedStartupCheck() {
+        return () -> HealthCheckResponse.up("cdi-produced-successful-check");
+    }
+
     @Produces
     @Liveness
     HealthCheck cdiProducedLivenessCheck() {
