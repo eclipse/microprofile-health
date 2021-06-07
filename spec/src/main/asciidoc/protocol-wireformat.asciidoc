@@ -225,7 +225,7 @@ Aspects regarding the secure access of health check information.
 | Readiness
 | See Appendix B
 
-| /health/start
+| /health/started
 | GET
 | 200, 500, 503
 | Startup
@@ -255,7 +255,7 @@ The following table gives valid health check responses for all kinds of health c
 | Request | HTTP Status       | JSON Payload         | Status  | Comment
 | /health/live
   /health/ready
-  /health/start
+  /health/started
   /health
 | 200
 | Yes
@@ -264,7 +264,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
-  /health/start
+  /health/started
   /health
 | 200
 | Yes
@@ -273,7 +273,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
-  /health/start
+  /health/started
   /health
 | 503
 | Yes
@@ -282,7 +282,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
-  /health/start
+  /health/started
   /health
 | 503
 | Yes
@@ -291,7 +291,7 @@ The following table gives valid health check responses for all kinds of health c
 
 | /health/live
   /health/ready
-  /health/start
+  /health/started
   /health
 | 500
 | No
