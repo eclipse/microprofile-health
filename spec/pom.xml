@@ -23,7 +23,6 @@
     </parent>
 
 
-    <groupId>org.eclipse.microprofile.health.specs</groupId>
     <artifactId>microprofile-health-spec</artifactId>
     <packaging>pom</packaging>
     <name>MicroProfile Health Specification</name>
