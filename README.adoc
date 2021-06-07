@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2020 Contributors to the Eclipse Foundation
+// Copyright (c) 2016-2021 Contributors to the Eclipse Foundation
 //
 // See the NOTICES file(s) distributed with this work for additional
 // information regarding copyright ownership.
@@ -118,7 +118,7 @@ The _@Startup_ annotation must be applied on a _HealthCheck_ implementation to d
 
 == Integration with CDI
 
-Any enabled bean with a bean of type _org.eclipse.microprofile.health.HealthCheck_ and _@Liveness_ or _@Readiness_ qualifier can be used as health check procedure.
+Any enabled bean with a bean of type _org.eclipse.microprofile.health.HealthCheck_ and _@Liveness_, _@Readiness_, or _@Startup_ qualifier can be used as health check procedure.
 
 
 Contextual references of health check procedures are invoked by runtime when the outermost protocol entry point (i.e. _http://HOST:PORT/health_) receives an inbound request
@@ -153,6 +153,12 @@ class MyChecks {
   @Readiness
   HealthCheck check2() {
     return () -> HealthCheckResponse.named("cpu-usage").status(getCpuUsage() < 0.9).build();
+  }
+  
+  @Produces
+  @Startup
+  HealthCheck check3() {
+    return () -> HealthCheckResponse.named("initial-heap-memory").status(getMemUsage() < 0.95).build();
   }
 }
 ```
