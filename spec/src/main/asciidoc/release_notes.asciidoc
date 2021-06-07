@@ -34,6 +34,7 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 === API/SPI Changes
 
 - Added `@Startup` qualifier for the Kubernetes startup probes health check procedures (https://github.com/eclipse/microprofile-health/issues/274[#274])
+- Introduction of `/health/started` endpoint that must call all the startup procedures
 
 === Functional Changes
 

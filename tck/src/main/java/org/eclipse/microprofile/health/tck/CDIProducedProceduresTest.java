@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
 /**
  * Verifies the liveness, readiness, and startup health integration with CDI when the Health Check procedures are
  * defined with CDI method Producers.
- * 
+ *
  * @author Prashanth Gunapalasingam
  */
 public class CDIProducedProceduresTest extends TCKBase {
@@ -99,7 +99,7 @@ public class CDIProducedProceduresTest extends TCKBase {
     @Test
     @RunAsClient
     public void testSuccessStartupResponsePayload() {
-        Response response = getUrlStartContents();
+        Response response = getUrlStartedContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 200);
