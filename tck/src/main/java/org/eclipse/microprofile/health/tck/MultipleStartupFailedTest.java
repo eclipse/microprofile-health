@@ -53,7 +53,7 @@ public class MultipleStartupFailedTest extends TCKBase {
     @Test
     @RunAsClient
     public void testFailingStartupResponsePayload() {
-        Response response = getUrlStartContents();
+        Response response = getUrlStartedContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 503);

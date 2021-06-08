@@ -49,7 +49,7 @@ public class SingleStartupSuccessfulTest extends TCKBase {
     @Test
     @RunAsClient
     public void testSuccessResponsePayload() {
-        Response response = getUrlStartContents();
+        Response response = getUrlStartedContents();
 
         // status code
         Assert.assertEquals(response.getStatus(), 200);
