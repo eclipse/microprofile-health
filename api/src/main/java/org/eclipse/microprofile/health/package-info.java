@@ -23,5 +23,5 @@
  * Microprofile Health
  * </p>
  **/
-@org.osgi.annotation.versioning.Version("2.1")
+@org.osgi.annotation.versioning.Version("3.0")
 package org.eclipse.microprofile.health;

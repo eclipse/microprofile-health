@@ -24,15 +24,15 @@ package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
 import org.eclipse.microprofile.health.tck.deployment.CDIProducedProcedureCheck;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
 
 /**
  * Verifies the liveness, readiness, and startup health integration with CDI when the Health Check procedures are

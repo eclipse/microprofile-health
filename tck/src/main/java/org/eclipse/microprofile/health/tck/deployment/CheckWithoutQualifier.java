@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,16 +21,16 @@
  */
 package org.eclipse.microprofile.health.tck.deployment;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * @author Heiko Braun
  * @since 13.06.17
  */
-// lacks the @Liveness/@Readiness annotations and should not be discovered
+// lacks the @Liveness/@Readiness/@Startup annotations and should not be discovered
 @ApplicationScoped
 public class CheckWithoutQualifier implements HealthCheck {
     @Override

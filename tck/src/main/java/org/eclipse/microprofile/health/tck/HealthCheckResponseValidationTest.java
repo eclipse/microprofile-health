@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Contributors to the Eclipse Foundation
+ * Copyright (c) 2020-2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -24,9 +24,6 @@ package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -36,6 +33,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
 
 /**
  * @author Prashanth Gunapalasingam
