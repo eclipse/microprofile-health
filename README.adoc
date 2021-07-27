@@ -39,7 +39,7 @@ The proposed solution breaks down into two parts:
 === Protocol
 
 This project defines a protocol (wireformat, semantics and possible forms of interactions) between system components that need to determine the “liveliness” of computing nodes in a bigger architecture.
-A detailed description of the health check protocol can be found in the link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.adoc[companion document].
+A detailed description of the health check protocol can be found in the link:https://github.com/eclipse/microprofile-health/tree/master/spec/src/main/asciidoc/protocol-wireformat.asciidoc[companion document].
 
 === API Usage
 
