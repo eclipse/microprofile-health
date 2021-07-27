@@ -24,7 +24,7 @@
 
     <groupId>org.eclipse.microprofile.health</groupId>
     <artifactId>microprofile-health-parent</artifactId>
-    <version>3.2-SNAPSHOT</version>
+    <version>4.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
     <name>MicroProfile Health</name>
