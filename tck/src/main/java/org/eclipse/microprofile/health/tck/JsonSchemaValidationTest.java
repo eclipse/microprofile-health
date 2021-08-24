@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Contributors to the Eclipse Foundation
+ * Copyright (c) 2019-2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -26,8 +26,6 @@ import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileW
 
 import java.io.IOException;
 
-import javax.json.JsonObject;
-
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -41,6 +39,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+
+import jakarta.json.JsonObject;
 
 /**
  * @author Martin Stefanko

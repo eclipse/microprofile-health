@@ -24,9 +24,6 @@ package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
 import org.eclipse.microprofile.health.tck.deployment.FailedStartup;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulLiveness;
 import org.eclipse.microprofile.health.tck.deployment.SuccessfulReadiness;
@@ -35,6 +32,9 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
 
 /**
  * @author Martin Stefanko

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2021 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -24,14 +24,14 @@ package org.eclipse.microprofile.health.tck;
 
 import static org.eclipse.microprofile.health.tck.DeploymentUtils.createWarFileWithClasses;
 
-import javax.json.JsonObject;
-
 import org.eclipse.microprofile.health.tck.deployment.CheckWithoutQualifier;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import jakarta.json.JsonObject;
 
 /**
  * @author Heiko Braun
