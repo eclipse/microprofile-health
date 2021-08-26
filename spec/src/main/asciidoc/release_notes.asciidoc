@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2017 Contributors to the Eclipse Foundation
+// Copyright (c) 2016-2021 Contributors to the Eclipse Foundation
 //
 // See the NOTICE file(s) distributed with this work for additional
 // information regarding copyright ownership.
@@ -18,108 +18,133 @@
 // Contributors:
 // Emily Jiang
 
-= Release Notes
+[[release_notes]]
+== Release Notes
+This section documents the changes introduced by individual releases.
+
+[[release_notes_4_0]]
+=== Release Notes for MicroProfile Health 4.0
+
+The following changes occurred in the 4.0 release, compared to 3.1.
+
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/7[MicroProfile Health 4.0]
+
+==== Incompatible Changes
+
+- This release aligns with Jakarta EE 9.1, so it won't work with earlier versions of Jakarta or Java EE.
+
+==== API/SPI Changes
+
+- There are no functional changes introduced in this release, except the dependency updating from javax to jakarta.
+
+==== Functional Changes
+
+- None
+
+==== Other Changes
+
+- None
 
 [[release_notes_3_1]]
-== Release Notes for MicroProfile Health 3.1
+=== Release Notes for MicroProfile Health 3.1
 
 The following changes occurred in the 3.1 release, compared to 3.0.
 
 A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?q=is%3Aissue+milestone%3A3.1+is%3Aclosed[MicroProfile Health 3.1]
 
-=== Incompatible Changes
+==== Incompatible Changes
 
 - None
 
-=== API/SPI Changes
+==== API/SPI Changes
 
 - Added `@Startup` qualifier for the Kubernetes startup probes health check procedures (https://github.com/eclipse/microprofile-health/issues/274[#274])
 - Introduction of `/health/started` endpoint that must call all the startup procedures
 
-=== Functional Changes
+==== Functional Changes
 
 - Specify the behavior of the startup health checks (https://github.com/eclipse/microprofile-health/issues/274[#274])
 - Specify the `mp.health.default.startup.empty.response` config property (https://github.com/eclipse/microprofile-health/issues/274[#274])
 
-=== Other Changes
+==== Other Changes
 
 - Integrated MicroProfile Parent POM (https://github.com/eclipse/microprofile-health/issues/282[#282])
 - Clarified `mp.health.default.readiness.empty.response` usage (https://github.com/eclipse/microprofile-health/issues/283[#283])
 
 
 [[release_notes_3_0]]
-== Release Notes for MicroProfile Health 3.0
+=== Release Notes for MicroProfile Health 3.0
 
 The following changes occurred in the 3.0 release, compared to 2.2.
 
 A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?q=is%3Aissue+milestone%3A3.0+is%3Aclosed[MicroProfile Health 3.0]
 
-=== Incompatible changes
+==== Incompatible changes
 
 - Pruning `@Health` qualifier (https://github.com/eclipse/microprofile-health/issues/252[#252])
 - Fix `HealthCheckResponse` deserialization issue (https://github.com/eclipse/microprofile-health/issues/243[#243])
 
-=== Other changes
+==== Other changes
 
 - Add configuration value for default readiness status (https://github.com/eclipse/microprofile-health/issues/244[#244])
 - Update dependencies scope and version to align on latest Jakarta EE 8 version (https://github.com/eclipse/microprofile-health/issues/214[#214])
 
 
 [[release_notes_2_2]]
-== Release Notes for MicroProfile Health 2.2
+=== Release Notes for MicroProfile Health 2.2
 
 The following changes occurred in the 2.2 release, compared to 2.1
 
 A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/4?closed=1[MicroProfile Health 2.2]
 
-=== API/SPI Changes
+==== API/SPI Changes
 
 - Add Annotation literals for all Qualifier in spec to ease programmatic lookup
 - Make HealthCheckResponse a concrete class to allow its usage on consuming end
 
-=== Miscellaneous
+==== Miscellaneous
 
 - Update version of CDI API to 2.0
 - Remove Guava exclusion since its required to run TCK
 
 
 [[release_notes_2_1]]
-== Release Notes for MicroProfile Health 2.1
+=== Release Notes for MicroProfile Health 2.1
 
 The following changes occurred in the 2.1 release, compared to 2.0
 
 A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/3?closed=1+[MicroProfile Health 2.1]
 
-=== API/SPI Changes
+==== API/SPI Changes
 
 - Add new method to create responses
 - Add config property to disable implementation health check procedures
 - Improve javadoc
 
-=== TCK enhancement
+==== TCK enhancement
 
 - Testing JSON format
 - Add delayed test
 - Add test name before each tests
 
-=== Miscellaneous
+==== Miscellaneous
 
 - Remove duplicate Arquillian import
 - Remove EL API transitive dependency
 
 [[release_notes_2]]
-== Release Notes for MicroProfile Health 2.0
+=== Release Notes for MicroProfile Health 2.0
 
 The following changes occurred in the 2.0 release, compared to 1.0
 
 A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/issues?utf8=✓&q=is%3Aissue+milestone%3A2.0+[MicroProfile Health 2.0]
 
-=== API/SPI Changes
+==== API/SPI Changes
 
 - Deprecation of `@Health` qualifier
 - Introduction of `@Liveness` and `@Readiness` qualifiers
 
-=== Protocol and wireformat changes
+==== Protocol and wireformat changes
 
 - In response JSON format replaced `outcome` and `state` by `status`. *This change breaks backward compatibility with version 1.0*
 - Introduction of `/health/live` endpoint that must call all the liveness procedures
@@ -127,7 +152,7 @@ A full list of changes may be found on the link:https://github.com/eclipse/micro
 - For backward compatibility, `/health` endpoint should now call all procedures having `@Health`, `@Liveness` or `@Readiness` qualifiers
 - Correction and enhancement of response JSON format.
 
-=== TCK enhancement
+==== TCK enhancement
 
 - Adding tests for new types of health check procedures
 - Cleaning existing tests
