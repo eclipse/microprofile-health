@@ -26,7 +26,7 @@
     <name>MicroProfile Health TCK</name>
 
     <properties>
-        <version.glassfish.json>1.1.6</version.glassfish.json>
+        <version.glassfish.json>2.0.0</version.glassfish.json>
         <httpclient.version>4.5.2</httpclient.version>
         <version.com.github.java-json-tools>2.2.10</version.com.github.java-json-tools>
     </properties>
