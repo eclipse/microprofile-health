@@ -1,6 +1,6 @@
 =========================================================================
 ==  NOTICE file corresponding to section 4(d) of the Apache License,   ==
-==  Version 2.0, in this case for Microprofile Config                  ==
+==  Version 2.0, in this case for Microprofile Health                  ==
 =========================================================================
 
 This product includes software developed at
@@ -12,7 +12,5 @@ PackageHomePage: http://www.eclipse.org/microprofile
 PackageLicenseDeclared: Apache-2.0
 
 PackageCopyrightText: <text>
-Mark Struberg struberg@apache.org,
-Emily Jiang emijiang@uk.ibm.com,
-Ondrej Mihalyi ondrej.mihalyi@gmail.com
+Heiko Braun hbraun@redhat.com
 </text>
