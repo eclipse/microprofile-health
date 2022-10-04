@@ -27,7 +27,7 @@
 
     <properties>
         <version.glassfish.json>2.0.0</version.glassfish.json>
-        <httpclient.version>4.5.2</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <version.com.github.java-json-tools>2.2.10</version.com.github.java-json-tools>
     </properties>
 
