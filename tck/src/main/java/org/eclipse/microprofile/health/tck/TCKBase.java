@@ -63,19 +63,19 @@ public abstract class TCKBase extends Arquillian {
         LOG.info(String.format("Running test: %s#%s", method.getDeclaringClass().getSimpleName(), method.getName()));
     }
 
-    Response getUrlHealthContents() {
+    protected Response getUrlHealthContents() {
         return getUrlContents(this.uri + "/health", false);
     }
 
-    Response getUrlLiveContents() {
+    protected Response getUrlLiveContents() {
         return getUrlContents(this.uri + "/health/live", false);
     }
 
-    Response getUrlReadyContents() {
+    protected Response getUrlReadyContents() {
         return getUrlContents(this.uri + "/health/ready", false);
     }
 
-    Response getUrlStartedContents() {
+    protected Response getUrlStartedContents() {
         return getUrlContents(this.uri + "/health/started", false);
     }
 
@@ -127,7 +127,7 @@ public abstract class TCKBase extends Arquillian {
         return new Response(code, content.toString());
     }
 
-    JsonObject readJson(Response response) {
+    protected JsonObject readJson(Response response) {
         JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().get()));
         JsonObject json = jsonReader.readObject();
         System.out.println(json);
@@ -135,12 +135,12 @@ public abstract class TCKBase extends Arquillian {
         return json;
     }
 
-    void assertSuccessfulCheck(JsonObject check, String expectedName) {
+    protected void assertSuccessfulCheck(JsonObject check, String expectedName) {
         assertCheckName(check, expectedName);
         verifySuccessStatus(check);
     }
 
-    void assertFailureCheck(JsonObject check, String expectedName) {
+    protected void assertFailureCheck(JsonObject check, String expectedName) {
         assertCheckName(check, expectedName);
         verifyFailureStatus(check);
     }
@@ -153,7 +153,7 @@ public abstract class TCKBase extends Arquillian {
                         "but it was not present in the response", expectedName));
     }
 
-    void verifySuccessStatus(JsonObject check) {
+    protected void verifySuccessStatus(JsonObject check) {
         Assert.assertEquals(
                 check.getString("status"),
                 "UP",
@@ -161,21 +161,21 @@ public abstract class TCKBase extends Arquillian {
 
     }
 
-    void verifyFailureStatus(JsonObject check) {
+    protected void verifyFailureStatus(JsonObject check) {
         Assert.assertEquals(
                 check.getString("status"),
                 "DOWN",
                 "Expected a failed check result");
     }
 
-    void assertOverallSuccess(JsonObject json) {
+    protected void assertOverallSuccess(JsonObject json) {
         Assert.assertEquals(
                 json.getString("status"),
                 "UP",
                 "Expected overall status to be successful");
     }
 
-    void assertOverallFailure(JsonObject json) {
+    protected void assertOverallFailure(JsonObject json) {
         Assert.assertEquals(
                 json.getString("status"),
                 "DOWN",

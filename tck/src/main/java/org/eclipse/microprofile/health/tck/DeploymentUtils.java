@@ -26,16 +26,16 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
-class DeploymentUtils {
+public class DeploymentUtils {
     private DeploymentUtils() {
     }
 
-    static WebArchive createEmptyWarFile(String name) {
+    public static WebArchive createEmptyWarFile(String name) {
         return ShrinkWrap.create(WebArchive.class, name + ".war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
-    static WebArchive createWarFileWithClasses(String name, Class<?>... classes) {
+    public static WebArchive createWarFileWithClasses(String name, Class<?>... classes) {
         return createEmptyWarFile(name)
                 .addClasses(classes);
     }
