@@ -54,7 +54,7 @@ public class HealthCheckResponse {
 
     /**
      * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
-     * 
+     *
      * @param name
      *            Health Check procedure's name
      * @param status
@@ -112,7 +112,7 @@ public class HealthCheckResponse {
 
     /**
      * Creates a successful health check with a name.
-     * 
+     *
      * @param name
      *            the check name
      * @return a new sucessful health check response with a name
@@ -123,7 +123,7 @@ public class HealthCheckResponse {
 
     /**
      * Creates a failed health check with a name.
-     * 
+     *
      * @param name
      *            the check name
      * @return a new failed health check response with a name
