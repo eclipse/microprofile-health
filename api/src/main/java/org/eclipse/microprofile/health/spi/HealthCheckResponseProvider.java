@@ -35,7 +35,7 @@ public interface HealthCheckResponseProvider {
 
     /**
      * Provides an implementation of {@link HealthCheckResponseBuilder}.
-     * 
+     *
      * @return a vendor specific implemenatation of {@link HealthCheckResponseBuilder}
      */
     HealthCheckResponseBuilder createResponseBuilder();
