@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2021 Contributors to the Eclipse Foundation
+// Copyright (c) 2016-2024 Contributors to the Eclipse Foundation
 //
 // See the NOTICE file(s) distributed with this work for additional
 // information regarding copyright ownership.
@@ -21,6 +21,37 @@
 [[release_notes]]
 == Release Notes
 This section documents the changes introduced by individual releases.
+
+[[release_notes_4_1]]
+=== Release Notes for MicroProfile Health 4.1
+
+The following changes occurred in the 4.1 release, compared to 4.0.
+
+A full list of changes may be found on the link:https://github.com/eclipse/microprofile-health/milestone/8[Future]
+
+==== Incompatible Changes
+
+- None
+
+==== API/SPI Changes
+
+- The existing link:../../../../api/src/main/java/org/eclipse/microprofile/health/HealthCheckResponse.java[`HealthCheckResponse(String, Status, Optional<Map<String, Object>>)`]
+constructor has been deprecated since this release, see https://github.com/eclipse/microprofile-health/issues/323.
+Therefore, the method signature will be refactored accordingly in the next MicroProfile Health major release (5.0).
+A new constructor has been defined as `HealthCheckResponse(String, Status, Map<String, Object>)`, and should be used
+from now on.
+
+- link:../../../../api/src/main/java/org/eclipse/microprofile/health/HealthCheckResponse.java[`HealthCheckResponse::getData`]
+has been deprecated since this release, see https://github.com/eclipse/microprofile-health/issues/323, hence the method
+signature will be refactored accordingly in the next MicroProfile Health major release (5.0).
+
+==== Functional Changes
+
+- None
+
+==== Other Changes
+
+- None
 
 [[release_notes_4_0]]
 === Release Notes for MicroProfile Health 4.0

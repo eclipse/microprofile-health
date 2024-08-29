@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 Contributors to the Eclipse Foundation
+ * Copyright (c) 2017-2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICES file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -50,7 +50,27 @@ public class HealthCheckResponse {
 
     private final Status status;
 
-    private final Optional<Map<String, Object>> data;
+    private final Map<String, Object> data;
+
+    /**
+     * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
+     * <p>
+     * This is deprecated since MicroProfile Health 4.1, and will be removed in the next major version.
+     * {@link HealthCheckResponse#HealthCheckResponse(String, Status, Map)} should be used from now on.
+     *
+     * @param name
+     *            Health Check procedure's name
+     * @param status
+     *            Health Check procedure's status
+     * @param data
+     *            additional data for Health Check procedure
+     */
+    @Deprecated(since = "4.1", forRemoval = true)
+    public HealthCheckResponse(String name, Status status, Optional<Map<String, Object>> data) {
+        this.name = name;
+        this.status = status;
+        this.data = data.orElse(null);
+    }
 
     /**
      * Constructor allowing instantiation from 3rd party framework like MicroProfile Rest client
@@ -62,7 +82,7 @@ public class HealthCheckResponse {
      * @param data
      *            additional data for Health Check procedure
      */
-    public HealthCheckResponse(String name, Status status, Optional<Map<String, Object>> data) {
+    public HealthCheckResponse(String name, Status status, Map<String, Object> data) {
         this.name = name;
         this.status = status;
         this.data = data;
@@ -72,9 +92,9 @@ public class HealthCheckResponse {
      * Default constructor
      */
     public HealthCheckResponse() {
-        name = null;
-        status = null;
-        data = null;
+        this.name = null;
+        this.status = null;
+        this.data = null;
     }
 
     /**
@@ -165,8 +185,21 @@ public class HealthCheckResponse {
         return status;
     }
 
+    /**
+     * Access the map which stores the Health check response data.
+     * <p>
+     * This is deprecated since MicroProfile Health 4.1, and will be replaced by
+     * {@code public Map<String, Object> getData()} in the next major version.
+     *
+     * @return An {@link Optional} instance to contain the Health check response data.
+     */
+    @Deprecated(since = "4.1")
     public Optional<Map<String, Object>> getData() {
-        return data;
+        return Optional.ofNullable(data);
+    }
+
+    public Optional<Object> getData(String key) {
+        return Optional.of(data.get(key));
     }
 
     private static <T> T find(Class<T> service) {
