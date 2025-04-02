@@ -41,7 +41,7 @@ The overall application health for a given endpoint is the logical AND of all of
 The current version of the MicroProfile Health specification does not define how the defined endpoints may be partitioned in the event
 that the MicroProfile runtime supports deployment of multiple applications. If an implementation wishes to
 support multiple applications within a MicroProfile runtime, the semantics of individual endpoints are
-expected to be the logical AND of all the application in the runtime. The exact details of this are deferred to
+expected to be the logical AND of all the applications in the runtime. The exact details of this are deferred to
 a future version of the MicroProfile Health specification.
 
 == Proposed solution
