@@ -65,4 +65,5 @@ The proposed solution breaks down into two parts:
 - Scott Stark
 - Martin Stefanko
 - Kevin Sutter
+- Fabio Burzigotti
 
