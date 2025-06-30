@@ -129,7 +129,9 @@ public class SuccessfulCheck implements HealthCheck {
 
 The `name` is used to tell the different checks apart when a human operator looks at the responses.
 It may be that one check of several fails and it's useful to know which one.
-It's required that a response defines a name.
+It's required that a response defines a name, i.e. implementations must verify that a consistent name is provided when
+constructing a `HealthCheckResponse` instance, and fail accordingly if it is not.
+Specific tests to verify this behavior are executed when running the TCKs.
 
 `HealthCheckResponse` 's also support a free-form information holder, that can be used to supply arbitrary data to the consuming end:
 
