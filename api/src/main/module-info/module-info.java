@@ -24,14 +24,16 @@
  *
  * <p>
  * {@code @Liveness}, {@code @Readiness} and {@code @Startup} are meta-annotated with
- * {@code jakarta.inject.Qualifier} and ship {@code AnnotationLiteral} subclasses, so the Inject and
- * CDI modules are required transitively: consumers must read them for those meta-annotations to be
- * resolvable on the module path.
+ * {@code jakarta.inject.Qualifier} and ship {@code AnnotationLiteral} subclasses. The Inject and CDI
+ * modules are optional at resolution time ({@code static}): {@code HealthCheck} and
+ * {@code HealthCheckResponse} can be used without a CDI container. When they are present they are
+ * re-exported ({@code transitive}) so that consumers using the qualifiers or their literals read them
+ * without declaring the dependency themselves.
  */
 module org.eclipse.microprofile.health {
     requires java.logging;
-    requires transitive jakarta.cdi;
-    requires transitive jakarta.inject;
+    requires static transitive jakarta.cdi;
+    requires static transitive jakarta.inject;
 
     exports org.eclipse.microprofile.health;
     exports org.eclipse.microprofile.health.spi;
