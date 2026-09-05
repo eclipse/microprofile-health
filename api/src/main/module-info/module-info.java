@@ -21,14 +21,6 @@
 
 /**
  * MicroProfile Health API.
- *
- * <p>
- * {@code @Liveness}, {@code @Readiness} and {@code @Startup} are meta-annotated with
- * {@code jakarta.inject.Qualifier} and ship {@code AnnotationLiteral} subclasses. The Inject and CDI
- * modules are optional at resolution time ({@code static}): {@code HealthCheck} and
- * {@code HealthCheckResponse} can be used without a CDI container. When they are present they are
- * re-exported ({@code transitive}) so that consumers using the qualifiers or their literals read them
- * without declaring the dependency themselves.
  */
 module org.eclipse.microprofile.health {
     requires java.logging;
